@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -16,7 +16,7 @@ const root = createRoot(container); // Tạo root
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate  persistor={persistor}>
         <Router history={history}> {/* Sử dụng HistoryRouter */}
           <App />
         </Router>
