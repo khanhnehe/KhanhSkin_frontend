@@ -1,71 +1,75 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loginApiService } from '../../services/userService';
-import { decodeToken, isTokenExpired } from '../../services/tokenService'; // Import các tiện ích token
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'; 
+import { loginApiService } from '../../services/userService'; 
+import { decodeToken, isTokenExpired } from '../../services/tokenService'; 
+import { toast } from 'react-toastify';
 
+// Hàm bất đồng bộ dùng để login người dùng, sử dụng createAsyncThunk để xử lý các side effect
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }, { rejectWithValue }) => { //  rejectWithValue dùng để trả về lỗi
     try {
-      const response = await loginApiService(email, password);
-      return response; // Không cần `response.data` vì interceptor đã xử lý
+      const response = await loginApiService(email, password); 
+      return response; 
     } catch (err) {
-      return rejectWithValue(err.response?.data || 'Login failed');
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Login failed';
+      toast.error(errorMessage); // Hiển thị thông báo lỗi bằng toast
+      return rejectWithValue(errorMessage); 
     }
   }
 );
 
 const userSlice = createSlice({
-  name: 'user',
+  name: 'user', 
   initialState: {
-    isLoggedIn: false,
-    userInfo: null,
-    error: '',
+    isLoggedIn: false, 
+    userInfo: null, 
+    error: '', 
     accessToken: null,
-    isLoading: false,
+    isLoading: false, 
   },
-  reducers: {
-    logout(state) {
-      state.isLoggedIn = false;
-      state.userInfo = null;
-      state.accessToken = null;
-      state.error = '';
+  reducers: { // Các reducer để xử lý các hành động đồng bộ
+    logout(state) { 
+      state.isLoggedIn = false; 
+      state.userInfo = null; 
+      state.accessToken = null; 
+      state.error = ''; 
       state.isLoading = false;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: (builder) => { // Xử lý các hành động bất đồng bộ
     builder
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = '';
+      .addCase(loginUser.pending, (state) => { // Khi hành động login đang xử lý (đang chờ)
+        state.isLoading = true; 
+        state.error = ''; 
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        const token = action.payload.result.token; // Giả sử token có trong result
+      .addCase(loginUser.fulfilled, (state, action) => { 
+        const token = action.payload.result.token; 
         
         // Kiểm tra nếu token hết hạn
-        if (isTokenExpired(token)) {
+        if (isTokenExpired(token)) { 
           state.error = 'Token has expired.';
-          state.isLoading = false;
-          return;
+          state.isLoading = false; // Ngừng trạng thái loading
+          return; 
         }
 
-        // Giải mã token và lấy thông tin người dùng
-        const decodedToken = decodeToken(token);
+        // Giải mã token 
+        const decodedToken = decodeToken(token); 
 
         state.isLoggedIn = true;
-        state.userInfo = decodedToken; // Lưu thông tin người dùng đã giải mã
-        state.accessToken = token; // Lưu token
-        state.error = '';
+        state.userInfo = decodedToken; 
+        state.accessToken = token;
+        state.error = ''; 
         state.isLoading = false;
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoggedIn = false;
-        state.userInfo = null;
+      .addCase(loginUser.rejected, (state, action) => { // Khi hành động login bị từ chối
+        state.isLoggedIn = false; 
+        state.userInfo = null; 
         state.accessToken = null;
         state.error = action.payload || 'Login failed. Please check your credentials.';
-        state.isLoading = false;
+        state.isLoading = false; 
       });
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout } = userSlice.actions; 
 export default userSlice.reducer;

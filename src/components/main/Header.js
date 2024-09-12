@@ -7,22 +7,24 @@ import logo from "../../assets/logo.jpg";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TbLogout } from "react-icons/tb";
-import { LiaShoppingBagSolid } from "react-icons/lia";
+import { PiShoppingCart } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineAccountCircle } from "react-icons/md";
 
 const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     // Sử dụng selector chính xác để lấy dữ liệu từ Redux store
-    const isLoggedIn = useSelector((state) => state.root.user.isLoggedIn);
-    const userInfo = useSelector((state) => state.root.user.userInfo);
+    const { isLoggedIn, userInfo } = useSelector((state) => state.root.user);
 
     const [openMenu, setOpenMenu] = useState(false);
     const [firstName, setFirstName] = useState(userInfo ? userInfo.FullName : '');
 
     useEffect(() => {
-        setFirstName(userInfo ? userInfo.FullName : '');
+        if (userInfo && userInfo.FullName) {
+            const nameParts = userInfo.FullName.split(' ');
+            setFirstName(nameParts.pop()); // Lấy phần cuối cùng của mảng tên
+        }
     }, [userInfo]);
 
     const toggleMenu = () => {
@@ -40,9 +42,9 @@ const Header = () => {
     );
 
     const cartOrder = (
-        <span className='cart px-3'>
+        <span className='cart '>
             <Link to='/cart'>
-                <LiaShoppingBagSolid />
+                <PiShoppingCart />
                 {/* <p>{listCartOrder && listCartOrder.cartItems ? listCartOrder.cartItems.length : 0}</p> */}
             </Link>
         </span>
@@ -109,10 +111,11 @@ const Header = () => {
                                 </span>
                             )}
 
-                            <span className='links px-3'>
-                                <MdOutlineFavoriteBorder className='tim' />
-                            </span>
-                            {cartOrder}
+                                <span className='links px-3'>
+                                    <MdOutlineFavoriteBorder className='tim' />
+                                </span>
+                                {cartOrder}
+
                         </div>
                     </nav>
 
