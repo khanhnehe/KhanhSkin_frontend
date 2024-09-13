@@ -1,0 +1,13 @@
+.system {
+    display: flex;
+}
+
+.systemContainer {
+    flex: 1;
+    padding: 20px;
+    background-color: #f1f1f1; // Màu nền cho container
+}
+
+.content {
+    margin-top: 60px; // Điều chỉnh khoảng cách trên để tránh bị che khuất bởi Navbar
+}

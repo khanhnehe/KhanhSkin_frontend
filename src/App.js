@@ -1,24 +1,24 @@
 import React, { Fragment } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom'; // Removed BrowserRouter
 import Login from './Auth/Login';
-import { path } from './utils/constant'; 
+import { path } from './utils/constant';
 import MyComponent from './Auth/test';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import Header from './components/main/Header';
-import Footer from './components/main/Footer';
+import Header from './home/main/Header';
+import Footer from './home/main/Footer';
+import System from './router/System';
+import HomeAdmin from './home/HomeAdmin'; // Import component cho admin
 
 function App() {
   return (
-    <Fragment>
-      <Header />
+    <>
       <Routes>
-        <Route path={path.LOGIN} element={<Login />} />
-        <Route path="/test" element={<MyComponent />} />
+        <Route path={path.ADMIN + "/*"} element={<AdminRoutes />} />
+        <Route path="/*" element={<UserRoutes />} />
       </Routes>
-      <Footer/>
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -31,8 +31,26 @@ function App() {
         pauseOnHover
         theme="light"
       />
-    </Fragment>
+    </>
   );
 }
+
+const AdminRoutes = () => (
+  <Routes>
+    <Route path="/*" element={<System />} />
+    {/* Thêm các route khác cho admin ở đây nếu cần */}
+  </Routes>
+);
+
+const UserRoutes = () => (
+  <Fragment>
+    <Header />
+    <Routes>
+      <Route path={path.LOGIN} element={<Login />} />
+      <Route path="/test" element={<MyComponent />} />
+    </Routes>
+    <Footer />
+  </Fragment>
+);
 
 export default App;

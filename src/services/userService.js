@@ -4,4 +4,12 @@ const loginApiService = (email, password) => {
     return axios.post('/User/sign-in', { email, password });
 }
 
-export { loginApiService };
+const getAllUser = () => {
+    return axios.get ('/User/get-all-users');
+}
+
+export { 
+    loginApiService,
+    getAllUser
+
+ };

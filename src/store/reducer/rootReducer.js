@@ -2,9 +2,9 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userSlice from '../reducer/userSlice';
-import adminReducer from '../reducer/adminReducer';
+import adminSlice from '../reducer/adminSlice';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-
+import loadingSlice from '../reducer/loadingSlice';
 // Cấu hình lưu trữ cho reducer 'user'
 const userPersistConfig = {
   key: 'user',
@@ -24,8 +24,8 @@ const adminPersistConfig = {
 // Kết hợp các reducer, trong đó mỗi reducer được bọc bởi persistReducer riêng
 const rootReducer = combineReducers({
   user: persistReducer(userPersistConfig, userSlice),
-  admin: persistReducer(adminPersistConfig, adminReducer),
-  // Thêm các reducer khác nếu cần
+  admin: persistReducer(adminPersistConfig, adminSlice),
+  loading: loadingSlice,
 });
 
 export default rootReducer;

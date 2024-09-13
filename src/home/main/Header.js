@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TbLogout } from "react-icons/tb";
 import { PiShoppingCart } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineAccountCircle } from "react-icons/md";
+import { logout } from '../../store/reducer/userSlice'; // Import hành động logout từ Redux
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,11 @@ const Header = () => {
 
     const toggleMenu = () => {
         setOpenMenu(!openMenu);
+    };
+
+    const handleLogout = async () => {
+        await dispatch(logout());
+        navigate('/sign-in');
     };
 
     const logoHome = (
@@ -86,8 +92,8 @@ const Header = () => {
                                                     Hồ sơ
                                                 </NavLink>
 
-                                                <span className='links px-3'>
-                                                    <div ><TbLogout /></div>
+                                                <span className='links px-3' onClick={handleLogout}>
+                                                    <div><TbLogout /></div>
                                                 </span>
                                             </div>
                                         </div>
@@ -111,10 +117,10 @@ const Header = () => {
                                 </span>
                             )}
 
-                                <span className='links px-3'>
-                                    <MdOutlineFavoriteBorder className='tim' />
-                                </span>
-                                {cartOrder}
+                            <span className='links px-3'>
+                                <MdOutlineFavoriteBorder className='tim' />
+                            </span>
+                            {cartOrder}
 
                         </div>
                     </nav>
