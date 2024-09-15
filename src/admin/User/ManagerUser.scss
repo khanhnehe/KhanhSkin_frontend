@@ -1,0 +1,97 @@
+.systemContainer {
+    flex: 1 1;
+    padding: 20px;
+    background-color: #e4e4e4;
+
+    .manager-user {
+        width       : 100%;
+        color       : #616161;
+        padding-left: 225px;
+        padding-top : 6px;
+    
+    
+        .top {
+            // margin-bottom     : 17px;
+            // // Add your styling for the 'top' section here if needed'
+            // padding           : 20px;
+            // -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            // box-shadow        : 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            // background-color  : rgb(255, 255, 255);
+        }
+    
+        .bot {
+            padding           : 20px;
+            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            box-shadow        : 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            background-color  : rgb(255, 255, 255);
+    
+            .edit-button {
+                font-size: 13px;
+                background-color: white !important;
+                border-color: green !important;
+                color: #18aa66 !important;
+            
+                &:hover {
+                    border-color: darkgreen !important;
+                    color: rgb(1, 138, 1) !important;
+                }
+            }
+            
+            .delete-button {
+                font-size: 13px;
+                background-color: white !important;
+                border-color: red !important;
+                color: red !important;
+            
+                &:hover {
+                    border-color: darkred !important;
+                    color: rgb(179, 10, 10) !important;
+                }
+            }
+            
+            .bot-btn{
+                display: flex;
+                justify-content: flex-end; /* Căn chỉnh phần tử con về bên phải */
+                margin-bottom: 1rem; /* Khoảng cách dưới */
+    
+                .custom-button {
+                    background-color: #ff3d3e !important;
+                    color: white !important;
+                
+                    &:hover {
+                        background-color: #ff0808 !important;
+                    }
+                }
+            }
+        }
+    
+        table {
+            width          : 100%;
+            border-collapse: collapse;
+            border         : 1px solid #e4e4e4;
+            // border-radius  : 1px solid gray;
+            // box-shadow     : -2px 2px 5px 0px rgba(201, 201, 201, 0.47);
+    
+            th,
+            td {
+                padding      : 12px;
+                text-align   : left;
+                border-bottom: 1px solid #ddd;
+            }
+    
+            th {
+                background-color: #c5c5c5;
+        color: #0d0d0d;
+            }
+    
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+    
+            tr:hover {
+                background-color: #ccc; // Màu xám khi hover
+            }
+        }
+    
+    }
+}

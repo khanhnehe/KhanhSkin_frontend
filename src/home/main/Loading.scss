@@ -16,9 +16,9 @@
   }
   
   .loader {
-    border: 5px solid #ff7861;
-    border-top: 13px solid #ff7861;
-    border-bottom: 13px solid #ff7861;
+    border: 5px solid #ffffff;
+    border-top: 13px solid rgb(255, 255, 255);
+    border-bottom: 13px solid #ffffff;
     border-radius: 50%;
     width: 80px;
     height: 80px;
@@ -28,7 +28,7 @@
   .loading-text {
     margin-top: 10px;
     text-align: center;
-    color: #ff7861;
+    color: #ffffff;
     font-family: cursive;
     font-size: 20px;
   }

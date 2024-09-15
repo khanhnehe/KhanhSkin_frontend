@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Tạo instance của axios với cấu hình cơ bản
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:5054/api', // Đảm bảo baseURL đúng
+    baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:5054', // Đảm bảo baseURL đúng
     headers: {
         'Content-Type': 'application/json',
     },

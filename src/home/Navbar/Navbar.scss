@@ -1,10 +1,10 @@
 .navbar {
     position: fixed;
     top: 0;
-    left: 190px;
+    left: 230px;
     width: calc(100% - 190px);
     height: 70px;
-    background-color: #ff4328;
+    background-color: #ffffff;
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
 
     .navbarContainer {
         display: flex;
-        width: 100%;
+        width: 90%;
         align-items: center; 
         justify-content: space-between;
 
@@ -36,18 +36,18 @@
 
             .hello {
                 font-weight: 500;
-                font-size: 17px;
-                padding: 3px 4px;
-                background-color: white;
-                border-radius: 10px 8px 10px 0px;
-                color: #ff4328;
-                margin-left: 5px;
-                cursor: pointer;
+    font-size: 17px;
+    padding: 3px 4px;
+    background-color: #ff5253;
+    border-radius: 10px 8px 10px 0px;
+    color: #ffffff;
+    margin-left: 5px;
+    cursor: pointer;
             }
 
             .icon {
                 border-radius: 10px;
-                color: white;
+                color: rgb(0, 0, 0);
                 font-size: 34px;
                 margin-right: 3px;
                 padding-bottom: 5px;

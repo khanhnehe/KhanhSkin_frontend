@@ -11,25 +11,19 @@ export const loginUser = createAsyncThunk(
     try {
       dispatch(showLoading()); // Hiển thị loading spinner
 
-      // Tạo một Promise để đảm bảo loading spinner hiển thị ít nhất 2 giây
-      const minimumLoadingTime = new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Gọi API login
-      const responsePromise = loginApiService(email, password);
-
-      // Chờ cả hai Promise hoàn thành
-      const [response] = await Promise.all([responsePromise, minimumLoadingTime]);
+      const response = await loginApiService(email, password);
 
       dispatch(hideLoading()); // Ẩn loading spinner
       return response; 
     } catch (err) {
       dispatch(hideLoading()); // Ẩn loading spinner nếu có lỗi
-      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Login failed';
-      toast.error(errorMessage); // Hiển thị thông báo lỗi bằng toast
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage;
+      toast.error(errorMessage);
       return rejectWithValue(errorMessage); 
     }
   }
 );
+
 
 const userSlice = createSlice({
   name: 'user', 
