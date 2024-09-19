@@ -1,86 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllUser, createNewUser, updatedUser, deletedUser } from '../../store/action/adminThunks'; // Import hành động tạo mới và cập nhật người dùng
+import { fetchAllBrand, createNewBrand, updatedBrand, deletedBrand } from '../../../store/action/adminThunks';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import { IoPersonAdd } from "react-icons/io5";
+import { IoMdAdd } from "react-icons/io";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import './ManagerUser.scss';
+import './Brand.scss';
 import Fab from '@mui/material/Fab';
 import { IoIosRemoveCircle } from "react-icons/io";
 import { Badge, IconButton } from '@mui/material';
 
-const ManagerUser = () => {
+const Brand = () => {
     const dispatch = useDispatch();
-    const allUsers = useSelector((state) => state.root.admin.allUser);
+    const allBrands = useSelector((state) => state.root.admin.allBrand);
 
-    const [newUser, setNewUser] = useState({
-        fullName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        imageFile: null,
-        role: 1
+    const [newBrand, setNewBrand] = useState({
+        brandName: '',
+        imageFile: null
     });
 
-    const [open, setOpen] = useState(false); // mở/đóng 
-    const [editMode, setEditMode] = useState(false); //edit mode
-    const [editingUser, setEditingUser] = useState(null);
-    const [confirmOpen, setConfirmOpen] = useState(false); // modal xác nhận
-    const [userToDelete, setUserToDelete] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [editingBrand, setEditingBrand] = useState(null);
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [brandToDelete, setBrandToDelete] = useState(null);
 
-    const [imagePreview, setImagePreview] = useState(null); // Biến trạng thái để lưu trữ URL của ảnh đã chọn
-    const [currentImage, setCurrentImage] = useState(null); // Trạng thái để lưu trữ URL của ảnh hiện tại khi sửa
+    const [imagePreview, setImagePreview] = useState(null);
+    const [currentImage, setCurrentImage] = useState(null);
 
-
-    //mở modal add
     const handleOpen = () => {
-        setEditMode(false); // Chuyển sang chế độ add
-        setNewUser({
-            fullName: '',
-            email: '',
-            phoneNumber: '',
-            password: '',
-            imageFile: null,
-            role: 1
+        setEditMode(false);
+        setNewBrand({
+            brandName: '',
+            imageFile: null
         });
         setImagePreview(null);
-        setCurrentImage(null); // Xóa hình hiện tại khi thêm mới
-        setOpen(true); // Mở modal
-    };
-
-    // Mở modal và điền data input edit
-    const handleEditOpen = (user) => {
-        setEditingUser(user); // Lưu trữ info user để sửa
-        setNewUser({
-            fullName: user.fullName,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
-            password: '......',
-            imageFile: null, // Đặt lại imageFile vì sẽ cập nhật mới nếu người dùng chọn
-            role: user.role
-        });
-        setEditMode(true); // Chuyển sang sửa
-        setImagePreview(null);
-        setCurrentImage(user.image); // Hiển thị ảnh hiện tại khi sửa
+        setCurrentImage(null);
         setOpen(true);
     };
 
-    // Đóng modal
+    const handleEditOpen = (brand) => {
+        setEditingBrand(brand);
+        setNewBrand({
+            brandName: brand.brandName,
+            imageFile: null
+        });
+        setEditMode(true);
+        setImagePreview(null);
+        setCurrentImage(brand.image);
+        setOpen(true);
+    };
+
     const handleClose = () => {
         setOpen(false);
-        setNewUser({
-            fullName: '',
-            email: '',
-            phoneNumber: '',
-            password: '',
-            imageFile: null,
-            role: 1
+        setNewBrand({
+            brandName: '',
+            imageFile: null
         });
         setImagePreview(null);
         setCurrentImage(null);
@@ -88,139 +68,118 @@ const ManagerUser = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewUser({
-            ...newUser,
-            [name]: name === 'role' ? parseInt(value, 10) : value
+        setNewBrand({
+            ...newBrand,
+            [name]: value
         });
     };
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setNewUser({ ...newUser, imageFile: file });
-            setImagePreview(URL.createObjectURL(file)); // Cập nhật URL của ảnh đã chọn
+            setNewBrand({ ...newBrand, imageFile: file });
+            setImagePreview(URL.createObjectURL(file));
         }
     };
 
-    // add new user
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('FullName', newUser.fullName);
-        formData.append('Email', newUser.email);
-        formData.append('PhoneNumber', newUser.phoneNumber);
-        formData.append('Password', newUser.password);
-        formData.append('Role', parseInt(newUser.role, 10));
-        if (newUser.imageFile) {
-            formData.append('ImageFile', newUser.imageFile);
+        formData.append('BrandName', newBrand.brandName);
+        if (newBrand.imageFile) {
+            formData.append('ImageFile', newBrand.imageFile);
         }
 
-        dispatch(createNewUser(formData)).then(() => {
-            setNewUser({
-                fullName: '',
-                email: '',
-                phoneNumber: '',
-                password: '',
-                imageFile: null,
-                role: 1
+        dispatch(createNewBrand(formData)).then(() => {
+            setNewBrand({
+                brandName: '',
+                imageFile: null
             });
             handleClose();
         });
     };
 
-    //update user
     const handleUpdateSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('FullName', newUser.fullName);
-        formData.append('Email', newUser.email);
-        formData.append('PhoneNumber', newUser.phoneNumber);
-        formData.append('Password', newUser.password);
-        formData.append('Role', parseInt(newUser.role, 10));
-        if (newUser.imageFile) {
-            formData.append('ImageFile', newUser.imageFile);
-        } else if (newUser.image === null) {
-            formData.append('ImageFile', null); // Đặt ImageFile thành null nếu không có ảnh
+        formData.append('BrandName', newBrand.brandName);
+        if (newBrand.imageFile) {
+            formData.append('ImageFile', newBrand.imageFile);
+        } else if (newBrand.image === null) {
+            formData.append('ImageFile', null);
         }
 
-        const userPayload = {
-            id: editingUser.id, // Gán id user 
+        const brandPayload = {
+            id: editingBrand.id,
             data: formData
         };
 
-        dispatch(updatedUser(userPayload)).then(() => {
+        dispatch(updatedBrand(brandPayload)).then(() => {
             handleClose();
         });
     };
 
-    //delete user
-    const handleDeleteOpen = (user) => {
-        setUserToDelete(user);
+    const handleDeleteOpen = (brand) => {
+        setBrandToDelete(brand);
         setConfirmOpen(true);
     };
 
     const handleDeleteClose = () => {
         setConfirmOpen(false);
-        setUserToDelete(null);
+        setBrandToDelete(null);
     };
 
     const handleDeleteConfirm = () => {
-        if (userToDelete) {
-            dispatch(deletedUser(userToDelete.id)).then(() => {
+        if (brandToDelete) {
+            dispatch(deletedBrand(brandToDelete.id)).then(() => {
                 setConfirmOpen(false);
-                setUserToDelete(null);
+                setBrandToDelete(null);
             });
         }
     };
 
     useEffect(() => {
-        dispatch(fetchAllUser());
+        dispatch(fetchAllBrand());
     }, [dispatch]);
 
     return (
         <>
-            <div className="manager-user">
+            <div className="manager-brand">
                 <span className='top'></span>
                 <div className='bot'>
                     <div className='bot-btn mb-4'>
-                        <Button variant="contained" className="custom-button" endIcon={<IoPersonAdd />} onClick={handleOpen}>
-                            Thêm người dùng
+                        <Button variant="contained" className="custom-button" endIcon={<IoMdAdd />} onClick={handleOpen}>
+                            Thêm thương hiệu
                         </Button>
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>Họ và tên</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th>Ảnh đại diện</th>
-                                <th>Quyền</th>
+                                <th>Tên thương hiệu</th>
+                                <th>Logo</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.isArray(allUsers) && allUsers.map((user) => (
-                                <tr key={user.id}>
-                                    <td>{user.fullName}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phoneNumber}</td>
+                            {Array.isArray(allBrands) && allBrands.map((brand) => (
+                                <tr key={brand.id}>
+                                    <td>{brand.brandName}</td>
                                     <td>
-                                        {user.image && (
+                                        {brand.image && (
                                             <img
-                                                src={user.image}
+                                                src={brand.image}
                                                 style={{ marginLeft: '10px', width: '55px', height: '55px', borderRadius: '50%' }}
-                                                alt="User Avatar"
+                                                alt="Brand Logo"
                                             />
                                         )}
                                     </td>
-                                    <td>{user.role === 1 ? 'User' : 'Admin'}</td>
                                     <td>
                                         <Fab
                                             size="small"
                                             className="edit-button"
                                             style={{ marginRight: '8px' }}
                                             variant="extended"
-                                            onClick={() => handleEditOpen(user)} // Mở modal sửa
+                                            onClick={() => handleEditOpen(brand)}
                                         >
                                             <EditIcon style={{ fontSize: '20px' }} /> Sửa
                                         </Fab>
@@ -228,7 +187,7 @@ const ManagerUser = () => {
                                             size="small"
                                             className="delete-button"
                                             variant="extended"
-                                            onClick={() => handleDeleteOpen(user)}
+                                            onClick={() => handleDeleteOpen(brand)}
                                         >
                                             <DeleteIcon style={{ fontSize: '20px' }} /> Xóa
                                         </Fab>
@@ -240,8 +199,8 @@ const ManagerUser = () => {
                 </div>
             </div>
             <Modal
-                open={open} // Điều khiển mở modal
-                onClose={handleClose} // Đóng modal
+                open={open}
+                onClose={handleClose}
                 aria-labelledby="modal-title"
                 aria-describedby="modal-description"
             >
@@ -258,74 +217,20 @@ const ManagerUser = () => {
                         borderRadius: '10px'
                     }}
                 >
-                    <h4 className="modal-title mb-3 ">{editMode ? 'Cập nhật người dùng' : 'Thêm người dùng'}</h4>
+                    <h4 className="modal-title mb-3 ">{editMode ? 'Cập nhật thương hiệu' : 'Thêm thương hiệu'}</h4>
                     <form onSubmit={editMode ? handleUpdateSubmit : handleSubmit}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="Họ và tên"
-                                    name="fullName"
-                                    value={newUser.fullName}
-                                    onChange={handleInputChange}
-                                    variant="outlined"
-                                    required
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="Số điện thoại"
-                                    name="phoneNumber"
-                                    value={newUser.phoneNumber}
-                                    onChange={handleInputChange}
-                                    variant="outlined"
-                                    required
-                                />
-                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
-                                    label="Email"
-                                    name="email"
-                                    type="email"
-                                    value={newUser.email}
+                                    label="Tên thương hiệu"
+                                    name="brandName"
+                                    value={newBrand.brandName}
                                     onChange={handleInputChange}
                                     variant="outlined"
                                     required
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="Mật khẩu"
-                                    name="password"
-                                    type="password"
-                                    value={newUser.password}
-                                    onChange={handleInputChange}
-                                    variant="outlined"
-                                    required
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    select
-                                    fullWidth
-                                    label="Quyền"
-                                    name="role"
-                                    value={newUser.role}
-                                    onChange={handleInputChange}
-                                    SelectProps={{
-                                        native: true,
-                                    }}
-                                    variant="outlined"
-                                    required
-                                >
-                                    <option value={1}>User</option>
-                                    <option value={2}>Admin</option>
-                                </TextField>
-                            </Grid>
-
                             <Grid item xs={12}>
                                 <input
                                     accept="image/*"
@@ -336,12 +241,11 @@ const ManagerUser = () => {
                                 />
                                 <label htmlFor="upload-image">
                                     <Button variant="outlined" size='small' component="span" fullWidth>
-                                        Chọn ảnh đại diện
+                                        Chọn logo thương hiệu
                                     </Button>
                                 </label>
 
-                                {/* Hiển thị ảnh đại diện hiện tại khi đang chỉnh sửa */}
-                                {editMode && editingUser && editingUser.image && !imagePreview && (
+                                {editMode && editingBrand && editingBrand.image && !imagePreview && (
                                     <div className='mt-3'>
                                         <Badge
                                             overlap="circular"
@@ -350,24 +254,22 @@ const ManagerUser = () => {
                                                 <IconButton
                                                     color="error"
                                                     onClick={() => {
-                                                        setNewUser({ ...newUser, imageFile: null, image: null });
-                                                        setEditingUser({ ...editingUser, image: null });
+                                                        setNewBrand({ ...newBrand, imageFile: null, image: null });
+                                                        setEditingBrand({ ...editingBrand, image: null });
                                                     }}
-
                                                 >
                                                     <IoIosRemoveCircle />
                                                 </IconButton>
                                             }
                                         >
                                             <img
-                                                src={editingUser.image}
+                                                src={editingBrand.image}
                                                 style={{ width: '55px', height: '55px', borderRadius: '50%' }}
                                             />
                                         </Badge>
                                     </div>
                                 )}
 
-                                {/* Hiển thị ảnh xem trước khi chọn ảnh mới */}
                                 {imagePreview && (
                                     <div className='mt-4'>
                                         <Badge
@@ -376,12 +278,10 @@ const ManagerUser = () => {
                                             badgeContent={
                                                 <IconButton
                                                     color="error"
-
                                                     onClick={() => {
-                                                        setNewUser({ ...newUser, imageFile: null, image: null });
+                                                        setNewBrand({ ...newBrand, imageFile: null, image: null });
                                                         setImagePreview(null);
                                                     }}
-
                                                 >
                                                     <IoIosRemoveCircle />
                                                 </IconButton>
@@ -412,7 +312,6 @@ const ManagerUser = () => {
                 </Box>
             </Modal>
 
-            {/* Modal xác nhận xóa */}
             <Modal
                 open={confirmOpen}
                 onClose={handleDeleteClose}
@@ -432,7 +331,7 @@ const ManagerUser = () => {
                     }}
                 >
                     <h4 className="modal-title mb-3 ">Xác nhận xóa</h4>
-                    <p>Bạn có chắc chắn muốn xóa người dùng này không?</p>
+                    <p>Bạn có chắc chắn muốn xóa thương hiệu này không?</p>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Button
@@ -461,4 +360,4 @@ const ManagerUser = () => {
     );
 };
 
-export default ManagerUser;
+export default Brand;

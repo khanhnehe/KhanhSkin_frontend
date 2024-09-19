@@ -20,12 +20,17 @@ const Header = () => {
 
     const [openMenu, setOpenMenu] = useState(false);
     const [firstName, setFirstName] = useState(userInfo ? userInfo.FullName : '');
+    const [image, setImage] = useState(userInfo ? userInfo.Image : '');
 
     useEffect(() => {
         if (userInfo && userInfo.FullName) {
             const nameParts = userInfo.FullName.split(' ');
-            setFirstName(nameParts.pop()); // Lấy phần cuối cùng của mảng tên
+            setFirstName(nameParts.pop());
         }
+        if (userInfo && userInfo.Image) {
+            setImage(userInfo.Image);
+        }
+
     }, [userInfo]);
 
     const toggleMenu = () => {
@@ -81,6 +86,7 @@ const Header = () => {
                                 <div className='links px-3'>
                                     <div className='account'>
                                         <div className="image-header">
+                                            <img src={image} width="50" height="50" style={{ borderRadius: '50%' }} />
                                             <span className='hello'>
                                                 Hi, {firstName}!
                                             </span>

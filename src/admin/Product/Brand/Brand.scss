@@ -1,0 +1,88 @@
+.systemContainer {
+    flex: 1 1;
+    padding: 20px;
+    background-color: #e4e4e4;
+
+    .manager-brand {
+        width: 100%;
+        color: #616161;
+        padding-left: 225px;
+        padding-top: 6px;
+
+        .top {
+            // Các style cho phần 'top' nếu cần
+        }
+
+        .bot {
+            padding: 20px;
+            box-shadow: -1px 3px 7px 4px rgb(201 201 201 / 73%);
+            background-color: rgb(255, 255, 255);
+            border-radius: 5px;
+
+            .edit-button {
+                font-size: 13px;
+                background-color: white !important;
+                border-color: green !important;
+                color: #18aa66 !important;
+
+                &:hover {
+                    border-color: darkgreen !important;
+                    color: rgb(1, 138, 1) !important;
+                }
+            }
+
+            .delete-button {
+                font-size: 13px;
+                background-color: white !important;
+                border-color: red !important;
+                color: red !important;
+
+                &:hover {
+                    border-color: darkred !important;
+                    color: rgb(179, 10, 10) !important;
+                }
+            }
+
+            .bot-btn {
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 1rem;
+
+                .custom-button {
+                    background-color: #ff5253 !important;
+                    color: white !important;
+
+                    &:hover {
+                        background-color: #ff0808 !important;
+                    }
+                }
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #e4e4e4;
+
+            th,
+            td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            th {
+                background-color: #c5c5c5;
+                color: #0d0d0d;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #ccc;
+            }
+        }
+    }
+}

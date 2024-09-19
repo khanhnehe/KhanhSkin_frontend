@@ -3,29 +3,69 @@
     padding         : 20px;
     background-color: #e4e4e4;
 
-    .manager-user {
+
+    .pagination {
+        display        : flex;
+        justify-content: center;
+        list-style     : none;
+        padding        : 0;
+        margin-top     : 20px;
+
+        li {
+            margin: 0 5px;
+
+            a {
+                padding        : 5px 10px;
+                border         : 1px solid #ddd;
+                color          : #333;
+                cursor         : pointer;
+                border-radius  : 3px;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: #f5f5f5;
+                }
+            }
+
+            &.active a {
+                background-color: #ff5253;
+                color           : white;
+                border-color    : #ff5253;
+            }
+
+            &.disabled a {
+                color : #999;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+
+    .manager-category {
         width       : 100%;
         color       : #616161;
         padding-left: 225px;
         padding-top : 6px;
 
-
-        .top {
-            // margin-bottom     : 17px;
-            // // Add your styling for the 'top' section here if needed'
-            // padding           : 20px;
-            // -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-            // box-shadow        : 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-            // background-color  : rgb(255, 255, 255);
+        .bot {
+            // padding: 20px;
+            // box-shadow: -1px 3px 7px 4px rgb(201 201 201 / 73%);
+            // background-color: rgb(255, 255, 255);
+            // border-radius: 5px;
+            // min-height: 505px;
+            margin-top: 5px;
         }
 
-        .bot {
+        .top {
+            margin-bottom: 14px;
             padding         : 20px;
             box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
             background-color: rgb(255, 255, 255);
             border-radius   : 5px;
+            min-height      : 505px;
 
-            .edit-button {
+            .edit-button {              
+                z-index         : 1;
                 font-size       : 13px;
                 background-color: white !important;
                 border-color    : green !important;
@@ -38,6 +78,7 @@
             }
 
             .delete-button {
+                z-index         : 1;
                 font-size       : 13px;
                 background-color: white !important;
                 border-color    : red !important;
@@ -52,9 +93,7 @@
             .bot-btn {
                 display        : flex;
                 justify-content: flex-end;
-                /* Căn chỉnh phần tử con về bên phải */
                 margin-bottom  : 1rem;
-                /* Khoảng cách dưới */
 
                 .custom-button {
                     background-color: #ff5253 !important;
@@ -68,11 +107,9 @@
         }
 
         table {
-            width             : 100%;
-            border-collapse   : collapse;
-            border            : 1px solid #e4e4e4;
-            // border-radius  : 1px solid gray;
-            // box-shadow     : -2px 2px 5px 0px rgba(201, 201, 201, 0.47);
+            width          : 100%;
+            border-collapse: collapse;
+            border         : 1px solid #e4e4e4;
 
             th,
             td {
@@ -91,9 +128,8 @@
             }
 
             tr:hover {
-                background-color: #ccc; // Màu xám khi hover
+                background-color: #ccc;
             }
         }
-
     }
 }

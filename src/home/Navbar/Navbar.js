@@ -10,12 +10,16 @@ const Navbar = () => {
     const { isLoggedIn,userInfo} = useSelector(state => state.root.user);
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState(userInfo ? userInfo.FullName : '');
-    // const [image, setImage] = useState(userInfo ? userInfo.image : '');
+    const [image, setImage] = useState(userInfo ? userInfo.Image : '');
 
     useEffect(() => {
         if (userInfo && userInfo.FullName) {
             const nameParts = userInfo.FullName.split(' ');
             setFirstName(nameParts.pop()); 
+
+            if (userInfo && userInfo.Image) {
+                setImage(userInfo.Image);
+            }
         }
     }, [userInfo]);
 
@@ -34,12 +38,13 @@ const Navbar = () => {
                 <div className='navbarContainer row'>
                     <div className='items-right col-9'></div>
                     <div className='items-left col-3'>
-                        <div className='item-image'>
-                            {<img src={image} />}
-                            <span className='hello'>
-                                Hi, {firstName}!
-                            </span>
-                        </div>
+                    <div className="image-header">
+                                            <img src={image} width="50" height="50" style={{ borderRadius: '50%' }} />
+                                            <span className='hello'>
+                                                Hi, {firstName}!
+                                            </span>
+                                        </div>
+
                         <div onClick={handleLogout}><TbLogout className='icon' />
                         </div>
                     </div>

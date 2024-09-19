@@ -1,10 +1,58 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllUser, createNewUser, updatedUser, deletedUser } from '../action/adminThunks'; 
+import { fetchAllUser, createNewUser, updatedUser, deletedUser, fetchAllBrand, createNewBrand, updatedBrand, deletedBrand ,
+        fetchAllCategory, createNewCategory,  updatedCategory,  deletedCategory, fetchAllType, createNewType, updatedType, deletedType
+} from '../action/adminThunks';
 
 const initialState = {
   admin: null,
-  allUser: [], 
+  allUser: [],
+  allBrand: [],
+  allCategory: [],
+  allType: [],
   error: null,
+};
+
+const createGenericCases = (builder, thunk, stateProp) => {
+  builder
+    .addCase(thunk.pending, (state) => {
+      state.error = null;
+    })
+    .addCase(thunk.fulfilled, (state, action) => {
+      state[stateProp] = action.payload;
+    })
+    .addCase(thunk.rejected, (state, action) => {
+      state.error = action.payload;
+    });
+};
+
+const createEntityCases = (builder, thunks, stateProp) => {
+  const [fetchAll, create, update, remove] = thunks;
+
+  createGenericCases(builder, fetchAll, stateProp);
+
+  builder
+    .addCase(create.fulfilled, (state, action) => {
+      state[stateProp].push(action.payload);
+    })
+    .addCase(update.fulfilled, (state, action) => {
+      const index = state[stateProp].findIndex(item => item.id === action.payload.id);
+      if (index !== -1) {
+        state[stateProp][index] = action.payload;
+      }
+    })
+    .addCase(remove.fulfilled, (state, action) => {
+      state[stateProp] = state[stateProp].filter(item => item.id !== action.payload.id);
+    });
+
+  [create, update, remove].forEach(thunk => {
+    builder
+      .addCase(thunk.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(thunk.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+  });
 };
 
 const adminSlice = createSlice({
@@ -16,51 +64,14 @@ const adminSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllUser.pending, (state) => {
-        state.error = null; // Xóa lỗi khi bắt đầu fetch
-      })
-      .addCase(fetchAllUser.fulfilled, (state, action) => {
-        state.allUser = action.payload;
-      })
-      .addCase(fetchAllUser.rejected, (state, action) => {
-        state.error = action.payload; 
-      })
-      // create user
-      .addCase(createNewUser.pending, (state) => {
-        state.error = null; 
-      })
-      .addCase(createNewUser.fulfilled, (state, action) => {
-        state.allUser.push(action.payload); 
-      })
-      .addCase(createNewUser.rejected, (state, action) => {
-        state.error = action.payload; 
-      })
-      // update user
-      .addCase(updatedUser.pending, (state) => {
-        state.error = null; 
-      })
-      .addCase(updatedUser.fulfilled, (state, action) => {
-        const index = state.allUser.findIndex(user => user.id === action.payload.id);
-        if (index !== -1) {
-          state.allUser[index] = action.payload;
-        }
-      })
-      .addCase(updatedUser.rejected, (state, action) => {
-        state.error = action.payload; 
-      })
-      // delete user
-      .addCase(deletedUser.pending, (state) => {
-        state.error = null; 
-      })
-      .addCase(deletedUser.fulfilled, (state, action) => {
-        state.allUser = state.allUser.filter(user => user.id !== action.payload.id);
-      })
-      .addCase(deletedUser.rejected, (state, action) => {
-        state.error = action.payload; 
-      });
+    createEntityCases(builder, [fetchAllUser, createNewUser, updatedUser, deletedUser], 'allUser');
+    createEntityCases(builder, [fetchAllBrand, createNewBrand, updatedBrand, deletedBrand], 'allBrand');
+    createEntityCases(builder, [fetchAllCategory, createNewCategory, updatedCategory, deletedCategory], 'allCategory');
+    createEntityCases(builder, [fetchAllType, createNewType, updatedType, deletedType], 'allType');
+
+    
   },
 });
 
-export const { setAdmin } = adminSlice.actions; 
+export const { setAdmin } = adminSlice.actions;
 export default adminSlice.reducer;

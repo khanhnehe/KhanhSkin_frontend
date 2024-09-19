@@ -1,23 +1,32 @@
 import axios from "../axios";
 
 const loginApiService = (email, password) => {
-    return axios.post('/User/sign-in', { email, password });
+    return axios.post('/api/User/sign-in', { email, password });
 }
 
 const getAllUser = () => {
-    return axios.get ('/User/get-all-users');
+    return axios.get ('/api/User/get-all-users');
 }
 
-const createUser = (data)=>{
-    return axios.post('/User/create-user', data);
-}
+const createUser = (formData) => {
+    return axios.post('/api/User/create-user', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+};
+
 
 const updateUser = (id, data) => {
-    return axios.put(`/User/update-user/${id}`, data);
+    return axios.put(`/api/User/update-user/${id}`, data,{
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 }
 
 const deleteUser = (id) => {
-    return axios.delete(`/User/delete-user/${id}`);
+    return axios.delete(`/api/User/delete-user/${id}`);
 }
 
 export { 
