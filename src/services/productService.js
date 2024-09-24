@@ -62,6 +62,43 @@ export const deleteType = (id) => {
     return axios.delete(`/api/TypeProduct/delete-productType/${id}`);
 }
 
+//product
+export const getAllProduct = () => {
+    return axios.get ('/api/Product/get-all-product');
+}
+
+export const createProduct = (data) => {
+    return axios.post('/api/Product/create-product', data);
+}
+
+export const updateProduct = (id, formData) => {
+    return axios.put(`/api/Product/update-product/${id}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
+export const deleteProduct = (id) => {
+    return axios.delete(`/api/Product/delete-product/${id}`);
+}
+
+
+
+// GET
+// /api/Product/get-by-Id-product/{id}
+
+
+// PUT
+// /api/Product/update-product/{id}
+
+
+// DELETE
+// /api/Product/delete-product/{id}
+
+
+// POST
+// /api/Product/filter-products
 export { 
     getAllBrand,
     createBrand,

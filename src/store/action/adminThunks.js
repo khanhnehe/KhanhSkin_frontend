@@ -3,8 +3,9 @@ import { getAllUser, createUser, updateUser, deleteUser } from '../../services/u
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from '../reducer/loadingSlice';
 import { createBrand, getAllBrand, updateBrand, deleteBrand,
-  createCategory, getAllCategory, updateCategory, deleteCategory,updateCategoryType,
-  createType, getAllType, updateType, deleteType
+  createCategory, getAllCategory, updateCategory, deleteCategory,
+  createType, getAllType, updateType, deleteType, 
+  createProduct, getAllProduct, updateProduct, deleteProduct
  } from '../../services/productService';
 
 export const fetchAllUser = createAsyncThunk(
@@ -256,6 +257,88 @@ export const deletedType = createAsyncThunk(
     }
   }
 );
+
+//product
+export const fetchAllProduct = createAsyncThunk(
+  'admin/fetchAllProduct', 
+  async (_, { rejectWithValue }) => { // Hàm bất đồng bộ để thực hiện hành động
+    try {
+      const response = await getAllProduct(); 
+      return response.result; 
+    } catch (err) {
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage ;
+      return rejectWithValue(errorMessage); 
+    }
+  }
+);
+
+export const createNewProduct = createAsyncThunk(
+  'admin/createNewProduct', 
+  async (data, { dispatch, rejectWithValue }) => { 
+    try {
+      dispatch(showLoading());
+      const response = await createProduct(data); 
+      dispatch(hideLoading());
+      toast.success('Thêm sản phẩm thành công');
+      return response.result;
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorResponse = err.response?.data?.responseException;
+      let errorMessage = "Thêm sản phẩm thất bại";
+
+      if (errorResponse) {
+        if (typeof errorResponse.exceptionMessage === 'string') {
+          errorMessage = errorResponse.exceptionMessage;
+        } else if (errorResponse.errors) {
+          errorMessage = Object.values(errorResponse.errors).flat().join(' ');
+        }
+      }
+
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage); 
+    }
+  }
+);
+
+export const updatedProduct = createAsyncThunk(
+  "admin/updatedProduct",
+  async ({ id, data }, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(showLoading());
+      const response = await updateProduct(id, data); 
+      dispatch(hideLoading());
+      toast.success('Cập sản phẩm hiệu thành công');
+      return response.result;
+    } catch (err) {
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra';
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage); 
+    }
+  }
+);
+
+export const deletedProduct = createAsyncThunk(
+  "admin/deletedProduct",
+  async (id , { rejectWithValue }) => {
+    try {
+      await deleteProduct(id); 
+      toast.success('Xóa sản phẩm thành công');
+      return {id};
+    } catch (err) {
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra';
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage); 
+    }
+  }
+);
+
+
+
+
+
+
+
+
 export {
   updatedUser,
   deletedUser

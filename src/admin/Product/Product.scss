@@ -3,7 +3,6 @@
     padding         : 20px;
     background-color: #e4e4e4;
 
-
     .pagination {
         display        : flex;
         justify-content: center;
@@ -40,55 +39,75 @@
         }
     }
 
-
-    .manager-category {
+    .manager-product {
         width: 100%;
         color: #616161;
         padding-left: 230px;
         padding-top: 8px;
 
-        .bot {
-            // padding: 20px;
-            // box-shadow: -1px 3px 7px 4px rgb(201 201 201 / 73%);
-            // background-color: rgb(255, 255, 255);
-            // border-radius: 5px;
-            // min-height: 505px;
-            margin-top: 5px;
-        }
-
         .top {
-            margin-bottom: 14px;
+            margin-bottom: 20px;
             padding         : 20px;
             box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
             background-color: rgb(255, 255, 255);
             border-radius   : 5px;
-            min-height      : 505px;
+            // Các style cho phần 'top' nếu cần
+        }
 
-            .edit-button {              
-                z-index         : 1;
-                font-size       : 13px;
-                background-color: white !important;
-                border-color    : green !important;
-                color           : #18aa66 !important;
+        .bot {
 
-                &:hover {
-                    border-color: darkgreen !important;
-                    color       : rgb(1, 138, 1) !important;
+            .product-top {
+                display    : flex;
+                align-items: center;
+
+                .custom-td {
+                    díplay     : flex;
+                    align-items: center;
                 }
+
+
             }
 
-            .delete-button {
-                z-index         : 1;
-                font-size       : 13px;
-                background-color: white !important;
-                border-color    : red !important;
-                color           : red !important;
+            padding         : 20px;
+            box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
+            background-color: rgb(255, 255, 255);
+            border-radius   : 5px;
 
-                &:hover {
-                    border-color: darkred !important;
-                    color       : rgb(179, 10, 10) !important;
+            .button-custom {
+                display      : grid;
+                justify-items: start;
+                row-gap      : 6px;
+                /* padding   : 10px; */
+                border       : none;
+
+               
+
+                .edit-button {
+                    font-size       : 13px;
+                    background-color: white !important;
+                    border-color    : green !important;
+                    color           : #18aa66 !important;
+
+                    &:hover {
+                        border-color: darkgreen !important;
+                        color       : rgb(1, 138, 1) !important;
+                    }
                 }
+
+                .delete-button {
+                    font-size       : 13px;
+                    background-color: white !important;
+                    border-color    : red !important;
+                    color           : red !important;
+
+                    &:hover {
+                        border-color: darkred !important;
+                        color       : rgb(179, 10, 10) !important;
+                    }
+                }
+
             }
+
 
             .bot-btn {
                 display        : flex;
@@ -104,6 +123,16 @@
                     }
                 }
             }
+        }
+
+        .product-row {
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .variant-row {
+            font-size : 0.9em;
+            color     : #666;
+            margin-top: 4px;
         }
 
         table {
@@ -124,12 +153,16 @@
             }
 
             tr:nth-child(even) {
-                background-color: #f2f2f2;
+                // background-color: #f2f2f2;
             }
 
             tr:hover {
-                background-color: #ccc;
+                background-color: #dbd9d9;
+
             }
+
+           
+
         }
     }
 }

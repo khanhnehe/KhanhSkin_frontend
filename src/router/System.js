@@ -7,6 +7,7 @@ import ManagerUser from "../admin/User/ManagerUser";
 import Brand from "../admin/Product/Brand/Brand";
 import Category from "../admin/Product/Category/Category";
 import TypeProduct from "../admin/Product/Category/TypeProduct";
+import Product from "../admin/Product/Product";
 import './System.scss'; 
 
 const System = () => {
@@ -21,6 +22,7 @@ const System = () => {
                         <Route path="manage-user" element={<ManagerUser />} />
                         <Route path="manage-brand" element={<Brand />} />
                         <Route path="manage-category" element={<Category />} />
+                        <Route path="manage-product" element={<Product />} />
                         {/* <Route path="manage-category" element={<TypeProduct />} /> */}
                         {/* Thêm các route khác cho admin ở đây */}
                     </Routes>

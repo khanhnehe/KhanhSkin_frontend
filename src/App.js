@@ -11,6 +11,7 @@ import Header from './home/main/Header';
 import Footer from './home/main/Footer';
 import System from './router/System';
 import HomeAdmin from './home/HomeAdmin'; // Import component cho admin
+import UploadWidget from './utils/uploadWidget';
 
 function App() {
   return (

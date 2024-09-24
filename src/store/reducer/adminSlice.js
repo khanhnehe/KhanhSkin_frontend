@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllUser, createNewUser, updatedUser, deletedUser, fetchAllBrand, createNewBrand, updatedBrand, deletedBrand ,
-        fetchAllCategory, createNewCategory,  updatedCategory,  deletedCategory, fetchAllType, createNewType, updatedType, deletedType
+        fetchAllCategory, createNewCategory,  updatedCategory,  deletedCategory, fetchAllType, createNewType, updatedType, deletedType,
+        fetchAllProduct, createNewProduct, updatedProduct, deletedProduct
 } from '../action/adminThunks';
 
 const initialState = {
@@ -10,6 +11,8 @@ const initialState = {
   allCategory: [],
   allType: [],
   error: null,
+  allProduct: []
+
 };
 
 const createGenericCases = (builder, thunk, stateProp) => {
@@ -68,6 +71,7 @@ const adminSlice = createSlice({
     createEntityCases(builder, [fetchAllBrand, createNewBrand, updatedBrand, deletedBrand], 'allBrand');
     createEntityCases(builder, [fetchAllCategory, createNewCategory, updatedCategory, deletedCategory], 'allCategory');
     createEntityCases(builder, [fetchAllType, createNewType, updatedType, deletedType], 'allType');
+    createEntityCases(builder, [fetchAllProduct, createNewProduct, updatedProduct, deletedProduct], 'allProduct');
 
     
   },

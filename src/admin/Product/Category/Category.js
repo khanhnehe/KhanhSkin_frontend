@@ -146,7 +146,7 @@ const Category = () => {
   return (
     <>
       <div className="manager-category">
-      <h5>Danh mục sản phẩm</h5>
+      <h4>Danh mục sản phẩm</h4>
         <div className='top'>
           <div className='bot-btn mb-4'>
             <Button variant="contained" className="custom-button" endIcon={<IoMdAdd />} onClick={handleOpen}>
@@ -203,7 +203,7 @@ const Category = () => {
         </div>
 
         <div className='bot'>
-        <h5>Phân loại sản phẩm</h5>
+        <h4 className=''>Phân loại sản phẩm</h4>
           <TypeProduct />
         </div>
       </div>

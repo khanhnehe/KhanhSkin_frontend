@@ -14,6 +14,7 @@ import './Brand.scss';
 import Fab from '@mui/material/Fab';
 import { IoIosRemoveCircle } from "react-icons/io";
 import { Badge, IconButton } from '@mui/material';
+import ReactPaginate from 'react-paginate';
 
 const Brand = () => {
     const dispatch = useDispatch();
@@ -142,6 +143,20 @@ const Brand = () => {
         dispatch(fetchAllBrand());
     }, [dispatch]);
 
+    // Thêm state cho phân trang
+    const [currentPage, setCurrentPage] = useState(0);
+    const [categoriesPerPage] = useState(5);
+
+    // Tính  các ca cho trang hiện tại
+    const indexOfLastCategory = (currentPage + 1) * categoriesPerPage;
+    const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+    const currentBrand = allBrands.slice(indexOfFirstCategory, indexOfLastCategory);
+
+    const handlePageClick = (event) => {
+        setCurrentPage(event.selected);
+    };
+
+
     return (
         <>
             <div className="manager-brand">
@@ -161,7 +176,7 @@ const Brand = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.isArray(allBrands) && allBrands.map((brand) => (
+                            {Array.isArray(currentBrand) && currentBrand.map((brand) => (
                                 <tr key={brand.id}>
                                     <td>{brand.brandName}</td>
                                     <td>
@@ -196,6 +211,17 @@ const Brand = () => {
                             ))}
                         </tbody>
                     </table>
+                    <ReactPaginate
+                        previousLabel={'<'}
+                        nextLabel={'>'}
+                        breakLabel={'...'}
+                        pageCount={Math.ceil(allBrands.length / categoriesPerPage)}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageClick}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'}
+                    />
                 </div>
             </div>
             <Modal
