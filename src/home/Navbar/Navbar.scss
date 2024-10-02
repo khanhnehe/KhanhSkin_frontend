@@ -1,8 +1,8 @@
 .navbar {
-    position        : fixed;
+    position        : fixed !important;
     top             : 0;
-    left            : 230px;
-    width           : calc(100% - 190px);
+    left            : 0px;
+    width           : calc(100% - 0px);
     height          : 70px;
     background-color: #ffffff;
     z-index         : 1000;
@@ -19,6 +19,13 @@
         width          : 90%;
         align-items    : center;
         justify-content: space-between;
+
+        .logo img {
+            width        : 12%;
+            height       : 80%;
+            margin-bottom: 1px;
+            margin-left: 25px;
+        }
 
         .items-left {
             display        : flex;

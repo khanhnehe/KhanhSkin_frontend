@@ -310,6 +310,7 @@ export const updatedProduct = createAsyncThunk(
       toast.success('Cập sản phẩm hiệu thành công');
       return response.result;
     } catch (err) {
+      dispatch(hideLoading());
       const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra';
       toast.error(errorMessage);
       return rejectWithValue(errorMessage); 

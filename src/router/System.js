@@ -9,6 +9,9 @@ import Category from "../admin/Product/Category/Category";
 import TypeProduct from "../admin/Product/Category/TypeProduct";
 import Product from "../admin/Product/Product";
 import './System.scss'; 
+import CreateProduct from "../admin/Product/CreateProduct";
+import UpdateProduct from "../admin/Product/UpdateProduct";
+import Voucher from "../admin/Voucher/Voucher";
 
 const System = () => {
     return (
@@ -23,7 +26,9 @@ const System = () => {
                         <Route path="manage-brand" element={<Brand />} />
                         <Route path="manage-category" element={<Category />} />
                         <Route path="manage-product" element={<Product />} />
-                        {/* <Route path="manage-category" element={<TypeProduct />} /> */}
+                        <Route path="create-product" element={<CreateProduct />} />
+                        <Route path="voucher" element={<Voucher />} />
+                        <Route path="update-product/:id" element={<UpdateProduct />} />
                         {/* Thêm các route khác cho admin ở đây */}
                     </Routes>
                 </div>

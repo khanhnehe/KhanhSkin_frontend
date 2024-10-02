@@ -52,6 +52,17 @@
             background-color: rgb(255, 255, 255);
             border-radius   : 5px;
             // Các style cho phần 'top' nếu cần
+            display: flex;
+            justify-content: flex-end;
+            
+            .custom-button {
+                background-color: #ff5253 !important;
+                color: white !important;
+
+                &:hover {
+                    background-color: #ff0808 !important;
+                }
+            }
         }
 
         .bot {

@@ -49,7 +49,7 @@ const menuItems = [
     icon: BiSolidDiscount,
     key: "discount",
     children: [
-      { title: "Mã giảm giá", path: "/admin/manage-discount" },
+      { title: "Mã giảm giá", path: "/admin/voucher" },
     ],
   },
 ];
