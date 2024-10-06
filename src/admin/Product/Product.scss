@@ -40,24 +40,23 @@
     }
 
     .manager-product {
-        width: 100%;
-        color: #616161;
+        width       : 100%;
+        color       : #616161;
         padding-left: 230px;
-        padding-top: 8px;
+        padding-top : 8px;
 
         .top {
-            margin-bottom: 20px;
+            margin-bottom   : 20px;
             padding         : 20px;
             box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
             background-color: rgb(255, 255, 255);
             border-radius   : 5px;
-            // Các style cho phần 'top' nếu cần
-            display: flex;
-            justify-content: flex-end;
-            
+            display         : flex;
+            justify-content : flex-end;
+
             .custom-button {
                 background-color: #ff5253 !important;
-                color: white !important;
+                color           : white !important;
 
                 &:hover {
                     background-color: #ff0808 !important;
@@ -66,32 +65,26 @@
         }
 
         .bot {
+            padding         : 20px;
+            box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
+            background-color: rgb(255, 255, 255);
+            border-radius   : 5px;
 
             .product-top {
                 display    : flex;
                 align-items: center;
 
                 .custom-td {
-                    díplay     : flex;
+                    display    : flex;
                     align-items: center;
                 }
-
-
             }
-
-            padding         : 20px;
-            box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
-            background-color: rgb(255, 255, 255);
-            border-radius   : 5px;
 
             .button-custom {
                 display      : grid;
                 justify-items: start;
                 row-gap      : 6px;
-                /* padding   : 10px; */
                 border       : none;
-
-               
 
                 .edit-button {
                     font-size       : 13px;
@@ -116,9 +109,7 @@
                         color       : rgb(179, 10, 10) !important;
                     }
                 }
-
             }
-
 
             .bot-btn {
                 display        : flex;
@@ -156,6 +147,9 @@
                 padding      : 12px;
                 text-align   : left;
                 border-bottom: 1px solid #ddd;
+                white-space  : nowrap;
+                overflow     : hidden;
+                text-overflow: ellipsis;
             }
 
             th {
@@ -163,17 +157,66 @@
                 color           : #0d0d0d;
             }
 
+            .product-name {
+                max-width    : 150px;
+                overflow     : hidden;
+                text-overflow: ellipsis !important;
+                white-space  : nowrap;
+            }
+
+            td {
+                &:nth-child(1) {
+                    max-width    : 150px; // ProductName
+                    overflow     : hidden;
+                    text-overflow: ellipsis  !important;
+                    white-space  : nowrap;
+                }
+
+                &:nth-child(2) {
+                    max-width: 80px;
+                }
+
+
+                // SKU
+                &:nth-child(4) {
+                    max-width: 100px;
+                }
+
+                // Price
+                &:nth-child(5) {
+                    max-width: 100px;
+                }
+
+                // Quantity
+                &:nth-child(6) {
+                    max-width: 80px;
+                }
+
+                // Brand
+                &:nth-child(7) {
+                    max-width: 80px;
+                }
+
+                // Categories
+                &:nth-child(8) {
+                    max-width: 100px;
+                }
+
+                // ProductTypes
+                &:nth-child(9) {
+                    max-width: 100px;
+                }
+
+                // Actions
+            }
+
             tr:nth-child(even) {
                 // background-color: #f2f2f2;
             }
 
             tr:hover {
-                background-color: #dbd9d9;
-
+                // background-color: #dbd9d9;
             }
-
-           
-
         }
     }
 }

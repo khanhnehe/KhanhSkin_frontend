@@ -49,7 +49,7 @@ const menuItems = [
     icon: BiSolidDiscount,
     key: "discount",
     children: [
-      { title: "Mã giảm giá", path: "/admin/voucher" },
+      { title: "Mã giảm giá", path: "/admin/" },
     ],
   },
 ];
@@ -73,7 +73,7 @@ const Sidebar = () => {
 
   const renderMenuItem = (item) => (
     <div key={item.key}>
-      <div className="title mt-2" onClick={() => toggleSection(item.key)}>
+      <div className="title mt-2 mb-2" onClick={() => toggleSection(item.key)}>
         <item.icon className="icon" />
         {item.title}
         {openSections[item.key] ? <RiArrowDropUpLine className="arrow-icon" /> : <RiArrowDropDownLine className="arrow-icon" />}
@@ -94,7 +94,8 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <span className="logo">
-          <img src={logo} alt='Logo' />
+        <img src={logo} alt='Logo' />
+
         </span>
       </div>
       <div className="bottom">

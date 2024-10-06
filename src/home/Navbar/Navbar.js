@@ -38,9 +38,9 @@ const Navbar = () => {
             <div className='navbar'>
                 <div className='navbarContainer row'>
                     <div className='items-right col-9'>
-                        <span className="logo">
+                        {/* <span className="logo">
                             <img src={logo} alt='Logo' />
-                        </span>
+                        </span> */}
                     </div>
                     <div className='items-left col-3'>
                         <div className="image-header">

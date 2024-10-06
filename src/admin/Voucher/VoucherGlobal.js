@@ -6,14 +6,14 @@ import vi from 'date-fns/locale/vi';
 import 'bootstrap/scss/bootstrap.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import './Voucher.scss';
+import './VoucherGlobal.scss';
 
 
 registerLocale('vi', vi);
 setDefaultLocale('vi');
 
 
-const Voucher = () => {
+const VoucherGlobal = () => {
     const [voucherType, setVoucherType] = useState('discount');
     const [smartCode, setSmartCode] = useState(false);
     const [startDate, setStartDate] = useState(setHours(setMinutes(new Date(), 0), 0));
@@ -131,4 +131,4 @@ const Voucher = () => {
     );
 };
 
-export default Voucher;
+export default VoucherGlobal;

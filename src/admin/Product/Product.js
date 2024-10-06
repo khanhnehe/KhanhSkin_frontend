@@ -59,7 +59,7 @@ const Product = () => {
     const handleEdit = (product) => {
         navigate(`/admin/update-product/${product.id}`, { state: { product } });
     };
-    
+
     return (
         <div className="manager-product">
             <div className='top'>
@@ -78,7 +78,6 @@ const Product = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Tên sản phẩm</TableCell>
-                                <TableCell>Doanh số</TableCell>
                                 <TableCell>SKU</TableCell>
                                 <TableCell>Giá</TableCell>
                                 <TableCell>Kho hàng</TableCell>
@@ -100,48 +99,62 @@ const Product = () => {
                                                     alt="Product"
                                                 />
                                             )}
-                                            <div>{product.productName}</div>
+                                            <div className='productName'>{product.productName}</div>
 
                                         </div>
+
+                                        {/* VARINATS */}
                                         {product.variants && product.variants.map((variant, index) => (
                                             <div key={variant.id} className="row">
                                                 <div className="col">
                                                     <img src={variant.imageUrl} alt={variant.nameVariant} style={{ width: '40px', height: '40px', objectFit: 'cover' }} />
 
                                                 </div>
-                                                <div className='col'>{variant.nameVariant}</div>
+                                                <div className='col' >{variant.nameVariant}</div>
                                             </div>
                                         ))}
 
                                     </TableCell>
-                                    <TableCell>
-                                        <div>{product.purchases}</div>
-                                        {product.variants && product.variants.map((variant, index) => (
-                                            <div key={variant.id} className="variant-row">&nbsp;</div>
-                                        ))}
-                                    </TableCell>
+
 
                                     <TableCell>
                                         <div>{product.sku}</div>
+
                                         {product.variants && product.variants.map((variant, index) => (
-                                            <div key={variant.id} className="variant-row">{variant.skuVariant}</div>
+                                            <div key={variant.id} className="variant-row">
+                                                <div className="col">
+                                                    <div style={{ width: '40px', height: '18px', objectFit: 'cover' }} />
+
+                                                </div>
+                                                <div className='col' >{variant.skuVariant}</div>
+                                            </div>
                                         ))}
+
+
                                     </TableCell>
 
                                     <TableCell>
                                         <div>{product.price.toLocaleString()} đ</div>
                                         {product.variants && product.variants.map((variant, index) => (
                                             <div key={variant.id} className="variant-row">
-                                                {variant.priceVariant.toLocaleString()} đ
+                                                <div className="col">
+                                                    <div style={{ width: '40px', height: '18px', objectFit: 'cover' }} />
+
+                                                </div>
+                                                <div className='col'>{variant.priceVariant.toLocaleString()} đ</div>
                                             </div>
                                         ))}
                                     </TableCell>
 
                                     <TableCell>
                                         <div>{product.quantity}</div>
-                                        {product.variants && product.variants.map((variant, index) => (
+                                         {product.variants && product.variants.map((variant, index) => (
                                             <div key={variant.id} className="variant-row">
-                                                {variant.quantityVariant}
+                                                <div className="col">
+                                                    <div style={{ width: '40px', height: '18px', objectFit: 'cover' }} />
+
+                                                </div>
+                                                <div className='col'>{variant.quantityVariant}</div>
                                             </div>
                                         ))}
                                     </TableCell>

@@ -10,7 +10,7 @@ import { TbLogout } from "react-icons/tb";
 import { PiShoppingCart } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineAccountCircle } from "react-icons/md";
 import { logout } from '../../store/reducer/userSlice'; // Import hành động logout từ Redux
-
+import CategoryMenu from '../../components/CategoryMenu';
 const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -136,6 +136,7 @@ const Header = () => {
                     </div>
                 </div>
             </header>
+
         </>
     );
 };

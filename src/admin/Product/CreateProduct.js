@@ -140,26 +140,34 @@ const CreateProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await dispatch(createNewProduct(newProduct));
-            setProduct({
-                productName: '',
-                description: '',
-                price: 0,
-                quantity: 0,
-                discount: 0,
-                salePrice: 0,
-                sku: '',
-                brandId: '',
-                categoryIds: [],
-                productTypeIds: [],
-                images: [],
-                variants: []
-            });
-            setImagePreview([]);
+            const response = await dispatch(createNewProduct(newProduct));
+    
+            // Check if the product creation was successful
+            if (response.meta.requestStatus === 'fulfilled') {
+                // Clear form fields and image preview after successful creation
+                setProduct({
+                    productName: '',
+                    description: '',
+                    price: 0,
+                    quantity: 0,
+                    discount: 0,
+                    salePrice: 0,
+                    sku: '',
+                    brandId: '',
+                    categoryIds: [],
+                    productTypeIds: [],
+                    images: [],
+                    variants: []
+                });
+                setImagePreview([]);
+            }
         } catch (error) {
             console.error('Error creating product:', error);
         }
     };
+    
+
+
     const handleManager = () => {
         navigate('/admin/manage-product');
     };
@@ -268,7 +276,7 @@ const CreateProduct = () => {
                                 <TextField
                                     fullWidth
                                     name="discount"
-                                    label="Mã giảm (nhập 0-100%)"
+                                    label="Giảm giá (nhập 0-100%)"
                                     value={newProduct.discount}
                                     onChange={handleInputChange}
                                     type="number"
@@ -278,7 +286,7 @@ const CreateProduct = () => {
                                 <TextField
                                     fullWidth
                                     name="salePrice"
-                                    label="Giá bán"
+                                    label="Giá sau khi giảm"
                                     value={newProduct.salePrice}
                                     onChange={handleInputChange}
                                     type="number"
@@ -388,7 +396,7 @@ const CreateProduct = () => {
                                             <Grid item xs={12} sm={1.5}>
                                                 <TextField
                                                     fullWidth
-                                                    label="Giá khuyến mãi"
+                                                    label="Giá sau giảm"
                                                     value={variant.salePriceVariant}
                                                     onChange={(e) => handleVariantChange(index, 'salePriceVariant', Number(e.target.value))}
                                                     type="number"

@@ -12,6 +12,8 @@ import Footer from './home/main/Footer';
 import System from './router/System';
 import HomeAdmin from './home/HomeAdmin'; // Import component cho admin
 import UploadWidget from './utils/uploadWidget';
+import CategoryMenu from './components/CategoryMenu';
+import Home from './home/Home';
 
 function App() {
   return (
@@ -46,10 +48,14 @@ const AdminRoutes = () => (
 const UserRoutes = () => (
   <Fragment>
     <Header />
+    <CategoryMenu/>
+
     <Routes>
+    <Route path={path.HOME} element={<Home />} />
       <Route path={path.LOGIN} element={<Login />} />
       <Route path="/test" element={<MyComponent />} />
     </Routes>
+
     <Footer />
   </Fragment>
 );

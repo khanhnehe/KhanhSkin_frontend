@@ -1,0 +1,22 @@
+.systemContainer {
+    flex            : 1 1;
+    padding         : 20px;
+    background-color: #e4e4e4;
+
+    .voucher{
+        width: 100%;
+        color: #616161;
+        padding-left: 230px;
+        padding-top: 8px;
+
+        .top {
+            padding         : 20px;
+            box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
+            background-color: rgb(255, 255, 255);
+            border-radius   : 5px;
+        }
+
+    }
+
+
+}

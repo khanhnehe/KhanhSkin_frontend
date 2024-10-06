@@ -1,0 +1,46 @@
+.Carousel-controller {
+    padding: 10px 15px;
+    
+    .row {
+      display: flex;
+      align-items: stretch;
+    }
+  
+    .col-9 {
+      padding-right: 10px;
+    }
+  
+    .col-3 {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-left: 10px;
+    }
+  
+    .carousel-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  
+    .left-side {
+      height: 100%;
+  
+      .row {
+        height: calc(50% - 5px);
+        margin-bottom: 10px;
+  
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+  
+      .row-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
+  }

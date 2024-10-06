@@ -18,8 +18,9 @@ const adminPersistConfig = {
   key: 'admin',
   storage,
   stateReconciler: autoMergeLevel2,
-  whitelist: ['infoProduct'], // Chỉ lưu trữ các trường cụ thể
+  whitelist: ['infoProduct'], // Thêm các trường khác nếu cần
 };
+
 
 // Kết hợp các reducer, trong đó mỗi reducer được bọc bởi persistReducer riêng
 const rootReducer = combineReducers({
