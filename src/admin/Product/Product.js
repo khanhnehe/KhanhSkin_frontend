@@ -79,7 +79,7 @@ const Product = () => {
                             <TableRow>
                                 <TableCell>Tên sản phẩm</TableCell>
                                 <TableCell>SKU</TableCell>
-                                <TableCell>Giá</TableCell>
+                                <TableCell>Giá bán</TableCell>
                                 <TableCell>Kho hàng</TableCell>
                                 <TableCell>Thương hiệu</TableCell>
                                 <TableCell>Danh mục</TableCell>
@@ -134,14 +134,14 @@ const Product = () => {
                                     </TableCell>
 
                                     <TableCell>
-                                        <div>{product.price.toLocaleString()} đ</div>
+                                        <div>{product.salePrice.toLocaleString()} đ</div>
                                         {product.variants && product.variants.map((variant, index) => (
                                             <div key={variant.id} className="variant-row">
                                                 <div className="col">
                                                     <div style={{ width: '40px', height: '18px', objectFit: 'cover' }} />
 
                                                 </div>
-                                                <div className='col'>{variant.priceVariant.toLocaleString()} đ</div>
+                                                <div className='col'>{variant.salePriceVariant.toLocaleString()} đ</div>
                                             </div>
                                         ))}
                                     </TableCell>

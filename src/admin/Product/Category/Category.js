@@ -146,8 +146,8 @@ const Category = () => {
   return (
     <>
       <div className="manager-category">
-      <h4>Danh mục sản phẩm</h4>
-        <div className='top'>
+      <h4 style={{color: "#c7313f"}}>DANH MỤC SẢN PHẨM</h4>
+      <div className='top mt-2'>
           <div className='bot-btn mb-4'>
             <Button variant="contained" className="custom-button" endIcon={<IoMdAdd />} onClick={handleOpen}>
               Thêm danh mục
@@ -203,8 +203,8 @@ const Category = () => {
         </div>
 
         <div className='bot'>
-        <h4 className=''>Phân loại sản phẩm</h4>
-          <TypeProduct />
+        <h4 style={{color: "#c7313f"}}>PHÂN LOẠI SẢN PHẨM</h4>
+        <TypeProduct />
         </div>
       </div>
       <Modal

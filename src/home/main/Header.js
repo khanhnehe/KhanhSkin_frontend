@@ -3,7 +3,7 @@ import './Header.scss';
 import { Link, NavLink } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoSearch } from 'react-icons/io5';
-import logo from "../../assets/logo.jpg";
+import logo from "../../assets/logo.png";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TbLogout } from "react-icons/tb";
@@ -74,7 +74,7 @@ const Header = () => {
                             <div className='search-group'>
                                 <input className='input-search' type='text' placeholder='Nhập tên sản phẩm cần tìm' />
                                 <button className='icon-search'>
-                                    <IoSearch />
+                                    <IoSearch  style={{fontSize: "20px", paddingBottom: "2px"}}/>
                                 </button>
                             </div>
                         </div>

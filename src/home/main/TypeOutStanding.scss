@@ -39,6 +39,13 @@
         object-fit: cover;
     }
 
+    a{
+        text-decoration: none;
+        color: black;
+        &:hover {
+            color: #c80404;
+        }
+    }
     &__name {
         font-size: 16px;
         text-align: center;

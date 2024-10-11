@@ -140,6 +140,39 @@ const UpdateProduct = () => {
         setProduct({ ...newProduct, variants: newVariants });
     };
 
+
+    useEffect(() => {
+        const { price, discount } = newProduct;
+
+        if (discount > 0 && discount <= 100) {
+            const calculatedSalePrice = price - (price * discount / 100);
+            setProduct(prevProduct => ({
+                ...prevProduct,
+                salePrice: calculatedSalePrice
+            }));
+        } else {
+            setProduct(prevProduct => ({
+                ...prevProduct,
+                salePrice: price
+            }));
+        }
+    }, [newProduct.price, newProduct.discount]);
+
+    // Tính toán salePriceVariant cho các biến thể
+    useEffect(() => {
+        const updatedVariants = newProduct.variants.map(variant => {
+            if (variant.discountVariant > 0 && variant.discountVariant <= 100) {
+                const calculatedSalePriceVariant = variant.priceVariant - (variant.priceVariant * variant.discountVariant / 100);
+                return { ...variant, salePriceVariant: calculatedSalePriceVariant };
+            } else {
+                return { ...variant, salePriceVariant: variant.priceVariant };
+            }
+        });
+
+        setProduct(prevProduct => ({ ...prevProduct, variants: updatedVariants }));
+    }, [newProduct.variants]);
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -275,6 +308,7 @@ const UpdateProduct = () => {
                                         value={newProduct.salePrice}
                                         onChange={handleInputChange}
                                         type="number"
+                                        disabled
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
@@ -359,15 +393,7 @@ const UpdateProduct = () => {
                                                         type="number"
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12} sm={1.5}>
-                                                    <TextField
-                                                        fullWidth
-                                                        label="Số lượng"
-                                                        value={variant.quantityVariant}
-                                                        onChange={(e) => handleVariantChange(index, 'quantityVariant', e.target.value)}
-                                                        type="number"
-                                                    />
-                                                </Grid>
+
                                                 <Grid item xs={12} sm={1.5}>
                                                     <TextField
                                                         fullWidth
@@ -384,16 +410,27 @@ const UpdateProduct = () => {
                                                         value={variant.salePriceVariant}
                                                         onChange={(e) => handleVariantChange(index, 'salePriceVariant', Number(e.target.value))}
                                                         type="number"
+                                                        disabled
+                                                    />
+                                                </Grid>
+
+                                                <Grid item xs={12} sm={1.5}>
+                                                    <TextField
+                                                        fullWidth
+                                                        label="Số lượng"
+                                                        value={variant.quantityVariant}
+                                                        onChange={(e) => handleVariantChange(index, 'quantityVariant', e.target.value)}
+                                                        type="number"
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={1.5}>
-                                                <TextField
-                                                    fullWidth
-                                                    label="SKU phân loại"
-                                                    value={variant.skuVariant}
-                                                    onChange={(e) => handleVariantChange(index, 'skuVariant', e.target.value)}
-                                                />
-                                            </Grid>
+                                                    <TextField
+                                                        fullWidth
+                                                        label="SKU phân loại"
+                                                        value={variant.skuVariant}
+                                                        onChange={(e) => handleVariantChange(index, 'skuVariant', e.target.value)}
+                                                    />
+                                                </Grid>
                                                 <Grid item xs={12} sm={1.5}>
                                                     <input
                                                         accept="image/*"

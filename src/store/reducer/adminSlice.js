@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchAllUser, createNewUser, updatedUser, deletedUser, fetchAllBrand, createNewBrand, updatedBrand, deletedBrand,
   fetchAllCategory, createNewCategory, updatedCategory, deletedCategory, fetchAllType, createNewType, updatedType, deletedType,
-  fetchAllProduct, createNewProduct, updatedProduct, deletedProduct
+  fetchAllProduct, createNewProduct, updatedProduct, deletedProduct, 
+  getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands
 } from '../action/adminThunks';
 
 const initialState = {
@@ -12,6 +13,8 @@ const initialState = {
   allCategory: [],
   allType: [],
   allProduct: [],
+  getFilterProducts: [],
+  categoryPrdocut: [],
   error: null,
 };
 
@@ -72,6 +75,75 @@ const adminSlice = createSlice({
     createEntityCases(builder, [fetchAllCategory, createNewCategory, updatedCategory, deletedCategory], 'allCategory');
     createEntityCases(builder, [fetchAllType, createNewType, updatedType, deletedType], 'allType');
     createEntityCases(builder, [fetchAllProduct, createNewProduct, updatedProduct, deletedProduct], 'allProduct');
+
+
+    // Xử lý trạng thái cho action getFilteredProducts
+    builder
+      .addCase(getFilteredProducts.pending, (state) => {
+        state.error = null; // Xóa lỗi khi đang lọc sản phẩm
+      })
+      .addCase(getFilteredProducts.fulfilled, (state, action) => {
+        state.getFilterProducts = action.payload; // Lưu sản phẩm được lọc vào state
+      })
+      .addCase(getFilteredProducts.rejected, (state, action) => {
+        state.error = action.payload; // Xử lý lỗi nếu có
+      });
+
+
+      builder
+      .addCase(postFilteredProducts.pending, (state) => {
+        state.error = null; 
+      })
+      .addCase(postFilteredProducts.fulfilled, (state, action) => {
+        state.getFilterProducts = action.payload; 
+      })
+      .addCase(postFilteredProducts.rejected, (state, action) => {
+        state.error = action.payload; 
+      });
+
+
+  builder
+      .addCase(getProductCategory.pending, (state) => {
+        state.error = null; 
+      })
+      .addCase(getProductCategory.fulfilled, (state, action) => {
+        state.categoryPrdocut = action.payload; 
+      })
+      .addCase(getProductCategory.rejected, (state, action) => {
+        state.error = action.payload; 
+      });
+
+      builder
+      .addCase(getProductTypes.pending, (state) => {
+        state.error = null; 
+      })
+      .addCase(getProductTypes.fulfilled, (state, action) => {
+        state.categoryPrdocut = action.payload; 
+      })
+      .addCase(getProductTypes.rejected, (state, action) => {
+        state.error = action.payload; 
+      });
+
+
+      builder
+      .addCase(getProductBrands.pending, (state) => {
+        state.error = null; 
+      })
+      .addCase(getProductBrands.fulfilled, (state, action) => {
+        state.categoryPrdocut = action.payload; 
+      })
+      .addCase(getProductBrands.rejected, (state, action) => {
+        state.error = action.payload; 
+      });
+
+
+
+
+
+
+
+
+
 
     // Lắng nghe action `PERSIST_STORE_UPDATE` để merge state từ localStorage
     builder.addCase('PERSIST_STORE_UPDATE', (state, action) => {

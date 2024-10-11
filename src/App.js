@@ -14,6 +14,9 @@ import HomeAdmin from './home/HomeAdmin'; // Import component cho admin
 import UploadWidget from './utils/uploadWidget';
 import CategoryMenu from './components/CategoryMenu';
 import Home from './home/Home';
+import CategoryPage from './home/main/CategoryPage/CategoryPage';
+import TypePage from './home/main/TypePage/TypePage';
+import BrandPage from './home/main/BrandPage/BrandPage';
 
 function App() {
   return (
@@ -52,8 +55,11 @@ const UserRoutes = () => (
 
     <Routes>
     <Route path={path.HOME} element={<Home />} />
-      <Route path={path.LOGIN} element={<Login />} />
-      <Route path="/test" element={<MyComponent />} />
+    <Route path={path.LOGIN} element={<Login />} />
+    <Route path={path.CATEGORY_PAGE} element={<CategoryPage />} />
+    <Route path={path.TYPE_PAGE} element={<TypePage />} />
+    <Route path={path.BRAND_PAGE} element={<BrandPage />} />
+    <Route path="/test" element={<MyComponent />} />
     </Routes>
 
     <Footer />

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCategory, fetchAllType, fetchAllBrand } from '../store/action/adminThunks';
 import './CategoryMenu.scss';
+import { NavLink } from 'react-router-dom';
 
 const CategoryMenu = () => {
   const dispatch = useDispatch();
@@ -88,12 +89,18 @@ const CategoryMenu = () => {
 
     return (
       <div className="category-content" key={category.id}>
-        <h3>{category.categoryName}</h3>
+        <NavLink to={`/category/${category.id}`}>
+          {category.categoryName}
+        </NavLink>
         <ul>
-          {productTypes.map((type) => (
-            <li key={type.id}>{type?.typeName}</li>
-          ))}
-        </ul>
+        {productTypes.map((type) => (
+          <li className='a-type' key={type.id}>
+            <NavLink to={`/type/${type.id}`}>
+              {type?.typeName}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
       </div>
     );
   };
@@ -110,7 +117,9 @@ const CategoryMenu = () => {
           <div key={rowIndex} className="brand-row">
             {row.map((brand) => (
               <div key={brand.id} className="brand-item">
-                <span>{brand.brandName}</span>
+                <NavLink to={`/brand/${brand.id}`}>
+                  <span>{brand.brandName}</span>
+                </NavLink>
               </div>
             ))}
           </div>
@@ -149,7 +158,7 @@ const CategoryMenu = () => {
             {showBrandDropdown && renderBrandDropdown()}
           </li>
           <li onClick={loadData}
-          style={{ cursor: 'pointer' , color: '#FFFFFFFF'}}
+            style={{ cursor: 'pointer', color: '#c31829' }}
           >
             oke
           </li>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { logout } from '../../store/reducer/userSlice';
 import image from '../../assets/avatar.webp';
 import './Navbar.scss'
-import logo from "../../assets/logo.jpg";
+import logo from "../../assets/logo.png";
 
 const Navbar = () => {
     const { isLoggedIn, userInfo } = useSelector(state => state.root.user);

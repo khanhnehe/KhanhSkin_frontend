@@ -181,7 +181,8 @@ const ManagerUser = () => {
         <>
             <div className="manager-user">
                 <span className='top'></span>
-                <div className='bot'>
+                <h4 style={{color: "#c7313f"}}>NGƯỜI DÙNG</h4>
+                <div className='bot mt-2'>
                     <div className='bot-btn mb-4'>
                         <Button variant="contained" className="custom-button" endIcon={<IoPersonAdd />} onClick={handleOpen}>
                             Thêm người dùng

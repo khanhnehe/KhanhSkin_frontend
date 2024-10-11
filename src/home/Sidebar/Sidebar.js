@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import "./Sidebar.scss";
-import logo from "../../assets/logo.jpg";
+import logo from "../../assets/logo.png";
 import { MdDashboard, MdManageAccounts } from "react-icons/md";
 import { RiArrowDropUpLine, RiArrowDropDownLine } from "react-icons/ri";
 import { PiNotepadFill } from "react-icons/pi";

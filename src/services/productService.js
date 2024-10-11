@@ -83,7 +83,33 @@ export const deleteProduct = (id) => {
     return axios.delete(`/api/Product/delete-product/${id}`);
 }
 
+export const getFilterProducts = (input) => {
+    return axios.get('/api/Product/get-filter-products', {
+        params: {
+            CategoryIds: input.CategoryIds
+        },
+        paramsSerializer: params => {
+            return params.CategoryIds.map(c => `CategoryIds=${c}`).join('&');
+        }
+    });
+};
 
+export const postFilterProducts = (input) => {
+    return axios.post('/api/Product/post-filte-products', input); // Truyền dữ liệu qua body
+};
+
+export const getProductByCategory = (categoryId) => {
+    return axios.get(`/api/Product/get-by-category/${categoryId}`);
+}
+
+export const getProductBrand = (brandId) => {
+    return axios.get(`/api/Product/get-by-brand/${brandId}`);
+}
+
+
+export const getProductType = (brandId) => {
+    return axios.get(`/api/Product/get-by-producttype/${brandId}`);
+}
 
 // GET
 // /api/Product/get-by-Id-product/{id}

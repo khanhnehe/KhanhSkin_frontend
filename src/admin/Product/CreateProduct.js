@@ -132,6 +132,36 @@ const CreateProduct = () => {
     };
 
     useEffect(() => {
+        const { price, discount } = newProduct;
+        if (discount > 0 && discount <= 100) {
+            const calculatedSalePrice = price - (price * discount / 100);
+            setProduct(prevProduct => ({
+                ...prevProduct,
+                salePrice: calculatedSalePrice
+            }));
+        } else {
+            setProduct(prevProduct => ({
+                ...prevProduct,
+                salePrice: price
+            }));
+        }
+    }, [newProduct.price, newProduct.discount]);
+
+
+    useEffect(() => {
+        const updatedVariants = newProduct.variants.map(variant => {
+            if (variant.discountVariant > 0 && variant.discountVariant <= 100) {
+                const calculatedSalePrice = variant.priceVariant - (variant.priceVariant * variant.discountVariant / 100);
+                return { ...variant, salePriceVariant: calculatedSalePrice };
+            } else {
+                return { ...variant, salePriceVariant: variant.priceVariant };
+            }
+        });
+        setProduct(prevProduct => ({ ...prevProduct, variants: updatedVariants }));
+    }, [newProduct.variants]);
+
+
+    useEffect(() => {
         dispatch(fetchAllCategory());
         dispatch(fetchAllType());
         dispatch(fetchAllBrand());
@@ -141,10 +171,7 @@ const CreateProduct = () => {
         e.preventDefault();
         try {
             const response = await dispatch(createNewProduct(newProduct));
-    
-            // Check if the product creation was successful
-            if (response.meta.requestStatus === 'fulfilled') {
-                // Clear form fields and image preview after successful creation
+                if (response.meta.requestStatus === 'fulfilled') {
                 setProduct({
                     productName: '',
                     description: '',
@@ -290,6 +317,7 @@ const CreateProduct = () => {
                                     value={newProduct.salePrice}
                                     onChange={handleInputChange}
                                     type="number"
+                                    disabled
                                 />
                             </Grid>
                             <Grid item xs={12} sm={3}>
@@ -375,15 +403,7 @@ const CreateProduct = () => {
                                                     type="number"
                                                 />
                                             </Grid>
-                                            <Grid item xs={12} sm={1.5}>
-                                                <TextField
-                                                    fullWidth
-                                                    label="Số lượng"
-                                                    value={variant.quantityVariant}
-                                                    onChange={(e) => handleVariantChange(index, 'quantityVariant', Number(e.target.value))}
-                                                    type="number"
-                                                />
-                                            </Grid>
+                                           
                                             <Grid item xs={12} sm={1.5}>
                                                 <TextField
                                                     fullWidth
@@ -399,6 +419,16 @@ const CreateProduct = () => {
                                                     label="Giá sau giảm"
                                                     value={variant.salePriceVariant}
                                                     onChange={(e) => handleVariantChange(index, 'salePriceVariant', Number(e.target.value))}
+                                                    type="number"
+                                                    disabled
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={1.5}>
+                                                <TextField
+                                                    fullWidth
+                                                    label="Số lượng"
+                                                    value={variant.quantityVariant}
+                                                    onChange={(e) => handleVariantChange(index, 'quantityVariant', Number(e.target.value))}
                                                     type="number"
                                                 />
                                             </Grid>

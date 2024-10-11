@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { fetchAllType } from '../../store/action/adminThunks';
 import './TypeOutStanding.scss';
+import { NavLink } from 'react-router-dom';
 
 const TypeOutStanding = () => {
   const dispatch = useDispatch();
@@ -39,13 +40,16 @@ const TypeOutStanding = () => {
           {row.map((type, index) => (
             <Col key={type.id} xs={6} sm={4} md={3} lg={2} xl={1} className="type-outstanding__item">
               <div className="type-outstanding__image-wrapper">
-                <img 
-                  src={getImagePath(rowIndex * 7 + index)} 
-                  alt={type.typeName} 
-                  className="type-outstanding__image" 
+                <img
+                  src={getImagePath(rowIndex * 7 + index)}
+                  alt={type.typeName}
+                  className="type-outstanding__image"
                 />
               </div>
-              <span className="type-outstanding__name">{type.typeName}</span>
+              <NavLink to={`/type/${type.id}`}>
+                <span className="type-outstanding__name">{type.typeName}</span>
+              </NavLink>
+
             </Col>
           ))}
         </Row>

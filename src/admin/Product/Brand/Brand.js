@@ -161,7 +161,8 @@ const Brand = () => {
         <>
             <div className="manager-brand">
                 <span className='top'></span>
-                <div className='bot'>
+                <h4 style={{color: "#c7313f"}}>THƯƠNG HIỆU</h4>
+                <div className='bot mt-2'>
                     <div className='bot-btn mb-4'>
                         <Button variant="contained" className="custom-button" endIcon={<IoMdAdd />} onClick={handleOpen}>
                             Thêm thương hiệu
