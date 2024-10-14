@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCategory, fetchAllType, fetchAllBrand } from '../store/action/adminThunks';
 import './CategoryMenu.scss';
@@ -52,7 +52,8 @@ const CategoryMenu = () => {
     ).filter(Boolean);
   };
 
-  const categorizeByBigCategory = () => {
+  // Memoize the result of categorizing categories by big categories
+  const bigCategories = useMemo(() => {
     const categorizedItems = Object.entries(bigCategoryMappings).reduce((acc, [bigCategoryName, categoryIds]) => {
       acc[bigCategoryName] = allCategories.filter((cat) => categoryIds.includes(cat.id));
       return acc;
@@ -64,7 +65,16 @@ const CategoryMenu = () => {
     categorizedItems["Tổng hợp"] = remainingCategories;
 
     return categorizedItems;
-  };
+  }, [allCategories]);
+
+  // Memoize the result of generating brand rows
+  const brandRows = useMemo(() => {
+    const rows = [];
+    for (let i = 0; i < allBrands.length; i += 3) {
+      rows.push(allBrands.slice(i, i + 3));
+    }
+    return rows;
+  }, [allBrands]);
 
   const handleBigCategoryHover = (bigCategoryName) => {
     setActiveBigCategory(bigCategoryName);
@@ -106,11 +116,6 @@ const CategoryMenu = () => {
   };
 
   const renderBrandDropdown = () => {
-    const brandRows = [];
-    for (let i = 0; i < allBrands.length; i += 3) {
-      brandRows.push(allBrands.slice(i, i + 3));
-    }
-
     return (
       <div className="brand-dropdown">
         {brandRows.map((row, rowIndex) => (
@@ -127,8 +132,6 @@ const CategoryMenu = () => {
       </div>
     );
   };
-
-  const bigCategories = categorizeByBigCategory();
 
   return (
     <div className="category-menu">

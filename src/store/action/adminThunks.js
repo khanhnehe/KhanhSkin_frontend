@@ -7,7 +7,7 @@ import { createBrand, getAllBrand, updateBrand, deleteBrand,
   createType, getAllType, updateType, deleteType, 
   createProduct, getAllProduct, updateProduct, deleteProduct,
   getFilterProducts, postFilterProducts, getProductByCategory,
-  getProductBrand, getProductType
+  getProductBrand, getProductType, getInfoProduct, addProductToCart
  } from '../../services/productService';
 
 export const fetchAllUser = createAsyncThunk(
@@ -375,11 +375,11 @@ export const getFilteredProducts = createAsyncThunk(
   'admin/getFilteredProducts', 
   async (input, {dispatch, rejectWithValue }) => {
     try {
-      const response = await getFilterProducts(input); // Gọi API GET filter products
-      return response.result; // Trả về dữ liệu từ API
+      const response = await getFilterProducts(input); 
+      return response.result;   
     } catch (err) {
       const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
-      return rejectWithValue(errorMessage); // Xử lý lỗi và trả về thông báo lỗi
+      return rejectWithValue(errorMessage);  
     }
   }
 );
@@ -389,13 +389,13 @@ export const postFilteredProducts = createAsyncThunk(
   async (input, {dispatch, rejectWithValue }) => {
     try {
       dispatch(showLoading());
-      const response = await postFilterProducts(input); // Gọi API POST filter products
+      const response = await postFilterProducts(input);    
       dispatch(hideLoading());
-      return response.result; // Trả về dữ liệu từ API
+      return response.result;   
     } catch (err) {
       dispatch(hideLoading());
       const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
-      return rejectWithValue(errorMessage); // Xử lý lỗi và trả về thông báo lỗi
+      return rejectWithValue(errorMessage);  
     }
   }
 );
@@ -404,11 +404,11 @@ export const getProductCategory = createAsyncThunk(
   'admin/getProductCategory', 
   async (input, {dispatch, rejectWithValue }) => {
     try {
-      const response = await getProductByCategory(input); // Gọi API POST filter products
-      return response.result; // Trả về dữ liệu từ API
+      const response = await getProductByCategory(input);    
+      return response.result;   
     } catch (err) {
       const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
-      return rejectWithValue(errorMessage); // Xử lý lỗi và trả về thông báo lỗi
+      return rejectWithValue(errorMessage);  
     }
   }
 );
@@ -418,11 +418,11 @@ export const getProductBrands = createAsyncThunk(
   'admin/getProductBrands', 
   async (input, {dispatch, rejectWithValue }) => {
     try {
-      const response = await getProductBrand(input); // Gọi API POST filter products
-      return response.result; // Trả về dữ liệu từ API
+      const response = await getProductBrand(input);    
+      return response.result;   
     } catch (err) {
       const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
-      return rejectWithValue(errorMessage); // Xử lý lỗi và trả về thông báo lỗi
+      return rejectWithValue(errorMessage);  
     }
   }
 );
@@ -432,18 +432,56 @@ export const getProductTypes = createAsyncThunk(
   'admin/getProductTypes', 
   async (input, {dispatch, rejectWithValue }) => {
     try {
-      const response = await getProductType(input); // Gọi API POST filter products
-      return response.result; // Trả về dữ liệu từ API
+      const response = await getProductType(input);    
+      return response.result;   
     } catch (err) {
       const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
-      return rejectWithValue(errorMessage); // Xử lý lỗi và trả về thông báo lỗi
+      return rejectWithValue(errorMessage);  
     }
   }
 );
 
+export const getInfoForProduct = createAsyncThunk(
+  'admin/getInfoForProduct', 
+  async (input, {dispatch, rejectWithValue }) => {
+    try {
+      dispatch(showLoading());
+      const response = await getInfoProduct(input);    
+      dispatch(hideLoading());
+      return response.result;   
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
+      return rejectWithValue(errorMessage);  
+    }
+  }
+);
 
+export const addProductCart = createAsyncThunk(
+  'admin/addProductCart', 
+  async (input, {dispatch, rejectWithValue }) => {
+    try {
+      const response = await addProductToCart(input); 
+      toast.success('Đã thêm sản phẩm vào giỏ hàng');
+      return response.result; 
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorResponse = err.response?.data?.responseException;
+      let errorMessage = "Thêm sản phẩm vào giỏ hàng thất bại";
 
+      if (errorResponse) {
+        if (typeof errorResponse.exceptionMessage === 'string') {
+          errorMessage = errorResponse.exceptionMessage;
+        } else if (errorResponse.errors) {
+          errorMessage = Object.values(errorResponse.errors).flat().join(' ');
+        }
+      }
 
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage); 
+    }
+  }
+);
 
 
 export {

@@ -5,6 +5,7 @@ import { postFilteredProducts, getProductCategory } from '../../../store/action/
 import './CategoryPage.scss';
 import bia from "../../../assets/poster/poster1.webp";
 import { IoIosStar } from "react-icons/io";
+import Rating from '@mui/material/Rating';
 
 const CategoryPage = () => {
     const dispatch = useDispatch();
@@ -268,8 +269,14 @@ const CategoryPage = () => {
                                                     <div className='price'>{product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
                                                     <div className='sale'>{product.salePrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
                                                     <div className='bottom-two'>
-                                                        <div className='sao'>{product.averageRating}<IoIosStar className='icon-star' /></div>
-                                                        <div className='purchases'>{product.purchases} Đã bán </div>
+                                                        <div className="rating">
+                                                            <Rating
+                                                                name={`rating-${product.id}`}
+                                                                value={product.averageRating || 0} // Ensure rating exists
+                                                                precision={0.5}
+                                                                readOnly
+                                                            />
+                                                        </div>                                                        <div className='purchases'>{product.purchases} Đã bán </div>
                                                     </div>
                                                 </div>
                                             </div>

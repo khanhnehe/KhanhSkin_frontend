@@ -17,6 +17,7 @@ import Home from './home/Home';
 import CategoryPage from './home/main/CategoryPage/CategoryPage';
 import TypePage from './home/main/TypePage/TypePage';
 import BrandPage from './home/main/BrandPage/BrandPage';
+import InfoProduct from './home/main/Infoproduct/InfoProduct';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ const UserRoutes = () => (
     <Route path={path.CATEGORY_PAGE} element={<CategoryPage />} />
     <Route path={path.TYPE_PAGE} element={<TypePage />} />
     <Route path={path.BRAND_PAGE} element={<BrandPage />} />
+    <Route path={path.INFO_PRODUCT} element={<InfoProduct />} />
     <Route path="/test" element={<MyComponent />} />
     </Routes>
 

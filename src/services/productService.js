@@ -9,12 +9,12 @@ const createBrand = (formData) => {
 };
 
 const getAllBrand = () => {
-    return axios.get ('/api/Brand/get-all-brand');
+    return axios.get('/api/Brand/get-all-brand');
 }
 
 
 const updateBrand = (id, formData) => {
-    return axios.put(`/api/Brand/update-brand/${id}`, formData,{
+    return axios.put(`/api/Brand/update-brand/${id}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -28,7 +28,7 @@ const deleteBrand = (id) => {
 
 //categoty
 export const getAllCategory = () => {
-    return axios.get ('/api/Category/get-all-category');
+    return axios.get('/api/Category/get-all-category');
 }
 
 export const createCategory = (data) => {
@@ -46,7 +46,7 @@ export const deleteCategory = (id) => {
 
 //type
 export const getAllType = () => {
-    return axios.get ('/api/TypeProduct/get-all-productTypes');
+    return axios.get('/api/TypeProduct/get-all-productTypes');
 }
 
 export const createType = (data) => {
@@ -64,7 +64,7 @@ export const deleteType = (id) => {
 
 //product
 export const getAllProduct = () => {
-    return axios.get ('/api/Product/get-all-product');
+    return axios.get('/api/Product/get-all-product');
 }
 
 export const createProduct = (data) => {
@@ -111,28 +111,26 @@ export const getProductType = (brandId) => {
     return axios.get(`/api/Product/get-by-producttype/${brandId}`);
 }
 
-// GET
-// /api/Product/get-by-Id-product/{id}
+export const getInfoProduct = (id) => {
+    return axios.get(`/api/Product/get-by-Id-product/${id}`);
+}
 
 
-// PUT
-// /api/Product/update-product/{id}
+
+export const addProductToCart = async (input) => {
+    return await axios.post('/api/Cart/add-product-to-cart', input);
+}
 
 
-// DELETE
-// /api/Product/delete-product/{id}
 
-
-// POST
-// /api/Product/filter-products
-export { 
+export {
     getAllBrand,
     createBrand,
     updateBrand,
     deleteBrand
-   
 
- };
+
+};
 
 
 
