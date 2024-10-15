@@ -5,7 +5,7 @@ const loginApiService = (email, password) => {
 }
 
 const getAllUser = () => {
-    return axios.get ('/api/User/get-all-users');
+    return axios.get('/api/User/get-all-users');
 }
 
 const createUser = (formData) => {
@@ -16,9 +16,8 @@ const createUser = (formData) => {
     });
 };
 
-
 const updateUser = (id, data) => {
-    return axios.put(`/api/User/update-user/${id}`, data,{
+    return axios.put(`/api/User/update-user/${id}`, data, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -29,11 +28,30 @@ const deleteUser = (id) => {
     return axios.delete(`/api/User/delete-user/${id}`);
 }
 
+export const getUserId = () => {
+    return axios.get('/api/User/get-user-by-id');
+};
+
+export const createAddress = (data) => {
+    return axios.post('/api/Address/create-address', data);
+};
+
+export const updateAddress = (id, data) => {
+    return axios.put(`/api/Address/update-address/${id}`, data);
+};
+
+export const deleteAddress = (id) => {
+    return axios.delete(`/api/Address/delete-address/${id}`);
+};
+
+export const getAddressId = () => {
+    return axios.get('/api/Address/get-my-address');
+};
+
 export { 
     loginApiService,
     getAllUser,
     createUser,
     updateUser,
     deleteUser
-
- };
+};

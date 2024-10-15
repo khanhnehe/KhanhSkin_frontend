@@ -3,7 +3,8 @@ import {
   fetchAllUser, createNewUser, updatedUser, deletedUser, fetchAllBrand, createNewBrand, updatedBrand, deletedBrand,
   fetchAllCategory, createNewCategory, updatedCategory, deletedCategory, fetchAllType, createNewType, updatedType, deletedType,
   fetchAllProduct, createNewProduct, updatedProduct, deletedProduct, 
-  getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands, getInfoForProduct
+  getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands, getInfoForProduct,
+  getCartByUser
 } from '../action/adminThunks';
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   getFilterProducts: [],
   categoryPrdocut: [],
   infoOfProduct: null,
+  cartByUser: null,
   error: null,
 };
 
@@ -149,6 +151,17 @@ const adminSlice = createSlice({
         state.error = action.payload; 
       });
 
+
+      builder
+      .addCase(getCartByUser.pending, (state) => {
+        state.error = null; 
+      })
+      .addCase(getCartByUser.fulfilled, (state, action) => {
+        state.cartByUser = action.payload; 
+      })
+      .addCase(getCartByUser.rejected, (state, action) => {
+        state.error = action.payload; 
+      });
 
 
 

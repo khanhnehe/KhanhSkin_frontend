@@ -18,6 +18,8 @@ import CategoryPage from './home/main/CategoryPage/CategoryPage';
 import TypePage from './home/main/TypePage/TypePage';
 import BrandPage from './home/main/BrandPage/BrandPage';
 import InfoProduct from './home/main/Infoproduct/InfoProduct';
+import CartOrder from './home/main/Cart/CartOrder';
+import Profile from './home/main/Profile/Profile';
 
 function App() {
   return (
@@ -61,6 +63,8 @@ const UserRoutes = () => (
     <Route path={path.TYPE_PAGE} element={<TypePage />} />
     <Route path={path.BRAND_PAGE} element={<BrandPage />} />
     <Route path={path.INFO_PRODUCT} element={<InfoProduct />} />
+    <Route path={path.CART_ORDER} element={<CartOrder />} />
+    <Route path="/profile/*" element={<Profile />} />
     <Route path="/test" element={<MyComponent />} />
     </Routes>
 

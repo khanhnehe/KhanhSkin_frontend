@@ -7,7 +7,9 @@ import { createBrand, getAllBrand, updateBrand, deleteBrand,
   createType, getAllType, updateType, deleteType, 
   createProduct, getAllProduct, updateProduct, deleteProduct,
   getFilterProducts, postFilterProducts, getProductByCategory,
-  getProductBrand, getProductType, getInfoProduct, addProductToCart
+  getProductBrand, getProductType, getInfoProduct, addProductToCart,
+  getCartByUserId, deleteCartItem
+
  } from '../../services/productService';
 
 export const fetchAllUser = createAsyncThunk(
@@ -462,7 +464,8 @@ export const addProductCart = createAsyncThunk(
   async (input, {dispatch, rejectWithValue }) => {
     try {
       const response = await addProductToCart(input); 
-      toast.success('Đã thêm sản phẩm vào giỏ hàng');
+      // toast.success('Đã thêm sản phẩm vào giỏ hàng');
+      dispatch(getCartByUser()); 
       return response.result; 
     } catch (err) {
       dispatch(hideLoading());
@@ -483,6 +486,39 @@ export const addProductCart = createAsyncThunk(
   }
 );
 
+export const getCartByUser = createAsyncThunk(
+  'admin/getCartByUser', 
+  async (input, {dispatch, rejectWithValue }) => {
+    try {
+      dispatch(showLoading());
+      const response = await getCartByUserId(input);    
+      dispatch(hideLoading());
+      return response.result;   
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
+      return rejectWithValue(errorMessage);  
+    }
+  }
+);
+
+export const deletedCartItem = createAsyncThunk(
+  'admin/deletedCartItem', 
+  async (input, {dispatch, rejectWithValue }) => {
+    try {
+      dispatch(showLoading());
+      const response = await deleteCartItem(input);  
+      toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
+      dispatch(hideLoading());
+      dispatch(getCartByUser());   
+      return response.result;   
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
+      return rejectWithValue(errorMessage);  
+    }
+  }
+);
 
 export {
   updatedUser,

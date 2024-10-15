@@ -3,20 +3,21 @@ import { loginApiService } from '../../services/userService';
 import { decodeToken, isTokenExpired } from '../../services/tokenService'; 
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from './loadingSlice'; // Import các hành động loading
+import { getUserById, getAddressById } from '../action/userThunks';
 
-// Hàm bất đồng bộ dùng để login người dùng, sử dụng createAsyncThunk để xử lý các side effect
+
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ email, password }, { dispatch, rejectWithValue }) => { // Thêm dispatch vào tham số
     try {
-      dispatch(showLoading()); // Hiển thị loading spinner
+      dispatch(showLoading());
 
       const response = await loginApiService(email, password);
 
-      dispatch(hideLoading()); // Ẩn loading spinner
+      dispatch(hideLoading());
       return response; 
     } catch (err) {
-      dispatch(hideLoading()); // Ẩn loading spinner nếu có lỗi
+      dispatch(hideLoading());
       const errorMessage = err.response?.data?.responseException?.exceptionMessage;
       toast.error(errorMessage);
       return rejectWithValue(errorMessage); 
@@ -32,9 +33,11 @@ const userSlice = createSlice({
     userInfo: null, 
     error: '', 
     accessToken: null,
+    address: [],
     isLoading: false, 
+    //
   },
-  reducers: { // Các reducer để xử lý các hành động đồng bộ
+  reducers: {   
     logout(state) { 
       state.isLoggedIn = false; 
       state.userInfo = null; 
@@ -43,7 +46,7 @@ const userSlice = createSlice({
       state.isLoading = false;
     },
   },
-  extraReducers: (builder) => { // Xử lý các hành động bất đồng bộ
+  extraReducers: (builder) => {  
     builder
       .addCase(loginUser.pending, (state) => { // Khi hành động login đang xử lý (đang chờ)
         state.isLoading = true; 
@@ -74,6 +77,33 @@ const userSlice = createSlice({
         state.accessToken = null;
         state.error = action.payload || 'Login failed. Please check your credentials.';
         state.isLoading = false; 
+      })
+
+      .addCase(getUserById.pending, (state) => {
+        state.isLoading = true; 
+        state.error = ''; 
+      })
+      .addCase(getUserById.fulfilled, (state, action) => {
+        // Cập nhật userInfo với dữ liệu lấy từ API
+        state.userInfo = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getUserById.rejected, (state, action) => {
+        state.error = action.payload || 'Failed to fetch user information.';
+        state.isLoading = false;
+      })
+
+      .addCase(getAddressById.pending, (state) => {
+        state.isLoading = true; 
+        state.error = ''; 
+      })
+      .addCase(getAddressById.fulfilled, (state, action) => {
+        state.address = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getAddressById.rejected, (state, action) => {
+        state.error = action.payload || 'Failed to fetch user information.';
+        state.isLoading = false;
       });
   },
 });

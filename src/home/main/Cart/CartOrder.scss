@@ -1,0 +1,170 @@
+.cart-page {
+    background-color   : rgb(243 243 243);
+    // padding         : 30px;
+
+    a {
+        text-decoration: none;
+        color          : black;
+    }
+
+    .line {
+        background-color: rgb(243 243 243);
+        padding         : 8px 125px;
+
+    }
+
+    .title-cart {
+        font-size    : 22px;
+        font-weight  : bold;
+        margin-bottom: 25px;
+        padding-left : 20px;
+
+    }
+
+    .container {
+        background-color: white;
+        /* padding      : 10px 40px; */
+        min-width       : 600px;
+        min-height      : 350px;
+        border-radius   : 8px 8px 0px 0px;
+
+        .cart-item {
+            display       : flex;
+            align-items   : center;
+            border-bottom : 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom : 20px;
+
+            .item-left {
+                display    : flex;
+                align-items: center;
+
+                .btn-delete {
+                    font-size: 15px;
+                    padding: 0px 4px 0px 4px;
+                    margin-right: 6px;
+                    /* background-color: #d8d8d8; */
+                    border: none;
+                    height: 24px;
+                
+            }
+
+            .cart-image {
+                width       : 80px;
+                height      : 80px;
+                object-fit  : cover;
+                margin-right: 20px;
+            }
+        }
+
+        .item-right {
+            max-width: 45%;
+
+            .name {
+                font-weight: 500;
+                font-size  : 14px;
+            }
+
+            .name-variant {
+                font-size       : 12px;
+                color           : #ffffff;
+                background-color: #dc3545;
+                font-weight     : 600;
+                padding         : 0px 8px;
+                border-radius   : 15px;
+                padding-bottom  : 1px;
+            }
+        }
+
+        .content-right {
+            margin-left: 20px;
+            display    : flex;
+            align-items: flex-end;
+            gap        : 20px;
+
+            .item-amount {
+                display     : flex;
+                align-items : center;
+                margin-right: 20px;
+
+                button {
+                    border        : none;
+                    background    : #d3d3d3;
+                    font-size     : 20px;
+                    cursor        : pointer;
+                    min-width     : 30px;
+                    padding-bottom: 3px;
+
+                }
+
+                .amount-number {
+                    margin: 0 12px;
+                }
+            }
+
+            .item-price {
+                margin-right: 20px;
+
+                .price {
+                    text-decoration: line-through;
+                    font-size      : 13px;
+                    color          : #999;
+                }
+
+                .sale_price {
+                    font-weight: bold;
+                    font-size  : 15px;
+                }
+            }
+
+            .tong-price {
+                font-weight: bold;
+                color      : #c31829;
+                font-size  : 15px;
+
+            }
+        }
+    }
+
+    .order-summary {
+        background    : #f5f3f3;
+        padding       : 20px;
+        border-radius : 5px;
+        /* border-left: 1px solid #dadada; */
+        min-height    : max-content;
+
+        .price {
+            display        : flex;
+            margin-bottom  : 15px;
+            align-items    : flex-end;
+            justify-content: space-between;
+
+            .tam-tinh {
+                font-size: 15px;
+            }
+
+            .final-price {
+                font-weight: bold;
+                font-size  : 20px;
+                color      : #c31829;
+            }
+        }
+
+        .text-tam-tinh {
+            font-weight  : bold;
+            display      : block;
+            margin-bottom: 10px;
+        }
+
+
+
+        .check-out {
+            width           : 100%;
+            background-color: #c31829;
+            border          : none;
+        }
+    }
+}
+
+
+}

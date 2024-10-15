@@ -121,7 +121,13 @@ export const addProductToCart = async (input) => {
     return await axios.post('/api/Cart/add-product-to-cart', input);
 }
 
+export const getCartByUserId = () => {
+    return axios.get('/api/Cart/get-cart-by-user-id');
+};
 
+export const deleteCartItem = (cartItemId) => {
+    return axios.delete(`/api/Cart/delete/${cartItemId}`);
+};
 
 export {
     getAllBrand,

@@ -11,6 +11,10 @@ import { PiShoppingCart } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineAccountCircle } from "react-icons/md";
 import { logout } from '../../store/reducer/userSlice'; // Import hành động logout từ Redux
 import CategoryMenu from '../../components/CategoryMenu';
+import Badge from '@mui/material/Badge';
+import {getCartByUser} from '../../store/action/adminThunks';
+import { MdOutlineShoppingBag } from "react-icons/md";
+
 const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,6 +26,7 @@ const Header = () => {
     const [firstName, setFirstName] = useState(userInfo ? userInfo.FullName : '');
     const [image, setImage] = useState(userInfo ? userInfo.Image : '');
 
+    const listCartOrder = useSelector((state) => state.root.admin.cartByUser);
     useEffect(() => {
         if (userInfo && userInfo.FullName) {
             const nameParts = userInfo.FullName.split(' ');
@@ -36,7 +41,11 @@ const Header = () => {
     const toggleMenu = () => {
         setOpenMenu(!openMenu);
     };
+    useEffect(() => {
+            dispatch(getCartByUser());
+    }, [dispatch]);
 
+    
     const handleLogout = async () => {
         await dispatch(logout());
         navigate('/sign-in');
@@ -53,14 +62,28 @@ const Header = () => {
     );
 
     const cartOrder = (
-        <span className='cart '>
+        <span className='cart'>
             <Link to='/cart'>
-                <PiShoppingCart />
-                {/* <p>{listCartOrder && listCartOrder.cartItems ? listCartOrder.cartItems.length : 0}</p> */}
+                <Badge badgeContent={listCartOrder && listCartOrder.cartItems ? listCartOrder.cartItems.length : 0}
+                sx={{
+                    '& .MuiBadge-badge': {
+                        color: 'white !important', 
+                        backgroundColor: '#c31829', 
+                        fontSize: '14px', 
+                        height: '20px', 
+                        minWidth: '20px', 
+                        borderRadius: '10px' ,
+                        top: '5px',
+                        right: '0px'
+                    }
+                }}
+                >
+                    <MdOutlineShoppingBag />
+                </Badge>
             </Link>
         </span>
     );
-
+    
     return (
         <>
             <div className='top-line'></div>
@@ -74,7 +97,7 @@ const Header = () => {
                             <div className='search-group'>
                                 <input className='input-search' type='text' placeholder='Nhập tên sản phẩm cần tìm' />
                                 <button className='icon-search'>
-                                    <IoSearch  style={{fontSize: "20px", paddingBottom: "2px"}}/>
+                                    <IoSearch style={{ fontSize: "20px", paddingBottom: "2px" }} />
                                 </button>
                             </div>
                         </div>

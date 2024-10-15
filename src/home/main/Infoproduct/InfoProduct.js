@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
 import { getInfoForProduct, addProductCart } from '../../../store/action/adminThunks';
 import './InfoProduct.scss';
+import { toast } from 'react-toastify';
 import { GrPrevious, GrNext, GrFormNext } from "react-icons/gr";
 import { IoIosStar } from "react-icons/io";
 import Rating from '@mui/material/Rating';
@@ -29,7 +30,7 @@ const InfoProduct = () => {
         setAmount(prev => prev + 1);
     };
 
-    const addToCart = () => {
+    const addToCart = async () => {
         if (!infoProduct) return;
         const input = {
             productId: infoProduct.id,
@@ -37,9 +38,17 @@ const InfoProduct = () => {
             variantId: currentVariant ? currentVariant.id : undefined,
             // Add any additional fields if needed for the cart, like `voucherId`
         };
-
-        dispatch(addProductCart(input));
+    
+        try {
+            const resultAction = await dispatch(addProductCart(input));
+            if (addProductCart.fulfilled.match(resultAction)) {
+                toast.success('Đã thêm sản phẩm vào giỏ hàng');
+            }
+        } catch (error) {
+            // Error handling is already done in the thunk
+        }
     };
+    
     const images = React.useMemo(() => {
         if (!infoProduct) return [];
         const productImages = infoProduct.images || [];

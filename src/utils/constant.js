@@ -6,6 +6,8 @@ export const path = {
     BRAND_PAGE: "/brand/:id",
     TYPE_PAGE: "/type/:id",
     INFO_PRODUCT: "/product/:id",
+    CART_ORDER: "/cart",
+    PROFILE: "/profile"
 
    
 }
