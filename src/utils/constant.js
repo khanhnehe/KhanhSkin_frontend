@@ -7,7 +7,8 @@ export const path = {
     TYPE_PAGE: "/type/:id",
     INFO_PRODUCT: "/product/:id",
     CART_ORDER: "/cart",
-    PROFILE: "/profile"
+    PROFILE: "/profile",
+    CHECK_OUT: "/checkout",
 
    
 }

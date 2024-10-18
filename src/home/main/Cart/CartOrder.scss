@@ -50,8 +50,8 @@
             }
 
             .cart-image {
-                width       : 80px;
-                height      : 80px;
+                width       : 90px;
+                height      : 90px;
                 object-fit  : cover;
                 margin-right: 20px;
             }
@@ -62,7 +62,7 @@
 
             .name {
                 font-weight: 500;
-                font-size  : 14px;
+                font-size  : 15px;
             }
 
             .name-variant {
@@ -88,12 +88,14 @@
                 margin-right: 20px;
 
                 button {
-                    border        : none;
-                    background    : #d3d3d3;
-                    font-size     : 20px;
-                    cursor        : pointer;
-                    min-width     : 30px;
+                    border: none;
+                    background: #c31829;
+                    font-size: 22px;
+                    cursor: pointer;
+                    min-width: 33px;
                     padding-bottom: 3px;
+                    color: white;
+                    border-radius: 6px;
 
                 }
 
@@ -107,20 +109,20 @@
 
                 .price {
                     text-decoration: line-through;
-                    font-size      : 13px;
+                    font-size      : 15px;
                     color          : #999;
                 }
 
                 .sale_price {
                     font-weight: bold;
-                    font-size  : 15px;
+                    font-size  : 17px;
                 }
             }
 
             .tong-price {
                 font-weight: bold;
                 color      : #c31829;
-                font-size  : 15px;
+                font-size  : 17px;
 
             }
         }
@@ -162,6 +164,7 @@
             width           : 100%;
             background-color: #c31829;
             border          : none;
+            font-weight: bold;
         }
     }
 }

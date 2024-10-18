@@ -129,6 +129,10 @@ export const deleteCartItem = (cartItemId) => {
     return axios.delete(`/api/Cart/delete/${cartItemId}`);
 };
 
+export const checkoutMyOrder = (data) => {
+    return axios.post('/api/Order/checkout', data);
+};
+
 export {
     getAllBrand,
     createBrand,

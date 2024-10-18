@@ -8,7 +8,7 @@ import { createBrand, getAllBrand, updateBrand, deleteBrand,
   createProduct, getAllProduct, updateProduct, deleteProduct,
   getFilterProducts, postFilterProducts, getProductByCategory,
   getProductBrand, getProductType, getInfoProduct, addProductToCart,
-  getCartByUserId, deleteCartItem
+  getCartByUserId, deleteCartItem, checkoutMyOrder
 
  } from '../../services/productService';
 
@@ -151,7 +151,7 @@ export const fetchAllCategory = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getAllCategory();
-      console.log('API response:', response); // Log dữ liệu trả về
+      // console.log('API response:', response); // Log dữ liệu trả về
       return response.result; 
     } catch (err) {
       const errorMessage = err.response?.data?.responseException?.exceptionMessage;
@@ -517,6 +517,26 @@ export const deletedCartItem = createAsyncThunk(
       const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lọc sản phẩm';
       return rejectWithValue(errorMessage);  
     }
+  }
+);
+
+
+export const checkOutOrder = createAsyncThunk(
+  'user/checkOutOrder',
+  async (data , { dispatch, rejectWithValue }) => {
+      try {
+          dispatch(showLoading());
+          const response = await checkoutMyOrder(data);
+          dispatch(hideLoading());
+          toast.success('đặt hàng thành công');
+          dispatch(getCartByUser());   
+          return response.result;
+      } catch (err) {
+          dispatch(hideLoading());
+          const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi cập nhật địa chỉ';
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage);
+      }
   }
 );
 

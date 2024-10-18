@@ -9,13 +9,14 @@ const Address = () => {
     const dispatch = useDispatch();
     const infoAddress = useSelector(state => state.root.user.address);
     const [data, setData] = useState({
+        fullName: '',
         phoneNumber: '',
-        provinceId: '',
-        province: '',
-        districtId: '',
-        district: '',
-        wardId: '',
-        ward: '',
+        // provinceId: '',
+        // province: '',
+        // districtId: '',
+        // district: '',
+        // wardId: '',
+        // ward: '',
         addressDetail: '',
         isDefault: false
     });
@@ -28,71 +29,71 @@ const Address = () => {
 
     useEffect(() => {
         dispatch(getAddressById());
-        fetchProvinces();
+        // fetchProvinces();
     }, [dispatch]);
 
-    const fetchProvinces = async () => {
-        try {
-            const response = await axios.get('https://provinces.open-api.vn/api/p/');
-            setProvinces(response.data);
-        } catch (error) {
-            toast.error('Failed to fetch provinces');
-        }
-    };
+    // const fetchProvinces = async () => {
+    //     try {
+    //         const response = await axios.get('https://provinces.open-api.vn/api/p/');
+    //         setProvinces(response.data);
+    //     } catch (error) {
+    //         toast.error('Failed to fetch provinces');
+    //     }
+    // };
 
-    const fetchDistricts = async (provinceId) => {
-        try {
-            const response = await axios.get(`https://provinces.open-api.vn/api/p/${provinceId}?depth=2`);
-            setDistricts(response.data.districts);
-        } catch (error) {
-            toast.error('Failed to fetch districts');
-        }
-    };
+    // const fetchDistricts = async (provinceId) => {
+    //     try {
+    //         const response = await axios.get(`https://provinces.open-api.vn/api/p/${provinceId}?depth=2`);
+    //         setDistricts(response.data.districts);
+    //     } catch (error) {
+    //         toast.error('Failed to fetch districts');
+    //     }
+    // };
 
-    const fetchWards = async (districtId) => {
-        try {
-            const response = await axios.get(`https://provinces.open-api.vn/api/d/${districtId}?depth=2`);
-            setWards(response.data.wards);
-        } catch (error) {
-            toast.error('Failed to fetch wards');
-        }
-    };
+    // const fetchWards = async (districtId) => {
+    //     try {
+    //         const response = await axios.get(`https://provinces.open-api.vn/api/d/${districtId}?depth=2`);
+    //         setWards(response.data.wards);
+    //     } catch (error) {
+    //         toast.error('Failed to fetch wards');
+    //     }
+    // };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === 'provinceId') {
-            const selectedProvince = provinces.find(province => province.code === Number(value));
-            setData({
-                ...data,
-                provinceId: value,
-                province: selectedProvince ? selectedProvince.name : '',
-                districtId: '',
-                district: '',
-                wardId: '',
-                ward: ''
-            });
-            fetchDistricts(value);
-        } else if (name === 'districtId') {
-            const selectedDistrict = districts.find(district => district.code === Number(value));
-            setData({
-                ...data,
-                districtId: value,
-                district: selectedDistrict ? selectedDistrict.name : '',
-                wardId: '',
-                ward: ''
-            });
-            fetchWards(value);
-        } else if (name === 'wardId') {
-            const selectedWard = wards.find(ward => ward.code === Number(value));
-            setData({
-                ...data,
-                wardId: value,
-                ward: selectedWard ? selectedWard.name : ''
-            });
-        } else {
+        // if (name === 'provinceId') {
+        //     const selectedProvince = provinces.find(province => province.code === Number(value));
+        //     setData({
+        //         ...data,
+        //         provinceId: value,
+        //         province: selectedProvince ? selectedProvince.name : '',
+        //         districtId: '',
+        //         district: '',
+        //         wardId: '',
+        //         ward: ''
+        //     });
+        //     fetchDistricts(value);
+        // } else if (name === 'districtId') {
+        //     const selectedDistrict = districts.find(district => district.code === Number(value));
+        //     setData({
+        //         ...data,
+        //         districtId: value,
+        //         district: selectedDistrict ? selectedDistrict.name : '',
+        //         wardId: '',
+        //         ward: ''
+        //     });
+        //     fetchWards(value);
+        // } else if (name === 'wardId') {
+        //     const selectedWard = wards.find(ward => ward.code === Number(value));
+        //     setData({
+        //         ...data,
+        //         wardId: value,
+        //         ward: selectedWard ? selectedWard.name : ''
+        //     });
+       
             setData({ ...data, [name]: value });
-        }
+        
     };
 
     const handleCreateOrUpdate = async () => {
@@ -104,13 +105,14 @@ const Address = () => {
             }
             setEditMode(false);
             setData({
+                fullName: '',
                 phoneNumber: '',
-                provinceId: '',
-                province: '',
-                districtId: '',
-                district: '',
-                wardId: '',
-                ward: '',
+                // provinceId: '',
+                // province: '',
+                // districtId: '',
+                // district: '',
+                // wardId: '',
+                // ward: '',
                 addressDetail: '',
                 isDefault: false
             });
@@ -125,18 +127,19 @@ const Address = () => {
         setEditMode(true);
         setAddressId(address.id);
         setData({
+            fullName: address.fullName,
             phoneNumber: address.phoneNumber,
-            provinceId: address.provinceId,
-            province: address.province,
-            districtId: address.districtId,
-            district: address.district,
-            wardId: address.wardId,
-            ward: address.ward,
+            // provinceId: address.provinceId,
+            // province: address.province,
+            // districtId: address.districtId,
+            // district: address.district,
+            // wardId: address.wardId,
+            // ward: address.ward,
             addressDetail: address.addressDetail,
             isDefault: address.isDefault
         });
-        fetchDistricts(address.provinceId);
-        fetchWards(address.districtId);
+        // fetchDistricts(address.provinceId);
+        // fetchWards(address.districtId);
         setShowModal(true); // Hiển thị modal
     };
 
@@ -151,6 +154,7 @@ const Address = () => {
     const handleAddNewAddress = () => {
         setEditMode(false);
         setData({
+            fullName: '',
             phoneNumber: '',
             provinceId: '',
             province: '',
@@ -184,11 +188,15 @@ const Address = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <form>
+                    <div className='form-group'>
+                            <label>Họ và tên</label>
+                            <input type='text' name='fullName' value={data.fullName} onChange={handleInputChange} className='form-control' />
+                        </div>
                         <div className='form-group'>
                             <label>Số điện thoại</label>
                             <input type='text' name='phoneNumber' value={data.phoneNumber} onChange={handleInputChange} className='form-control' />
                         </div>
-                        <div className='form-group'>
+                        {/* <div className='form-group'>
                             <label>Tỉnh/Thành phố</label>
                             <select name='provinceId' value={data.provinceId} onChange={handleInputChange} className='form-control'>
                                 <option value=''>Chọn tỉnh/ thành phố</option>
@@ -196,8 +204,8 @@ const Address = () => {
                                     <option key={province.code} value={province.code}>{province.name}</option>
                                 ))}
                             </select>
-                        </div>
-                        <div className='form-group'>
+                        </div> */}
+                        {/* <div className='form-group'>
                             <label>Quận/Huyện</label>
                             <select name='districtId' value={data.districtId} onChange={handleInputChange} className='form-control'>
                                 <option value=''>Chọn quận/huyện</option>
@@ -205,8 +213,8 @@ const Address = () => {
                                     <option key={district.code} value={district.code}>{district.name}</option>
                                 ))}
                             </select>
-                        </div>
-                        <div className='form-group'>
+                        </div> */}
+                        {/* <div className='form-group'>
                             <label>Xã/Phường</label>
                             <select name='wardId' value={data.wardId} onChange={handleInputChange} className='form-control'>
                                 <option value=''>Chọn xã/phường</option>
@@ -214,7 +222,7 @@ const Address = () => {
                                     <option key={ward.code} value={ward.code}>{ward.name}</option>
                                 ))}
                             </select>
-                        </div>
+                        </div> */}
                         <div className='form-group'>
                             <label>Địa chỉ chi tiết</label>
                             <input type='text' name='addressDetail' value={data.addressDetail} onChange={handleInputChange} className='form-control' />

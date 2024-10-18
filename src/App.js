@@ -20,6 +20,7 @@ import BrandPage from './home/main/BrandPage/BrandPage';
 import InfoProduct from './home/main/Infoproduct/InfoProduct';
 import CartOrder from './home/main/Cart/CartOrder';
 import Profile from './home/main/Profile/Profile';
+import CheckOut from './home/main/Cart/CheckOut';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path={path.ADMIN + "/*"} element={<AdminRoutes />} />
         <Route path="/*" element={<UserRoutes />} />
+
       </Routes>
       <ToastContainer
         position="top-center"
@@ -66,6 +68,8 @@ const UserRoutes = () => (
     <Route path={path.CART_ORDER} element={<CartOrder />} />
     <Route path="/profile/*" element={<Profile />} />
     <Route path="/test" element={<MyComponent />} />
+    <Route path={path.CHECK_OUT} element={<CheckOut />} />
+
     </Routes>
 
     <Footer />

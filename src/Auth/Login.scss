@@ -12,7 +12,7 @@
         border-radius: 10px;
         // background: white;
         position: absolute;
-        top: 55%;
+        top: 65%;
         left: 50%;
         transform: translate(-50%, -50%);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -63,7 +63,7 @@
             height         : 40px;
             border         : 1px solid #fff;
             border-radius  : 6px;
-            background     : #ff4425;
+            background     : #c31829;
             background-size: 200%;
             font-weight: 700;
             // margin-top: 60px;
@@ -71,7 +71,7 @@
 
             &:hover {
                 background-position: right;
-                background         : #f2654c;
+                background         : #dc4857;
 
             }
         }

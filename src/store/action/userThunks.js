@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllUser, createUser, updateUser, deleteUser, getUserId, createAddress, updateAddress, deleteAddress, getAddressId } from '../../services/userService';
+import { getAllUser, createUser, updateUser, deleteUser, getUserId, createAddress, updateAddress, deleteAddress, getAddressId
+ } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from '../reducer/loadingSlice';
 
@@ -93,3 +94,4 @@ export const deletedAddress = createAsyncThunk(
         }
     }
 );
+
