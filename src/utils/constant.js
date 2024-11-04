@@ -9,6 +9,7 @@ export const path = {
     CART_ORDER: "/cart",
     PROFILE: "/profile",
     CHECK_OUT: "/checkout",
+    ORDER: "/order",
 
    
 }

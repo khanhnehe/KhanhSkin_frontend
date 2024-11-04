@@ -133,6 +133,33 @@ export const checkoutMyOrder = (data) => {
     return axios.post('/api/Order/checkout', data);
 };
 
+export const getPagedProducts = (input) => {
+    return axios.post('/api/Product/get-paged-products', input);
+};
+export const getOrders = (input) => {
+    return axios.post('/api/Order/get-paged-orders', input);
+};
+
+export const createVoucher = (data) => {
+    return axios.post('/api/Voucher/create-voucher', data);
+}
+
+export const getAllVoucher = () => {
+    return axios.get('/api/Voucher/get-all-vouchers');
+};
+
+
+export const getActiveVoucher = () => {
+    return axios.get('/api/Voucher/get-active-vouchers');
+};
+
+export const applyVoucher = ({ voucherId, action }) => {
+    return axios.post('/api/Cart/apply-voucher', {
+        voucherId,
+        action
+    });
+};
+
 export {
     getAllBrand,
     createBrand,

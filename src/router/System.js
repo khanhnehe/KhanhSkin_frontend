@@ -13,6 +13,8 @@ import CreateProduct from "../admin/Product/CreateProduct";
 import UpdateProduct from "../admin/Product/UpdateProduct";
 import VoucherGlobal from "../admin/Voucher/VoucherGlobal";
 import VoucherSpecific from "../admin/Voucher/VoucherSpecific";
+import Order from '../admin/Order/Order';
+import Voucher from "../admin/Voucher/Voucher";
 
 const System = () => {
     return (
@@ -28,9 +30,12 @@ const System = () => {
                         <Route path="manage-category" element={<Category />} />
                         <Route path="manage-product" element={<Product />} />
                         <Route path="create-product" element={<CreateProduct />} />
+                  
+                        <Route path="update-product/:id" element={<UpdateProduct />} />
+                        <Route path="all-orders" element={<Order />} />
+                        <Route path="voucher" element={<Voucher />} />
                         <Route path="voucher-global" element={<VoucherGlobal />} />
                         <Route path="voucher-specific" element={<VoucherSpecific />} />
-                        <Route path="update-product/:id" element={<UpdateProduct />} />
                         {/* Thêm các route khác cho admin ở đây */}
                     </Routes>
                 </div>

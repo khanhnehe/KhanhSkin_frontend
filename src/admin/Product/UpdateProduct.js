@@ -34,7 +34,7 @@ const UpdateProduct = () => {
         discount: productFromState?.discount || 0,
         salePrice: productFromState?.salePrice || 0,
         sku: productFromState?.sku || '',
-        brandId: productFromState?.brandId || '',
+        brandId: productFromState?.brand.id || '',
         categoryIds: productFromState?.categories.map(cat => cat.id) || [],
         productTypeIds: productFromState?.productTypes.map(type => type.id) || [],
         images: productFromState?.images || [],

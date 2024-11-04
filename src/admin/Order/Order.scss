@@ -1,0 +1,319 @@
+.systemContainer {
+    flex            : 1 1;
+    padding         : 20px;
+    background-color: #e4e4e4;
+    overflow-x      : hidden; 
+    .pagination {
+        display        : flex;
+        justify-content: center;
+        list-style     : none;
+        padding        : 0;
+        margin-top     : 20px;
+
+        li {
+            margin: 0 5px;
+
+            a {
+                padding        : 5px 10px;
+                border         : 1px solid #ddd;
+                color          : #333;
+                cursor         : pointer;
+                border-radius  : 3px;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: #f5f5f5;
+                }
+            }
+
+            &.active a {
+                background-color: #ff5253;
+                color           : white;
+                border-color    : #ff5253;
+            }
+
+            &.disabled a {
+                color : #999;
+                cursor: not-allowed;
+            }
+        }
+
+
+    }
+
+    .manager-order {
+        width       : 100%;
+        color       : #616161;
+        padding-left: 230px;
+        padding-top : 8px;
+
+        // .order {
+        //     // box-shadow      : 2px 0 5px rgba(0, 0, 0, 0.1);
+        //     // background-color: rgb(241, 241, 241);
+        //     // min-height      : 505px;
+        //     // padding         : 0px 12px;
+        //     // margin-bottom   : 25px;
+        //     // /* border       : 1px solid #e7e7e7; */
+        //     // border-radius   : 5px;
+
+        .bottom-down {
+            border       : 1px solid #dfdfdf;
+            border-radius: 5px;
+            margin-left: 3px;
+            margin-right: 3px;
+
+            .option {
+                display         : flex;
+                /* border-bottom: 1px solid #d8d8d8; */
+                font-size       : 17px;
+                cursor          : pointer;
+                gap             : 81px;
+                font-weight     : 600;
+                align-items     : center;
+                height          : 60px;
+                padding         : 16px 25px;
+                background-color: white;
+                border-radius   : 5px;
+
+
+                .active {
+                    // color              : rgb(0 0 0);
+                    // border-bottom      : 3px solid #dc3545;
+                    // /* background-color: #dc3545; */
+                    // // border-radius   : 20px;
+                    // padding            : 16px 6px;
+                    // display: flex;
+                    // align-items: center;
+                    // font-weight: 600;
+
+                    display         : flex;
+                    // border-bottom: 1px solid #d8d8d8;
+                    font-size       : 17px;
+                    cursor          : pointer;
+                    gap             : 81px;
+                    font-weight     : 600;
+                    align-items     : center;
+                    height          : 60px;
+                    border-bottom   : 3px solid #dc3545;
+
+                }
+            }
+
+
+
+
+        }
+
+        .search {
+            margin-left: 3px;
+            margin-right: 3px;
+            margin-bottom   : 20px;
+            padding         : 20px;
+            // box-shadow      : -1px 3px 7px 4px rgba(201, 201, 201, 0.73);
+            background-color: rgb(255, 255, 255);
+            border-radius   : 5px;
+            display         : flex;
+            flex-wrap       : nowrap;
+            margin-top      : 13px;
+
+            .date {
+                display: grid;
+                gap: 5px;
+              
+                .title-date {
+                  font-weight: 600;
+                }
+              
+                .filter-date {
+                  display: flex;
+                  gap: 10px;
+              
+                  .date-picker-container {
+                    position: relative;
+                    // width: 100%;
+              
+                    
+                    .form-control {
+                      width: 80%;
+                      padding-right: 30px; /* Đảm bảo có đủ không gian cho icon */
+                    }
+              
+                    .date-icon {
+                      position: absolute;
+                      right: 57px;
+                      top: 50%;
+                      font-size: 25px;
+                      transform: translateY(-50%);
+                      pointer-events: none; /* Đảm bảo icon không chặn các sự kiện của input */
+                    }
+                  }
+                }
+              }
+
+            .search-bar {
+                margin-bottom: 1px;
+                margin-top: 24px;
+
+                input {
+                    width        : 100%;
+                    padding      : 10px;
+                    border       : 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size    : 14px;
+                    box-shadow   : 2px 0 5px rgba(0, 0, 0, 0.1);
+
+                    &:focus {
+                        outline        : none;
+                        // border-color: #a5d651;
+                        box-shadow     : 0 0 5px rgba(203, 203, 203, 0.5);
+                    }
+                }
+
+                .search-icon {
+                    position: absolute;
+                    right: 569px;
+                    top: 50%;
+                    transform: translateY(-571%);
+                    font-size: 23px;
+                    color: #a4a2a2;
+                    pointer-events: none;
+                }
+            }
+        }
+
+       
+
+
+
+        .listAllOrder {
+
+            // .top {
+            //     padding: 10px;
+
+            .my-order {
+                .boc {
+                    box-shadow      : 2px 0 5px rgba(0, 0, 0, 0.1);
+                    border-radius   : 5px;
+                    background-color: rgb(255, 255, 255);
+                    margin-bottom   : 20px;
+                    border          : 1px solid #ddd2d2;
+
+                    .code {
+                        font-size    : 12px;
+                        font-weight  : 700;
+                        text-align   : left;
+                        padding      : 10px 21px;
+                        color        : #909090;
+                        cursor       : pointer;
+                        margin-bottom: 3px;
+                        border-bottom: 1px solid #f0e8e8;
+                    }
+
+                    .product-info {
+                        display        : flex;
+                        gap            : 10px;
+                        border-bottom  : 1px solid #d6d4d4;
+                        padding        : 5px 30px 10px 20px;
+                        justify-content: flex-start;
+                        flex-direction : column;
+
+                        .product-image {
+                            width : 80px;
+                            height: auto;
+                        }
+
+                        .product-info-name {
+                            display        : flex;
+                            justify-content: space-between;
+
+                            .up-info {
+                                display      : flex;
+                                gap          : 10px;
+                                align-content: stretch;
+                                align-items  : start;
+
+                                .name {
+                                    display: grid;
+
+                                    .product-name {
+                                        font-weight: 500;
+                                        font-size  : 14px;
+                                        max-width  : 650px;
+                                    }
+
+                                    .product-variant {
+                                        width           : fit-content;
+                                        font-weight     : 500;
+                                        font-size       : 10px;
+                                        color           : #ffffff;
+                                        background-color: #c31829;
+                                        padding         : 1px 8px;
+                                        border-radius   : 10px;
+                                    }
+                                }
+                            }
+
+                            .down-info {
+                                display      : grid;
+                                justify-items: end;
+
+                                .price {
+                                    color          : #828282;
+                                    font-size      : 11px;
+                                    text-decoration: line-through;
+                                }
+
+                                .price-sale {
+                                    color      : brown;
+                                    font-size  : 14px;
+                                    font-weight: 600;
+                                }
+
+                                .amount {
+                                    font-size: 13px;
+                                }
+                            }
+                        }
+                    }
+
+                    .bottom {
+                        background-color: #f8f8f8;
+                        display         : flex;
+                        padding         : 10px 19px;
+                        gap             : 40px;
+                        justify-content : space-between;
+                        border-radius   : 5px;
+
+                        .cancel-button {
+                            padding      : 5px 14px;
+                            font-size    : 14px;
+                            border-radius: 4px;
+                        }
+
+                        .right-price {
+                            display        : flex;
+                            gap            : 40px;
+                            justify-content: flex-end;
+
+                            .tien {
+                                color      : brown;
+                                font-size  : 14px;
+                                font-weight: 600;
+                                padding-top: 4px;
+                            }
+
+                            .status-tong {
+                                font-size    : 15px;
+                                border-radius: 50px;
+                                padding      : 5px 8px;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
+
+}

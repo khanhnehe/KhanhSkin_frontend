@@ -8,7 +8,8 @@ import { createBrand, getAllBrand, updateBrand, deleteBrand,
   createProduct, getAllProduct, updateProduct, deleteProduct,
   getFilterProducts, postFilterProducts, getProductByCategory,
   getProductBrand, getProductType, getInfoProduct, addProductToCart,
-  getCartByUserId, deleteCartItem, checkoutMyOrder
+  getCartByUserId, deleteCartItem, checkoutMyOrder, getPagedProducts,
+  getOrders, createVoucher, getAllVoucher, getActiveVoucher, applyVoucher
 
  } from '../../services/productService';
 
@@ -304,7 +305,7 @@ export const createNewProduct = createAsyncThunk(
       const response = await createProduct(data); 
       dispatch(hideLoading());
       toast.success('Thêm sản phẩm thành công');
-      dispatch(fetchAllProduct()); 
+      dispatch(getPageProduct()); 
       return response.result;
     } catch (err) {
       dispatch(hideLoading());
@@ -333,7 +334,7 @@ export const updatedProduct = createAsyncThunk(
       const response = await updateProduct(id, data); 
       dispatch(hideLoading());
       toast.success('Cập sản phẩm hiệu thành công');
-      dispatch(fetchAllProduct()); 
+      dispatch(getPageProduct()); 
       return response.result;
     } catch (err) {
       dispatch(hideLoading());
@@ -362,7 +363,7 @@ export const deletedProduct = createAsyncThunk(
       await deleteProduct(id); 
       dispatch(hideLoading());
       toast.success('Xóa sản phẩm thành công');
-      dispatch(fetchAllProduct()); 
+      dispatch(getPageProduct()); 
       return {id};
     } catch (err) {
       dispatch(hideLoading());
@@ -475,6 +476,8 @@ export const addProductCart = createAsyncThunk(
       if (errorResponse) {
         if (typeof errorResponse.exceptionMessage === 'string') {
           errorMessage = errorResponse.exceptionMessage;
+        } else if (typeof errorResponse.exceptionMessage === 'object' && errorResponse.exceptionMessage.message) {
+          errorMessage = errorResponse.exceptionMessage.message;
         } else if (errorResponse.errors) {
           errorMessage = Object.values(errorResponse.errors).flat().join(' ');
         }
@@ -510,7 +513,7 @@ export const deletedCartItem = createAsyncThunk(
       const response = await deleteCartItem(input);  
       toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
       dispatch(hideLoading());
-      dispatch(getCartByUser());   
+      await dispatch(getCartByUser());   
       return response.result;   
     } catch (err) {
       dispatch(hideLoading());
@@ -522,7 +525,7 @@ export const deletedCartItem = createAsyncThunk(
 
 
 export const checkOutOrder = createAsyncThunk(
-  'user/checkOutOrder',
+  'admin/checkOutOrder',
   async (data , { dispatch, rejectWithValue }) => {
       try {
           dispatch(showLoading());
@@ -539,6 +542,122 @@ export const checkOutOrder = createAsyncThunk(
       }
   }
 );
+
+export const getPageProduct = createAsyncThunk(
+  'admin/getPageProduct',
+  async (data , { dispatch, rejectWithValue }) => {
+      try {
+          // dispatch(showLoading());
+          const response = await getPagedProducts(data);
+          // dispatch(hideLoading());
+          return response.result; 
+       } catch (err) {
+          // dispatch(hideLoading());
+          const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi cập nhật địa chỉ';
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage);
+      }
+  }
+);
+
+export const getPageOrders = createAsyncThunk(
+  'admin/getPageOrders', 
+  async (input, { dispatch, rejectWithValue }) => {
+      try {
+          // dispatch(showLoading());
+          const response = await getOrders(input);    
+          // dispatch(hideLoading());
+          return response.result;   
+      } catch (err) {
+          // dispatch(hideLoading());
+          const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage);  
+      }
+  }
+);
+
+export const createdVoucher = createAsyncThunk(
+  'admin/createdVoucher', 
+  async (input, { dispatch, rejectWithValue }) => {
+      try {
+          // dispatch(showLoading());
+          const response = await createVoucher(input);    
+          // dispatch(hideLoading());
+          toast.success('Tạo mã giảm giá thành công');
+          return response.result;   
+      } catch (err) {
+          // dispatch(hideLoading());
+          const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage);  
+      }
+  }
+);
+
+export const getVoucher = createAsyncThunk(
+  'admin/getVoucher', 
+  async (input, { dispatch, rejectWithValue }) => {
+      try {
+          dispatch(showLoading());
+          const response = await getAllVoucher();    
+          dispatch(hideLoading());
+          return response.result;   
+      } catch (err) {
+          dispatch(hideLoading());
+          const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage);  
+      }
+  }
+);
+
+export const getActiveVouchers = createAsyncThunk(
+  'admin/getActiveVouchers', 
+  async (input, { dispatch, rejectWithValue }) => {
+      try {
+          dispatch(showLoading());
+          const response = await getActiveVoucher();    
+          dispatch(hideLoading());
+          return response.result;   
+      } catch (err) {
+          dispatch(hideLoading());
+          const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage);  
+      }
+  }
+);
+
+export const applyToVoucher = createAsyncThunk(
+  'admin/applyToVoucher', 
+  async ({ voucherId, action }, { dispatch, rejectWithValue }) => {
+      try {
+        dispatch(showLoading());
+          const response = await applyVoucher({ voucherId, action });    
+          dispatch(getCartByUser()); // Làm mới giỏ hàng để hiển thị cập nhật
+          toast.success('Áp dụng mã giảm giá thành công');
+          dispatch(hideLoading());
+          return response.result;   
+        } catch (err) {
+          dispatch(hideLoading());
+          const errorResponse = err.response?.data?.responseException;
+          let errorMessage = "Áp dụng mã giảm giá thất bại";
+    
+          if (errorResponse) {
+            if (typeof errorResponse.exceptionMessage === 'string') {
+              errorMessage = errorResponse.exceptionMessage;
+            } else if (errorResponse.errors) {
+              errorMessage = Object.values(errorResponse.errors).flat().join(' ');
+            }
+          }
+    
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage); 
+        }
+  }
+);
+
 
 export {
   updatedUser,

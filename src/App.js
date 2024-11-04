@@ -21,7 +21,6 @@ import InfoProduct from './home/main/Infoproduct/InfoProduct';
 import CartOrder from './home/main/Cart/CartOrder';
 import Profile from './home/main/Profile/Profile';
 import CheckOut from './home/main/Cart/CheckOut';
-
 function App() {
   return (
     <>

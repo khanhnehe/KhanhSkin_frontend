@@ -48,6 +48,21 @@ export const getAddressId = () => {
     return axios.get('/api/Address/get-my-address');
 };
 
+
+export const getOrdersByUser = (input) => {
+    return axios.post('/api/Order/get-orders-by-user-status', input);
+};
+
+
+export const changeStatus = (input) => {
+    return axios.post('/api/Order/change-status', input);
+};
+
+export const createReview = (input) => {
+    return axios.post('/api/Review/create-reviews', input);
+};
+
+
 export { 
     loginApiService,
     getAllUser,

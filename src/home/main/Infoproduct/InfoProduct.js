@@ -141,7 +141,7 @@ const InfoProduct = () => {
                                             readOnly
                                         />
                                     </div>
-                                    <p className='text-review'>{infoProduct.reviews?.length || 0} Đánh giá</p>
+                                    <p className='text-review'>{infoProduct.reviewCount || 0} Đánh giá</p>
 
                                     <p className='ms-1'>{infoProduct.purchases} Đã bán</p>
                                 </div>

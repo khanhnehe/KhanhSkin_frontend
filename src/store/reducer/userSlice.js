@@ -3,7 +3,7 @@ import { loginApiService } from '../../services/userService';
 import { decodeToken, isTokenExpired } from '../../services/tokenService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from './loadingSlice'; // Import các hành động loading
-import { getUserById, getAddressById } from '../action/userThunks';
+import { getUserById, getAddressById, getOrderByUser } from '../action/userThunks';
 
 
 export const loginUser = createAsyncThunk(
@@ -34,6 +34,7 @@ const userSlice = createSlice({
     error: '',
     accessToken: null,
     address: [],
+    orderUser: [],
     isLoading: false,
     //
   },
@@ -79,6 +80,7 @@ const userSlice = createSlice({
         state.isLoading = false;
       })
 
+      //
       .addCase(getUserById.pending, (state) => {
         state.isLoading = true;
         state.error = '';
@@ -95,6 +97,7 @@ const userSlice = createSlice({
         state.isLoading = false;
       })
 
+      //
       .addCase(getAddressById.pending, (state) => {
         state.isLoading = true;
         state.error = '';
@@ -104,6 +107,19 @@ const userSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getAddressById.rejected, (state, action) => {
+        state.error = action.payload || 'Failed to fetch user information.';
+        state.isLoading = false;
+      })
+      //
+      .addCase(getOrderByUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(getOrderByUser.fulfilled, (state, action) => {
+        state.orderUser = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getOrderByUser.rejected, (state, action) => {
         state.error = action.payload || 'Failed to fetch user information.';
         state.isLoading = false;
       });

@@ -1,41 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { getCartByUser, deletedCartItem, addProductCart } from '../../../store/action/adminThunks';
+import { Row, Col, Button } from 'react-bootstrap';
+import { getCartByUser, deletedCartItem, addProductCart, getActiveVouchers, applyToVoucher } from '../../../store/action/adminThunks';
 import './CartOrder.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { ChevronDown, AlertCircle } from 'react-feather';
+import { CiDiscount1 } from "react-icons/ci";
 
 const CartOrder = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const listCart = useSelector(state => state.root.admin.cartByUser|| {});
+    const listCart = useSelector(state => state.root.admin.cartByUser || {});
+    const activeVouchers = useSelector(state => state.root.admin.activeVoucher || []);
+    const [selectedVoucher, setSelectedVoucher] = useState(null);
+    const [isOpen, setIsOpen] = useState(true);
 
     useEffect(() => {
         dispatch(getCartByUser());
+        dispatch(getActiveVouchers());
     }, [dispatch]);
 
     const handleDelete = (id) => {
-        dispatch(deletedCartItem(id));
+        dispatch(deletedCartItem(id)).then(() => {
+            dispatch(getCartByUser());
+        });
     };
 
-
     const handleChangeAmount = (cartItemId, amountChange) => {
-        // Hàm để thay đổi số lượng sản phẩm
-        const cartItem = listCart.cartItems.find(item => item.id === cartItemId);  // Tìm sản phẩm trong giỏ hàng
+        const cartItem = listCart.cartItems?.find(item => item.id === cartItemId);
         if (cartItem) {
-            const newAmount = cartItem.amount + amountChange;  // Tính số lượng mới
+            const newAmount = cartItem.amount + amountChange;
             if (newAmount > -1) {
-                // Nếu số lượng mới hợp lệ, gọi API để cập nhật
                 if (newAmount <= 0) {
-                    // Nếu số lượng mới là 1 và người dùng muốn giảm số lượng, không cho phép
                     return;
                 }
                 dispatch(addProductCart({
                     productId: cartItem.productId,
                     variantId: cartItem.variantId,
                     amountAdd: amountChange,
-                }));
+                })).then(() => {
+                    dispatch(getCartByUser());
+                });
             }
             if (newAmount === 0) {
                 handleDelete(cartItemId);
@@ -46,58 +52,167 @@ const CartOrder = () => {
     const handleCheckOut = () => {
         navigate('/checkout');
     };
+
+    const handleApplyVoucher = (voucherId) => {
+        dispatch(applyToVoucher({ voucherId, action: "apply" }))
+            .unwrap()
+            .then(() => {
+                dispatch(getCartByUser());
+                setSelectedVoucher(voucherId);
+            })
+            .catch((error) => {
+                console.error("Error applying voucher:", error);
+            });
+    };
+
+    const handleRemoveVoucher = () => {
+        if (selectedVoucher) {
+            dispatch(applyToVoucher({ voucherId: selectedVoucher, action: "remove" }))
+                .unwrap()
+                .then(() => {
+                    setSelectedVoucher(null);
+                    dispatch(getCartByUser());
+                })
+                .catch((error) => {
+                    console.error("Error removing voucher:", error);
+                });
+        }
+    };
+
     return (
         <div className="cart-page">
-        <div className="line">Trang chủ / Giỏ hàng</div>
-        <div className='container'>
-            <h1 className="title-cart">Giỏ hàng</h1>
-            {listCart && listCart.cartItems && listCart.cartItems.length > 0 ? (
-                <Row>
-                    <Col md={9}>
-                        {listCart.cartItems.map(item => (
-                            <div className="cart-item" key={item.id}>
-                                <div className="item-left">
-                                    <button className="btn-delete" onClick={() => handleDelete(item.id)}>x</button>
-                                    <img src={item.images[0]} alt="Product" className="cart-image" />
-                                </div>
-                                <div className="item-right">
-                                    <div className="name">{item.productName}</div>
-                                    {item.nameVariant && <span className="name-variant">{item.nameVariant}</span>}
-                                </div>
-                                <div className="content-right">
-                                    <div className="item-amount">
-                                        <button onClick={() => handleChangeAmount(item.id, -1)}>-</button>
-                                        <div className="amount-number">{item.amount}</div>
-                                        <button onClick={() => handleChangeAmount(item.id, 1)}>+</button>
+            <div className="line">Trang chủ / Giỏ hàng</div>
+            <div className='container'>
+                <h1 className="title-cart">Giỏ hàng</h1>
+                {listCart?.cartItems?.length > 0 ? (
+                    <Col>
+                        <Row>
+                            <Col md={9}>
+                                {listCart.cartItems.map(item => (
+                                    <div className="cart-item" key={item.id}>
+                                        <div className="item-left">
+                                            <button className="btn-delete" onClick={() => handleDelete(item.id)}>x</button>
+                                            <NavLink to={`/product/${item.productId}`} key={item.productId}>
+                                                <img src={item.images[0]} alt="Product" className="cart-image" />
+                                            </NavLink>
+                                        </div>
+                                        <div className="item-right">
+                                            <div className="name">{item.productName}</div>
+                                            {item.nameVariant && <span className="name-variant">{item.nameVariant}</span>}
+                                        </div>
+                                        <div className="content-right">
+                                            <div className="item-amount">
+                                                <button onClick={() => handleChangeAmount(item.id, -1)}>-</button>
+                                                <div className="amount-number">{item.amount}</div>
+                                                <button onClick={() => handleChangeAmount(item.id, 1)}>+</button>
+                                            </div>
+                                            <div className="item-price">
+                                                <div className="price">{item?.productPrice.toLocaleString('vi-VN')} ₫</div>
+                                                <div className="sale_price">{item?.productSalePrice.toLocaleString('vi-VN')} ₫</div>
+                                            </div>
+                                            <div className="tong-price">{item?.itemsPrice.toLocaleString('vi-VN')} ₫</div>
+                                        </div>
                                     </div>
-                                    <div className="item-price">
-                                        <div className="price">{item?.productPrice.toLocaleString('vi-VN')} ₫</div>
-                                        <div className="sale_price">{item?.productSalePrice.toLocaleString('vi-VN')} ₫</div>
+                                ))}
+                            </Col>
+                            <Col md={3}>
+                                <div className="order-summary">
+                                    <span className="text-tam-tinh">Tổng Đơn hàng</span>
+                                    <div className='price'>
+                                        <div className="tam-tinh">Tạm Tính:</div>
+                                        <div className='final-price'>{listCart?.totalPrice?.toLocaleString('vi-VN')} ₫</div>
                                     </div>
-                                    <div className="tong-price">{item?.itemsPrice.toLocaleString('vi-VN')} ₫</div>
+                                    <div className='price'>
+                                        <div className="tam-tinh">Mã giảm:</div>
+                                        <div className='final-price'>-{listCart?.discountValue?.toLocaleString('vi-VN')} ₫</div>
+                                    </div>
+                                    <div className="price">
+                                        <div className="tam-tinh">Tổng cộng:</div>
+                                        <div className="final-price">{listCart?.finalPrice?.toLocaleString('vi-VN')} ₫</div>
+                                    </div>
+                                    <Button variant="success" onClick={handleCheckOut} className="check-out" block>
+                                        Thanh toán
+                                    </Button>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <div className="apply-voucher">
+                                <div
+                                    className="flex items-center mb-4 cursor-pointer"
+                                    onClick={() => setIsOpen(!isOpen)}
+                                >
+                                    <ChevronDown
+                                        className={`text ${isOpen ? '' : '-rotate-90'}`}
+                                        size={20}
+                                    />
+                                    <span className="title-voucher">MÃ GIẢM GIÁ</span>
+                                </div>
+                                <div className={`transition-all duration-300 origin-top ${isOpen ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+                                    <div className="top-voucher gap-2 mb-4">
+                                        <div className='row-text'>
+                                            <div className=''>Mã đã được áp dụng</div>
+                                            <div className=''>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Nhập mã giảm giá/Phiếu mua hàng"
+                                                    className="flex-1 px-4 py-2 border rounded"
+                                                    value={listCart.voucherProgramName || ""}
+                                                    onChange={(e) => setSelectedVoucher(e.target.value)}
+                                                />
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div className="bottom-voucher">
+                                        {activeVouchers.map((voucher) => (
+                                            <div key={voucher.id} className="item-voucher col-5">
+                                                <div className="boc-icon">
+                                                    <div className=""><CiDiscount1 className="text-per" /></div>
+                                                </div>
+                                                <div className="flex-1">
+                                                    <div className="text">
+                                                        {voucher.discountType === 1
+                                                            ? `Giảm ${voucher.discountValue.toLocaleString('vi-VN')}₫`
+                                                            : `Giảm ${voucher.discountValue}%`}
+                                                    </div>
+                                                    <div className="tex">
+                                                        {voucher.minimumOrderValue && `Đơn hàng tối thiểu: ${voucher.minimumOrderValue.toLocaleString('vi-VN')}₫`}
+                                                    </div>
+                                                    <div className="text">
+                                                        <span className="text-gray-600">Mã: </span>
+                                                        <span>{voucher.code}</span>
+                                                    </div>
+                                                    <div className="text">
+                                                        HSD: {new Date(voucher.endTime).toLocaleString('vi-VN')}
+                                                    </div>
+                                                </div>
+                                                <div className="text-cancel">
+                                                    {listCart.voucherId === voucher.id ? (
+                                                        <button className="btn btn-danger" onClick={handleRemoveVoucher}>
+                                                            Gỡ bỏ
+                                                        </button>
+                                                    ) : (
+                                                        <button className="btn btn-success" onClick={() => handleApplyVoucher(voucher.id)}>
+                                                            Áp dụng
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                <AlertCircle className="text-gray-400" size={20} />
+                                            </div>
+                                        ))}
+
+                                    </div>
                                 </div>
                             </div>
-                        ))}
+                        </Row>
                     </Col>
-                    <Col md={3}>
-                        <div className="order-summary">
-                            <span className="text-tam-tinh">Tổng Đơn hàng</span>
-                            <div className='price'>
-                                <div className="tam-tinh">Tạm Tính:</div>
-                                <div className='final-price'>{listCart?.finalPrice.toLocaleString('vi-VN')} ₫</div>
-                            </div>
-                            <Button variant="success" onClick={handleCheckOut} className="check-out" block>
-                                Thanh toán
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
-            ) : (
-                <div>Không có sản phẩm nào</div>
-            )}
+                ) : (
+                    <div>Không có sản phẩm nào</div>
+                )}
+            </div>
         </div>
-    </div>
-    
     );
 };
 

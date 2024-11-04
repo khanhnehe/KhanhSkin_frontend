@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchAllUser, createNewUser, updatedUser, deletedUser, fetchAllBrand, createNewBrand, updatedBrand, deletedBrand,
   fetchAllCategory, createNewCategory, updatedCategory, deletedCategory, fetchAllType, createNewType, updatedType, deletedType,
-  fetchAllProduct, createNewProduct, updatedProduct, deletedProduct, 
+  fetchAllProduct, createNewProduct, updatedProduct, deletedProduct,
   getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands, getInfoForProduct,
-  getCartByUser
+  getCartByUser, getPageProduct, getPageOrders, getVoucher, getActiveVouchers, applyToVoucher
 } from '../action/adminThunks';
 
 const initialState = {
@@ -18,6 +18,10 @@ const initialState = {
   categoryPrdocut: [],
   infoOfProduct: null,
   cartByUser: null,
+  allOrder: [],
+  activeVoucher: [],
+  totalRecord: 0,
+  allVoucher: [],
   error: null,
 };
 
@@ -77,8 +81,6 @@ const adminSlice = createSlice({
     createEntityCases(builder, [fetchAllBrand, createNewBrand, updatedBrand, deletedBrand], 'allBrand');
     createEntityCases(builder, [fetchAllCategory, createNewCategory, updatedCategory, deletedCategory], 'allCategory');
     createEntityCases(builder, [fetchAllType, createNewType, updatedType, deletedType], 'allType');
-    createEntityCases(builder, [fetchAllProduct, createNewProduct, updatedProduct, deletedProduct], 'allProduct');
-
 
     // Xử lý trạng thái cho action getFilteredProducts
     builder
@@ -93,80 +95,145 @@ const adminSlice = createSlice({
       });
 
 
-      builder
+    builder
       .addCase(postFilteredProducts.pending, (state) => {
-        state.error = null; 
+        state.error = null;
       })
       .addCase(postFilteredProducts.fulfilled, (state, action) => {
-        state.getFilterProducts = action.payload; 
+        state.getFilterProducts = action.payload;
       })
       .addCase(postFilteredProducts.rejected, (state, action) => {
-        state.error = action.payload; 
+        state.error = action.payload;
       });
 
 
-  builder
+    builder
       .addCase(getProductCategory.pending, (state) => {
-        state.error = null; 
+        state.error = null;
       })
       .addCase(getProductCategory.fulfilled, (state, action) => {
-        state.categoryPrdocut = action.payload; 
+        state.categoryPrdocut = action.payload;
       })
       .addCase(getProductCategory.rejected, (state, action) => {
-        state.error = action.payload; 
+        state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(getProductTypes.pending, (state) => {
-        state.error = null; 
+        state.error = null;
       })
       .addCase(getProductTypes.fulfilled, (state, action) => {
-        state.categoryPrdocut = action.payload; 
+        state.categoryPrdocut = action.payload;
       })
       .addCase(getProductTypes.rejected, (state, action) => {
-        state.error = action.payload; 
+        state.error = action.payload;
       });
 
 
-      builder
+    builder
       .addCase(getProductBrands.pending, (state) => {
-        state.error = null; 
+        state.error = null;
       })
       .addCase(getProductBrands.fulfilled, (state, action) => {
-        state.categoryPrdocut = action.payload; 
+        state.categoryPrdocut = action.payload;
       })
       .addCase(getProductBrands.rejected, (state, action) => {
-        state.error = action.payload; 
+        state.error = action.payload;
       });
 
 
-      builder
+    builder
       .addCase(getInfoForProduct.pending, (state) => {
-        state.error = null; 
+        state.error = null;
       })
       .addCase(getInfoForProduct.fulfilled, (state, action) => {
-        state.infoOfProduct = action.payload; 
+        state.infoOfProduct = action.payload;
       })
       .addCase(getInfoForProduct.rejected, (state, action) => {
-        state.error = action.payload; 
+        state.error = action.payload;
+      });
+
+
+    builder
+      .addCase(getCartByUser.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getCartByUser.fulfilled, (state, action) => {
+        state.cartByUser = {
+          ...state.cartByUser,
+          ...action.payload,
+        };
+      })
+      .addCase(getCartByUser.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
+
+
+    builder
+      .addCase(getPageProduct.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getPageProduct.fulfilled, (state, action) => {
+        state.allProduct = action.payload.items;
+        state.totalRecord = action.payload.totalRecord;
+      })
+      .addCase(getPageProduct.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
+    //order
+    builder
+      .addCase(getPageOrders.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getPageOrders.fulfilled, (state, action) => {
+        state.allOrder = action.payload.items;
+        state.totalRecord = action.payload.totalRecord;
+      })
+      .addCase(getPageOrders.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
+    //
+
+    builder
+      .addCase(getVoucher.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getVoucher.fulfilled, (state, action) => {
+        state.allVoucher = action.payload;
+      })
+      .addCase(getVoucher.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
+      //
+      builder
+      .addCase(getActiveVouchers.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getActiveVouchers.fulfilled, (state, action) => {
+        state.activeVoucher = action.payload;
+      })
+      .addCase(getActiveVouchers.rejected, (state, action) => {
+        state.error = action.payload;
       });
 
 
       builder
-      .addCase(getCartByUser.pending, (state) => {
-        state.error = null; 
-      })
-      .addCase(getCartByUser.fulfilled, (state, action) => {
-        state.cartByUser = action.payload; 
-      })
-      .addCase(getCartByUser.rejected, (state, action) => {
-        state.error = action.payload; 
-      });
-
-
-
-
-
+  .addCase(applyToVoucher.pending, (state) => {
+      state.error = null;
+  })
+  .addCase(applyToVoucher.fulfilled, (state, action) => {
+      state.cartByUser = {
+        ...state.cartByUser,
+        ...action.payload, // Cập nhật giỏ hàng với giá trị giảm giá mới
+      };
+  })
+  .addCase(applyToVoucher.rejected, (state, action) => {
+      state.error = action.payload;
+  });
 
 
 
