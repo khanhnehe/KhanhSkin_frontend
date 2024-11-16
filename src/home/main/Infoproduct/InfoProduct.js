@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
 import { getInfoForProduct, addProductCart } from '../../../store/action/adminThunks';
+import { getReviewsProduct } from '../../../store/action/userThunks';
 import './InfoProduct.scss';
 import { toast } from 'react-toastify';
 import { GrPrevious, GrNext, GrFormNext } from "react-icons/gr";
 import { IoIosStar } from "react-icons/io";
 import Rating from '@mui/material/Rating';
+import ReactPaginate from 'react-paginate';
 
 const InfoProduct = () => {
     const dispatch = useDispatch();
@@ -17,11 +19,31 @@ const InfoProduct = () => {
     const [start, setStart] = useState(0);
     const [amount, setAmount] = useState(1);
     const [isExpanded, setIsExpanded] = useState(false);
+    //review
+    const allReview = useSelector((state) => state.root.user.reviewProduct);
+    const totalRecor = useSelector((state) => state.root.user.totalRecord);
+    const [currentPage, setCurrentPage] = useState(0);
+    const productPerPage = 5;
+
 
     useEffect(() => {
         dispatch(getInfoForProduct(id));
     }, [dispatch, id]);
 
+    //review
+    useEffect(() => {
+        dispatch(getReviewsProduct({
+            productId: id,
+            pageIndex: currentPage + 1,
+            pageSize: productPerPage,
+            isAscending: true,
+            isApproved: true
+        }));
+    }, [dispatch, id, currentPage]);
+
+    const handlePageClick = (event) => {
+        setCurrentPage(event.selected);
+    };
     const decreaseAmount = () => {
         setAmount(prev => Math.max(prev - 1, 1));
     };
@@ -38,7 +60,7 @@ const InfoProduct = () => {
             variantId: currentVariant ? currentVariant.id : undefined,
             // Add any additional fields if needed for the cart, like `voucherId`
         };
-    
+
         try {
             const resultAction = await dispatch(addProductCart(input));
             if (addProductCart.fulfilled.match(resultAction)) {
@@ -48,7 +70,7 @@ const InfoProduct = () => {
             // Error handling is already done in the thunk
         }
     };
-    
+
     const images = React.useMemo(() => {
         if (!infoProduct) return [];
         const productImages = infoProduct.images || [];
@@ -74,6 +96,7 @@ const InfoProduct = () => {
     }
 
     const currentImageUrl = currentVariant ? currentVariant.imageUrl : images[currentImage];
+
 
 
     return (
@@ -181,56 +204,70 @@ const InfoProduct = () => {
                                     <div className='mua-hang'>
                                         <div className='mua-ngay'>Mua ngay</div>
                                         <div className='add' onClick={addToCart}>Thêm vào giỏ hàng</div>
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
 
-                    <div className='info-review container mt-3'>
-                        {/* <div className='title mb-2'>Chi tiết sản phẩm</div> */}
-                        <div
-                            className='description-info'
-                            dangerouslySetInnerHTML={{ __html: infoProduct.description }}
-                            style={{ maxHeight: isExpanded ? '' : '350px', overflow: 'hidden' }}
-                        ></div>
-                        <div className="button-container">
-                            {isExpanded ? (
-                                <button className='btn-expand'
-                                    onClick={() => setIsExpanded(false)}>Thu gọn</button>
-                            ) : (
-                                <button className='btn-expand'
-                                    onClick={() => setIsExpanded(true)}>Mở rộng</button>
-                            )}
-                        </div>
-                        <div className='review'>
-                            <div className='boc-dg'>
-                                <div className='title'>Đánh giá sản phẩm</div>
-                                <div className='boc-sao'>
-                                    <p className='text-star'>{infoProduct.averageRating}<IoIosStar className='icon-star' /></p>
-                                    <p className='text-p'>trên  5</p>
-                                </div>
+                <div className='info-review container mt-3'>
+                    {/* <div className='title mb-2'>Chi tiết sản phẩm</div> */}
+                    <div
+                        className='description-info'
+                        dangerouslySetInnerHTML={{ __html: infoProduct.description }}
+                        style={{ maxHeight: isExpanded ? '' : '350px', overflow: 'hidden' }}
+                    ></div>
+                    <div className="button-container">
+                        {isExpanded ? (
+                            <button className='btn-expand'
+                                onClick={() => setIsExpanded(false)}>Thu gọn</button>
+                        ) : (
+                            <button className='btn-expand'
+                                onClick={() => setIsExpanded(true)}>Mở rộng</button>
+                        )}
+                    </div>
+                    <div className='review'>
+                        <div className='boc-dg'>
+                            <div className='title'>Đánh giá sản phẩm</div>
+                            <div className='boc-sao'>
+                                <p className='text-star'>{infoProduct.averageRating}<IoIosStar className='icon-star' /></p>
+                                <p className='text-p'>trên  5</p>
                             </div>
                         </div>
+                    </div>
 
 
-                        {/* {infoProduct.reviews?.map((review, index) => (
-                                <div key={review.id} className='danh-gia mt-4'>
+                    <div className='review-list'>
+                        {allReview && allReview.length > 0 ? (
+                            allReview.map((review) => (
+                                <div key={review.id} className='boc-review'>
                                     <div className='user-info'>
-                                        <img className='user-image' src={review.user.image} alt={review.user.firstName} />
-                                        <div className='user-name'>{review.user.firstName}</div>
+                                        <img src={review.user.image} alt={review.user.fullName} className='user-image' />
+                                        <p className='user-name'>{review.user.fullName}</p>
                                     </div>
-                                    <div className='cmt-info'>
-                                        <div className='rating'>{review.rating} <IoIosStar className='icon-star' /> </div>
-                                        {review.variantName && <span className='variantName mb-2'>{review.variantName}</span>}
-                                        <div className='comment'>{review.comment}</div>
-                                        <div className='created-at'>{new Date(review.createdAt).toLocaleString()}</div>
-                                    </div>
+                                    <Rating value={review.rating} readOnly className='review-rating' />
+                                    <p className='comment'>{review.comment}</p>
+                                    <p className='created-at'>{new Date(review.reviewDate).toLocaleDateString()}</p>
                                 </div>
-                            ))} */}
+                            ))
+                        ) : (
+                            <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                        )}
                     </div>
-                
+                    <ReactPaginate
+                        previousLabel={'<'}
+                        nextLabel={'>'}
+                        breakLabel={'...'}
+                        pageCount={Math.ceil(totalRecor / productPerPage)}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageClick}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'}
+                    />
+                </div>
+
             </div>
         </>
     );

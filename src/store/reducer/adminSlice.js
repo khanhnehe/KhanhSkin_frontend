@@ -4,7 +4,7 @@ import {
   fetchAllCategory, createNewCategory, updatedCategory, deletedCategory, fetchAllType, createNewType, updatedType, deletedType,
   fetchAllProduct, createNewProduct, updatedProduct, deletedProduct,
   getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands, getInfoForProduct,
-  getCartByUser, getPageProduct, getPageOrders, getVoucher, getActiveVouchers, applyToVoucher
+  getCartByUser, getPageProduct, getPageOrders, getVoucher, getActiveVouchers, applyToVoucher,getPageSupplier, getPageInventoryLog
 } from '../action/adminThunks';
 
 const initialState = {
@@ -22,6 +22,8 @@ const initialState = {
   activeVoucher: [],
   totalRecord: 0,
   allVoucher: [],
+  allSupplier: [],
+  allInventoryLog: [],
   error: null,
 };
 
@@ -228,11 +230,38 @@ const adminSlice = createSlice({
   .addCase(applyToVoucher.fulfilled, (state, action) => {
       state.cartByUser = {
         ...state.cartByUser,
-        ...action.payload, // Cập nhật giỏ hàng với giá trị giảm giá mới
+        ...action.payload, 
       };
   })
   .addCase(applyToVoucher.rejected, (state, action) => {
       state.error = action.payload;
+  });
+
+  //
+
+  builder
+  .addCase(getPageSupplier.pending, (state) => {
+    state.error = null;
+  })
+  .addCase(getPageSupplier.fulfilled, (state, action) => {
+    state.allSupplier = action.payload.items;
+    state.totalRecord = action.payload.totalRecord;
+  })
+  .addCase(getPageSupplier.rejected, (state, action) => {
+    state.error = action.payload;
+  });
+  //
+
+  builder
+  .addCase(getPageInventoryLog.pending, (state) => {
+    state.error = null;
+  })
+  .addCase(getPageInventoryLog.fulfilled, (state, action) => {
+    state.allInventoryLog = action.payload.items;
+    state.totalRecord = action.payload.totalRecord;
+  })
+  .addCase(getPageInventoryLog.rejected, (state, action) => {
+    state.error = action.payload;
   });
 
 

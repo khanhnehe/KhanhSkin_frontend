@@ -15,6 +15,10 @@ import VoucherGlobal from "../admin/Voucher/VoucherGlobal";
 import VoucherSpecific from "../admin/Voucher/VoucherSpecific";
 import Order from '../admin/Order/Order';
 import Voucher from "../admin/Voucher/Voucher";
+import Supplier from "../admin/ManagerSku/Supplier";
+import ImportProduct from "../admin/ManagerSku/ImportProduct";
+import Inventory from "../admin/ManagerSku/Inventory";
+import ImportInventory from "../admin/ManagerSku/ImportInventory";
 
 const System = () => {
     return (
@@ -36,6 +40,10 @@ const System = () => {
                         <Route path="voucher" element={<Voucher />} />
                         <Route path="voucher-global" element={<VoucherGlobal />} />
                         <Route path="voucher-specific" element={<VoucherSpecific />} />
+                        <Route path="manage-supplier" element={<Supplier />} />
+                        <Route path="admin-inventory" element={<ImportInventory />} />
+                        <Route path="import-product" element={<ImportProduct />} />
+                        <Route path="inventory" element={<Inventory />} />
                         {/* Thêm các route khác cho admin ở đây */}
                     </Routes>
                 </div>

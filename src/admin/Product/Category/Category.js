@@ -149,7 +149,13 @@ const Category = () => {
       <h4 style={{color: "#c7313f"}}>DANH MỤC SẢN PHẨM</h4>
       <div className='top mt-2'>
           <div className='bot-btn mb-4'>
-            <Button variant="contained" className="custom-button" endIcon={<IoMdAdd />} onClick={handleOpen}>
+            <Button variant="contained" sx={{
+        backgroundColor: '#dc3545',
+        color: 'white',
+        '&:hover': {
+            backgroundColor: '#b22b38',
+        }
+    }} endIcon={<IoMdAdd />} onClick={handleOpen}>
               Thêm danh mục
             </Button>
           </div>
@@ -264,7 +270,13 @@ const Category = () => {
                   fullWidth
                   variant="contained"
                   endIcon={<SendIcon />}
-                  className="custom-button"
+                  sx={{
+        backgroundColor: '#dc3545',
+        color: 'white',
+        '&:hover': {
+            backgroundColor: '#b22b38',
+        }
+    }}
                 >
                   {editMode ? 'Cập nhật' : 'Thêm mới'}
                 </Button>

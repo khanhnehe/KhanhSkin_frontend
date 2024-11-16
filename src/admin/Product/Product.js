@@ -20,9 +20,9 @@ const Product = () => {
     const allProducts = useSelector((state) => state.root.admin.allProduct);
     const totalRecor = useSelector((state) => state.root.admin.totalRecord);
 
-    const [searchTerm, setSearchTerm] = useState(""); 
-    const [currentPage, setCurrentPage] = useState(0);  
-    const [productPerPage] = useState(5);               
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(0);
+    const [productPerPage] = useState(5);
 
     // Memoize parameters to avoid unnecessary recalculations
     const searchParams = useMemo(() => ({
@@ -51,7 +51,7 @@ const Product = () => {
             cancelButtonText: 'Hủy'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deletedProduct(productId));
+                dispatch(deletedProduct({ id: productId, searchParams }));
             }
         });
     };
@@ -65,17 +65,14 @@ const Product = () => {
     };
 
     const handleSearchInputChange = (event) => {
-        setSearchTerm(event.target.value); 
+        setSearchTerm(event.target.value);
     };
 
     const handlePageClick = (event) => {
-        setCurrentPage(event.selected); 
+        setCurrentPage(event.selected);
     };
 
-    const handleSearch = () => {
-        setCurrentPage(0);  
-        fetchProducts();   
-    };
+ 
 
     // Gọi fetchProducts khi component được mount lần đầu tiên
     useEffect(() => {
@@ -85,26 +82,21 @@ const Product = () => {
     return (
         <div className="manager-product">
             <div className='top'>
-                <TextField
-                    label="Tìm kiếm sản phẩm"
-                    variant="outlined"
-                    value={searchTerm}
-                    onChange={handleSearchInputChange}
-                    style={{ marginRight: '10px' }}
-                />
+               <div className='search-bar col-7 me-4 '>
+                    <input
+                        type='text'
+                        placeholder='Nhập tên sản phẩm, sku để tìm kiếm '
+                        value={searchTerm}
+                        onChange={handleSearchInputChange}
+                    />
+                    <IoSearch className="search-icon" />
+                </div>
+
                 <Button
                     variant="contained"
-                    className="search-button"
-                    startIcon={<IoSearch />}
-                    onClick={handleSearch}   
-                >
-                    Tìm kiếm
-                </Button>
-                <Button
-                    variant="contained"
-                    className="custom-button"
                     endIcon={<IoMdAdd />}
                     onClick={handleAddProductClick}
+                    style={{ backgroundColor: '#dc3545', color: 'white' }}
                 >
                     Thêm sản phẩm
                 </Button>

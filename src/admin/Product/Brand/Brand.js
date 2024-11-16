@@ -161,10 +161,18 @@ const Brand = () => {
         <>
             <div className="manager-brand">
                 <span className='top'></span>
-                <h4 style={{color: "#c7313f"}}>THƯƠNG HIỆU</h4>
+                <h4 style={{ color: "#c7313f" }}>THƯƠNG HIỆU</h4>
                 <div className='bot mt-2'>
                     <div className='bot-btn mb-4'>
-                        <Button variant="contained" className="custom-button" endIcon={<IoMdAdd />} onClick={handleOpen}>
+                        <Button variant="contained"
+                            sx={{
+                                backgroundColor: '#dc3545',
+                                color: 'white',
+                                '&:hover': {
+                                    backgroundColor: '#b22b38',
+                                }
+                            }} endIcon={<IoMdAdd />}
+                            onClick={handleOpen}>
                             Thêm thương hiệu
                         </Button>
                     </div>
@@ -329,7 +337,13 @@ const Brand = () => {
                                     fullWidth
                                     variant="contained"
                                     endIcon={<SendIcon />}
-                                    className="custom-button"
+                                    sx={{
+                                        backgroundColor: '#dc3545',
+                                        color: 'white',
+                                        '&:hover': {
+                                            backgroundColor: '#b22b38',
+                                        }
+                                    }}
                                 >
                                     {editMode ? 'Cập nhật' : 'Thêm mới'}
                                 </Button>

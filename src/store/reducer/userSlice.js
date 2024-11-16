@@ -3,7 +3,7 @@ import { loginApiService } from '../../services/userService';
 import { decodeToken, isTokenExpired } from '../../services/tokenService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from './loadingSlice'; // Import các hành động loading
-import { getUserById, getAddressById, getOrderByUser } from '../action/userThunks';
+import { getUserById, getAddressById, getOrderByUser, getReviewsProduct } from '../action/userThunks';
 
 
 export const loginUser = createAsyncThunk(
@@ -35,6 +35,7 @@ const userSlice = createSlice({
     accessToken: null,
     address: [],
     orderUser: [],
+    reviewProduct: [],
     isLoading: false,
     //
   },
@@ -122,6 +123,19 @@ const userSlice = createSlice({
       .addCase(getOrderByUser.rejected, (state, action) => {
         state.error = action.payload || 'Failed to fetch user information.';
         state.isLoading = false;
+      });
+
+      //
+      builder
+      .addCase(getReviewsProduct.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getReviewsProduct.fulfilled, (state, action) => {
+        state.reviewProduct = action.payload.items;
+        state.totalRecord = action.payload.totalRecord;
+      })
+      .addCase(getReviewsProduct.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

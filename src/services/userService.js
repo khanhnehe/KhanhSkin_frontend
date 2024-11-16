@@ -62,7 +62,9 @@ export const createReview = (input) => {
     return axios.post('/api/Review/create-reviews', input);
 };
 
-
+export const getReviewProduct = (input) => {
+    return axios.post('/api/Review/get-review-product', input);
+};
 export { 
     loginApiService,
     getAllUser,

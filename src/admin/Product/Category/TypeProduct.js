@@ -124,7 +124,13 @@ const TypeProduct = () => {
                 <div className='bot-type row'>
                 <div className='bot col-8 '>
                     <div className='bot-btn mb-4'>
-                        <Button variant="contained" className="custom-button" endIcon={<IoMdAdd />} onClick={handleOpen}>
+                        <Button variant="contained" sx={{
+        backgroundColor: '#dc3545',
+        color: 'white',
+        '&:hover': {
+            backgroundColor: '#b22b38',
+        }
+    }} endIcon={<IoMdAdd />} onClick={handleOpen}>
                             Thêm loại sản phẩm
                         </Button>
                     </div>
@@ -216,7 +222,13 @@ const TypeProduct = () => {
                                     fullWidth
                                     variant="contained"
                                     endIcon={<SendIcon />}
-                                    className="custom-button"
+                                    sx={{
+        backgroundColor: '#dc3545',
+        color: 'white',
+        '&:hover': {
+            backgroundColor: '#b22b38',
+        }
+    }}
                                 >
                                     {editMode ? 'Cập nhật' : 'Thêm mới'}
                                 </Button>

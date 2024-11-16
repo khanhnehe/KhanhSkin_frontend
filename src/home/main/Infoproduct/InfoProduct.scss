@@ -3,6 +3,42 @@
     // padding         : 30px;
     background-color: rgb(243 243 243);
 
+    .pagination {
+        display        : flex;
+        justify-content: center;
+        list-style     : none;
+        padding        : 0;
+        margin-top     : 20px;
+
+        li {
+            margin: 0 5px;
+
+            a {
+                padding        : 5px 10px;
+                border         : 1px solid #ddd;
+                color          : #333;
+                cursor         : pointer;
+                border-radius  : 3px;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: #f5f5f5;
+                }
+            }
+
+            &.active a {
+                background-color: #ff5253;
+                color           : white;
+                border-color    : #ff5253;
+            }
+
+            &.disabled a {
+                color : #999;
+                cursor: not-allowed;
+            }
+        }
+    }
+
     a {
         text-decoration: none;
         color          : black;
@@ -40,6 +76,7 @@
             .left {
                 // border: 1px solid red;
                 padding: 0px 0px 30px 30px;
+
                 .image-info {
 
                     button {
@@ -89,6 +126,7 @@
             //___phần phải
             .right {
                 padding: 0px 31px 0px 42px;
+
                 .info-top {
 
                     .brand-info {
@@ -366,14 +404,13 @@
 
     //phần review
     .info-review {
-        margin-top: 80px;
-        padding   : 20px 25px;
+        margin-top      : 80px;
+        padding         : 20px 25px;
         background-color: white;
 
         .title {
             font-size  : 25px;
             font-weight: 600;
-            font-family: fangsong;
             color      : #c31829;
 
         }
@@ -416,7 +453,6 @@
                 .title {
                     font-size    : 25px;
                     font-weight  : 600;
-                    font-family  : fangsong;
                     color        : #000;
                     margin-bottom: 15px
                 }
@@ -446,11 +482,21 @@
 
             }
 
-            .danh-gia {
-                border-bottom   : 1px solid #d8d8d8;
-                padding         : 5px;
-                margin-bottom   : 30px;
-                background-color: #f4f4f3;
+
+        }
+
+        .review-list {
+            padding            : 5px;
+            margin-bottom      : 30px;
+            /* background-color: #f4f4f3; */
+            display            : grid;
+            gap                : 20px;
+
+            .boc-review {
+                background-color: #f7f6f6;
+                padding: 18px 10px 6px 22px;
+                box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.1);
+                border-radius: 7px;
 
                 .user-info {
                     display: flex;
@@ -508,11 +554,12 @@
                     }
                 }
 
-
-
-
-
             }
+
+
+
+
+
         }
 
     }

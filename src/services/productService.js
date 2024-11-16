@@ -160,6 +160,31 @@ export const applyVoucher = ({ voucherId, action }) => {
     });
 };
 
+export const createSupplier = (input) => {
+    return axios.post('/api/Supplier/create-supplier', input);
+};
+
+export const getPagedSupplier = (input) => {
+    return axios.post('/api/Supplier/get-paged-supplier', input);
+};
+
+export const updateSupplier = (id, data) => {
+    return axios.put(`/api/Supplier/update-supplier/${id}`, data)
+}
+
+export const deleteSupplier = (id) => {
+    return axios.delete(`/api/Supplier/delete-supplier/${id}`);
+}
+
+export const importInventory = (input) => {
+    return axios.post('/api/Product/import-inventory', input);
+};
+
+export const getPagedLogs = (input) => {
+    return axios.post('/api/Inventory/get-paged-logs', input);
+};
+
+
 export {
     getAllBrand,
     createBrand,

@@ -9,7 +9,9 @@ import { createBrand, getAllBrand, updateBrand, deleteBrand,
   getFilterProducts, postFilterProducts, getProductByCategory,
   getProductBrand, getProductType, getInfoProduct, addProductToCart,
   getCartByUserId, deleteCartItem, checkoutMyOrder, getPagedProducts,
-  getOrders, createVoucher, getAllVoucher, getActiveVoucher, applyVoucher
+  getOrders, createVoucher, getAllVoucher, getActiveVoucher, applyVoucher,
+  createSupplier,getPagedSupplier,updateSupplier, deleteSupplier, importInventory,
+  getPagedLogs
 
  } from '../../services/productService';
 
@@ -357,13 +359,13 @@ export const updatedProduct = createAsyncThunk(
 
 export const deletedProduct = createAsyncThunk(
   "admin/deletedProduct",
-  async (id , {dispatch, rejectWithValue }) => {
+  async ({id, searchParams} , {dispatch, rejectWithValue }) => {
     try {
       dispatch(showLoading());
       await deleteProduct(id); 
       dispatch(hideLoading());
       toast.success('Xóa sản phẩm thành công');
-      dispatch(getPageProduct()); 
+      dispatch(getPageProduct(searchParams)); 
       return {id};
     } catch (err) {
       dispatch(hideLoading());
@@ -658,7 +660,118 @@ export const applyToVoucher = createAsyncThunk(
   }
 );
 
+//
 
+export const getPageSupplier = createAsyncThunk(
+  'admin/getPageSupplier', 
+  async (input, { dispatch, rejectWithValue }) => {
+      try {
+          dispatch(showLoading());
+          const response = await getPagedSupplier(input);    
+          dispatch(hideLoading());
+          return response.result;   
+      } catch (err) {
+          dispatch(hideLoading());
+          const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+          toast.error(errorMessage);
+          return rejectWithValue(errorMessage);  
+      }
+  }
+);
+
+export const createdSupplier = createAsyncThunk(
+  'admin/createdSupplier', 
+  async (data, { dispatch, rejectWithValue }) => { 
+    try {
+      dispatch(showLoading());
+      const response = await createSupplier(data); 
+      dispatch(hideLoading());
+      toast.success('Thêm nhà phân phối thành công');
+      dispatch(getPageSupplier());
+      return response.result;
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage;
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage); 
+    }
+  }
+);
+
+export const updatedSupplier = createAsyncThunk(
+  "admin/updatedSupplier",
+  async ({ id, data }, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(showLoading());
+      const response = await updateSupplier(id, data); 
+      dispatch(getPageSupplier()); 
+      dispatch(hideLoading());
+      toast.success('Cập nhật danh mục thành công');
+      return response.result;
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra';
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage); 
+    }
+  }
+);
+
+export const deletedSupplier = createAsyncThunk(
+  "admin/deletedSupplier",
+    async (id , { dispatch,rejectWithValue }) => {
+      try {
+        await deleteSupplier(id); 
+        toast.success('Xóa nhà phân phối thành công');
+        dispatch(getPageSupplier());
+        return {id};
+      } catch (err) {
+        const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra';
+        toast.error(errorMessage);
+        return rejectWithValue(errorMessage); 
+      }
+    }
+  );
+
+  //
+
+  export const importProduct = createAsyncThunk(
+    'admin/importProduct', 
+    async (data, { dispatch, rejectWithValue }) => { 
+      try {
+        dispatch(showLoading());
+        const response = await importInventory(data); 
+        dispatch(hideLoading());
+        toast.success('Nhập hàng thành công');
+        dispatch(getPageInventoryLog())
+        return response.result;
+      } catch (err) {
+        dispatch(hideLoading());
+        const errorMessage = err.response?.data?.responseException?.exceptionMessage;
+        toast.error(errorMessage);
+        return rejectWithValue(errorMessage); 
+      }
+    }
+  );
+
+  //
+
+  export const getPageInventoryLog = createAsyncThunk(
+    'admin/getPageInventoryLog', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await getPagedLogs(input);    
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+  );
 export {
   updatedUser,
   deletedUser

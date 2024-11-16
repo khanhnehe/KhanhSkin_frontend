@@ -15,7 +15,7 @@ const menuItems = [
     key: "overview",
     children: [
       { title: "Doanh thu", path: "/admin/admin-manage" },
-      { title: "Nhập hàng", path: "/admin/phieu-nhap" },
+      { title: "Nhập hàng", path: "/admin/admin-inventory" },
     ],
   },
   {
@@ -24,6 +24,7 @@ const menuItems = [
     key: "users",
     children: [
       { title: "Quản lý người dùng", path: "/admin/manage-user" },
+      { title: "Nhà phân phối", path: "/admin/manage-supplier" },
     ],
   },
   {
@@ -32,6 +33,7 @@ const menuItems = [
     key: "orders",
     children: [
       { title: "Quản lý đơn hàng", path: "/admin/all-orders" },
+      { title: "Lịch sử xuất nhập", path: "/admin/inventory" },
     ],
   },
   {
@@ -52,20 +54,17 @@ const menuItems = [
       { title: "Mã giảm giá", path: "/admin/voucher" },
     ],
   },
+  
+  
 ];
 
 const Sidebar = () => {
   const location = useLocation();
-  const [openSections, setOpenSections] = useState({});
-
-  useEffect(() => {
-    const currentSection = menuItems.find(item => 
-      item.children.some(child => location.pathname.includes(child.path))
-    );
-    if (currentSection) {
-      setOpenSections(prev => ({ ...prev, [currentSection.key]: true }));
-    }
-  }, [location]);
+  
+  // Set all sections to be open initially
+  const [openSections, setOpenSections] = useState(
+    menuItems.reduce((acc, item) => ({ ...acc, [item.key]: true }), {})
+  );
 
   const toggleSection = (key) => {
     setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
@@ -73,7 +72,7 @@ const Sidebar = () => {
 
   const renderMenuItem = (item) => (
     <div key={item.key}>
-      <div className="title mt-2 mb-2" onClick={() => toggleSection(item.key)}>
+      <div className="title mt-1 mb-1" onClick={() => toggleSection(item.key)}>
         <item.icon className="icon" />
         {item.title}
         {openSections[item.key] ? <RiArrowDropUpLine className="arrow-icon" /> : <RiArrowDropDownLine className="arrow-icon" />}
@@ -94,8 +93,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <span className="logo">
-        <img src={logo} alt='Logo' />
-
+          <img src={logo} alt='Logo' />
         </span>
       </div>
       <div className="bottom">

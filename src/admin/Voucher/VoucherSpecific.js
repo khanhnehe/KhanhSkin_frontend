@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useMemo} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import { setHours, setMinutes } from 'date-fns';
@@ -27,6 +27,7 @@ const VoucherSpecific = () => {
     const [isActive, setIsActive] = useState(true);
     const [startDate, setStartDate] = useState(setHours(setMinutes(new Date(), 0), 0));
     const [endDate, setEndDate] = useState(setHours(setMinutes(new Date(), 59), 23));
+
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -49,18 +50,18 @@ const VoucherSpecific = () => {
         dispatch(getPageProduct(searchParams));
     };
 
-    
+
     const handleSearchInputChange = (event) => {
-        setSearchTerm(event.target.value); 
+        setSearchTerm(event.target.value);
     };
 
     const handlePageClick = (event) => {
-        setCurrentPage(event.selected); 
+        setCurrentPage(event.selected);
     };
-    
+
     const handleSearch = () => {
-        setCurrentPage(0);  
-        fetchProducts();   
+        setCurrentPage(0);
+        fetchProducts();
     };
 
     // Gọi fetchProducts khi component được mount lần đầu tiên
@@ -91,7 +92,7 @@ const VoucherSpecific = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
         const data = {
             programName,
             code,
@@ -110,7 +111,7 @@ const VoucherSpecific = () => {
                 productId: product.id
             }))
         };
-    
+
         dispatch(createdVoucher(data))
             .then(() => {
                 setProgramName('');
@@ -129,7 +130,7 @@ const VoucherSpecific = () => {
                 console.error("Failed to create voucher:", error);
             });
     };
-    
+
 
     return (
         <div className="voucher">

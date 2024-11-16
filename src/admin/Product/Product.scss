@@ -45,6 +45,7 @@
         padding-left: 230px;
         padding-top : 8px;
 
+       
         .top {
             margin-bottom   : 20px;
             padding         : 20px;
@@ -54,14 +55,43 @@
             display         : flex;
             justify-content : flex-end;
 
-            .custom-button {
+            .search-bar {
+                margin-bottom: 1px;
+
+                input {
+                    width        : 100%;
+                    padding      : 10px;
+                    border       : 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size    : 14px;
+                    box-shadow   : 2px 0 5px rgba(0, 0, 0, 0.1);
+
+                    &:focus {
+                        outline        : none;
+                        // border-color: #a5d651;
+                        box-shadow     : 0 0 5px rgba(203, 203, 203, 0.5);
+                    }
+                }
+
+                .search-icon {
+                    position: absolute;
+                    right: 255px;
+                    top: 36%;
+                    transform: translateY(-565%);
+                    font-size: 23px;
+                    color: #a4a2a2;
+                    pointer-events: none;
+                }
+            }
+            .custom-button{
                 background-color: #dc3545 !important;
                 color           : white !important;
-
+    
                 &:hover {
                     background-color: #b22b38 !important;
                 }
             }
+            
         }
 
         .bot {
@@ -111,19 +141,14 @@
                 }
             }
 
+            
+
             .bot-btn {
                 display        : flex;
                 justify-content: flex-end;
                 margin-bottom  : 1rem;
 
-                .custom-button {
-                    background-color: #ff5253 !important;
-                    color           : white !important;
-
-                    &:hover {
-                        background-color: #ff0808 !important;
-                    }
-                }
+                
             }
         }
 

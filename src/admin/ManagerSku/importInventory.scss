@@ -1,0 +1,291 @@
+.systemContainer {
+    flex            : 1 1;
+    padding         : 20px;
+    background-color: #e4e4e4;
+
+    .pagination {
+        display        : flex;
+        justify-content: center;
+        list-style     : none;
+        padding        : 0;
+        margin-top     : 20px;
+
+        li {
+            margin: 0 5px;
+
+            a {
+                padding        : 5px 10px;
+                border         : 1px solid #ddd;
+                color          : #333;
+                cursor         : pointer;
+                border-radius  : 3px;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: #f5f5f5;
+                }
+            }
+
+            &.active a {
+                background-color: #ff5253;
+                color           : white;
+                border-color    : #ff5253;
+            }
+
+            &.disabled a {
+                color : #999;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .custom-button {
+        background-color: #dc3545 !important;
+        color           : white !important;
+        margin-bottom   : 18px;
+        top             : 0;
+        left            : 1063px;
+
+        &:hover {
+            background-color: #b22b38 !important;
+        }
+    }
+
+    .importInventory {
+        width       : 100%;
+        color       : #616161;
+        padding-left: 230px;
+        padding-top : 8px;
+
+        .search {
+            margin-left        : 3px;
+            margin-right       : 3px;
+            margin-bottom      : 20px;
+            padding            : 20px;
+            // box-shadow      : -1px 3px 7px 4px rgba(201, 201, 201, 0.73);
+            background-color   : rgb(255, 255, 255);
+            border-radius      : 5px;
+            display            : flex;
+            flex-wrap          : nowrap;
+            margin-top         : 13px;
+
+            .date {
+                display: grid;
+                gap    : 5px;
+
+                .title-date {
+                    font-weight: 600;
+                }
+
+                .filter-date {
+                    display: flex;
+                    gap    : 10px;
+
+                    .date-picker-container {
+                        position: relative;
+                        // width: 100%;
+
+
+                        .form-control {
+                            width        : 80%;
+                            padding-right: 30px;
+                            /* Đảm bảo có đủ không gian cho icon */
+                        }
+
+                        .date-icon {
+                            position      : absolute;
+                            right         : 57px;
+                            top           : 50%;
+                            font-size     : 25px;
+                            transform     : translateY(-50%);
+                            pointer-events: none;
+                            /* Đảm bảo icon không chặn các sự kiện của input */
+                        }
+                    }
+                }
+            }
+
+            .search-bar {
+                margin-bottom: 1px;
+                margin-top   : 24px;
+
+                input {
+                    width        : 100%;
+                    padding      : 10px;
+                    border       : 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size    : 14px;
+                    box-shadow   : 2px 0 5px rgba(0, 0, 0, 0.1);
+
+                    &:focus {
+                        outline        : none;
+                        // border-color: #a5d651;
+                        box-shadow     : 0 0 5px rgba(203, 203, 203, 0.5);
+                    }
+                }
+
+                .search-icon {
+                    position      : absolute;
+                    right         : 569px;
+                    top           : 46%;
+                    transform     : translateY(-571%);
+                    font-size     : 23px;
+                    color         : #a4a2a2;
+                    pointer-events: none;
+                }
+            }
+        }
+
+
+        .top {
+            margin-bottom   : 20px;
+            padding         : 20px;
+            box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
+            background-color: rgb(255, 255, 255);
+            border-radius   : 5px;
+            display         : flex;
+            justify-content : space-between;
+
+
+        }
+
+        .bot {
+            padding         : 20px;
+            box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
+            background-color: rgb(255, 255, 255);
+            border-radius   : 5px;
+
+            .product-top {
+                display    : flex;
+                align-items: center;
+
+                .custom-td {
+                    display    : flex;
+                    align-items: center;
+                }
+            }
+
+            .product-row {
+                border-bottom: 2px solid #e0e0e0;
+            }
+
+            .variantName {
+                font-size: 14px;
+                color    : #666;
+            }
+
+            .variant-row {
+                font-size: 14px;
+                color    : #666;
+            }
+
+            .variantsku {
+                margin-top: 4px;
+            }
+
+            table {
+                width          : 100%;
+                border-collapse: collapse;
+                border         : 1px solid #e4e4e4;
+
+                th,
+                td {
+                    padding      : 12px;
+                    text-align   : left;
+                    border-bottom: 1px solid #ddd;
+                    white-space  : nowrap;
+                    overflow     : hidden;
+                    text-overflow: ellipsis;
+                }
+
+                th {
+                    background-color: #dfdede;
+                    color           : #0d0d0d;
+                }
+
+                .product-name {
+                    max-width    : 150px;
+                    overflow     : hidden;
+                    text-overflow: ellipsis !important;
+                    white-space  : nowrap;
+                }
+
+                td {
+                    &:nth-child(1) {
+                        /* Product Name */
+                        max-width    : 150px;
+                        overflow     : hidden;
+                        text-overflow: ellipsis !important;
+                        white-space  : nowrap;
+                    }
+
+                    &:nth-child(2) {
+                        /* Product Image */
+                        max-width: 100px;
+                    }
+
+                    &:nth-child(3) {
+                        /* Variant Image */
+                        max-width: 100px;
+                    }
+
+                    &:nth-child(4) {
+                        /* SKU */
+                        max-width    : 100px;
+                        overflow     : hidden;
+                        text-overflow: ellipsis !important;
+                        white-space  : nowrap;
+                    }
+
+                    &:nth-child(5) {
+                        /* Price */
+                        max-width    : 100px;
+                        overflow     : hidden;
+                        text-overflow: ellipsis !important;
+                        white-space  : nowrap;
+                    }
+
+                    &:nth-child(6) {
+                        /* Quantity */
+                        max-width : 80px;
+                        text-align: center;
+                    }
+
+                    &:nth-child(7) {
+                        /* Supplier Name */
+                        max-width    : 100px;
+                        overflow     : hidden;
+                        text-overflow: ellipsis !important;
+                        white-space  : nowrap;
+                    }
+
+                    &:nth-child(8) {
+                        /* Code Inventory */
+                        max-width    : 100px;
+                        overflow     : hidden;
+                        text-overflow: ellipsis !important;
+                        white-space  : nowrap;
+                    }
+
+                    &:nth-child(9) {
+                        /* Total Price */
+                        max-width : 100px;
+                        text-align: right;
+                    }
+                }
+
+
+                tr:nth-child(even) {
+                    // background-color: #f2f2f2;
+                }
+
+                tr:hover {
+                    // background-color: #dbd9d9;
+                }
+            }
+
+        }
+
+    }
+
+}

@@ -132,17 +132,18 @@ const OrderPage = () => {
           {order.orderItems.map((item, index) => (
             <div key={index} className='product-info'>
               <div className='product-info-name'>
-                <NavLink to={`/product/${item.productId}`} key={item.productId}>
-                  <div className='up-info'>
+                <div className='up-info'>
+                  <NavLink to={`/product/${item.productId}`} key={item.productId}>
                     <img src={item.images[0]} className='product-image' alt={item.productName} />
-                    <div className='name'>
-                      <span className='product-name'>{item.productName}</span>
-                      {item.nameVariant && (
-                        <span className='product-variant'>{item.nameVariant}</span>
-                      )}
-                    </div>
+                  </NavLink>
+
+                  <div className='name'>
+                    <span className='product-name'>{item.productName}</span>
+                    {item.nameVariant && (
+                      <span className='product-variant'>{item.nameVariant}</span>
+                    )}
                   </div>
-                </NavLink>
+                </div>
                 <div className='down-info'>
                   <span className='amount'>x {item.amount}</span>
                   <div className='price'>
@@ -164,12 +165,18 @@ const OrderPage = () => {
                 Hủy đơn
               </div>
             ) : order.orderStatus === 3 ? (
-              <div
-                className='btn btn-warning cancel-button'
-                onClick={() => openReviewModal(order)}
-              >
-                Đánh giá
-              </div>
+              order.hasReviewe ? (
+                <div className='btn btn-secondary text-light cancel-button disabled'>
+                  Đã đánh giá
+                </div>
+              ) : (
+                <div
+                  className='btn btn-success text-light cancel-button'
+                  onClick={() => openReviewModal(order)}
+                >
+                  Đánh giá
+                </div>
+              )
             ) : (
               <div></div>
             )}
@@ -183,6 +190,7 @@ const OrderPage = () => {
               </div>
             </div>
           </div>
+
         </div>
       ))
     ) : (

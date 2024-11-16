@@ -1,0 +1,144 @@
+.systemContainer {
+    flex: 1 1;
+    padding: 20px;
+    background-color: #e4e4e4;
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+
+        li {
+            margin: 0 5px;
+
+            a {
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+                color: #333;
+                cursor: pointer;
+                border-radius: 3px;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: #f5f5f5;
+                }
+            }
+
+            &.active a {
+                background-color: #ff5253;
+                color: white;
+                border-color: #ff5253;
+            }
+
+            &.disabled a {
+                color: #999;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .Inventory {
+        width: 100%;
+        color: #616161;
+        padding-left: 230px;
+        padding-top: 8px;
+
+        .search {
+            margin: 13px 3px 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: nowrap;
+
+            .date {
+                display: grid;
+                gap: 5px;
+
+                .title-date {
+                    font-weight: 600;
+                }
+
+                .filter-date {
+                    display: flex;
+                    gap: 10px;
+
+                    .date-picker-container {
+                        position: relative;
+
+                        .form-control {
+                            width: 80%;
+                            padding-right: 30px;
+                        }
+
+                        .date-icon {
+                            position: absolute;
+                            right: 57px;
+                            top: 50%;
+                            font-size: 25px;
+                            transform: translateY(-50%);
+                            pointer-events: none;
+                        }
+                    }
+                }
+            }
+
+            .search-bar {
+                margin-top: 24px;
+
+                input {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+                    &:focus {
+                        outline: none;
+                        box-shadow: 0 0 5px rgba(203, 203, 203, 0.5);
+                    }
+                }
+
+                .search-icon {
+                    position: absolute;
+                    right: 569px;
+                    top: 46%;
+                    transform: translateY(-571%);
+                    font-size: 23px;
+                    color: #a4a2a2;
+                    pointer-events: none;
+                }
+            }
+        }
+
+        .inventory-list {
+            .inventory-item {
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+                &.import {
+                    border-left: 5px solid #27f427;
+                }
+
+                &.export {
+                    border-left: 5px solid blue;
+                }
+
+                p {
+                    margin: 0;
+                    line-height: 1.5;
+                }
+
+                strong {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

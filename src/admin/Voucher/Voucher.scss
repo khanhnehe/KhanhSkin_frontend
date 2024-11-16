@@ -14,7 +14,28 @@
             box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
             background-color: rgb(255, 255, 255);
             border-radius   : 5px;
+            .product-list{
+                .info-product{
+                    display: flex;
+                    gap: 10px;
+    
+                    .product-name{
+                        width: 200px;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        font-size: 16px;
+                        /* font-weight: 600; */
+                        text-decoration: none;
+                    }
+    
+                }
+                
+    
+            }
         }
+      
 
     }
 

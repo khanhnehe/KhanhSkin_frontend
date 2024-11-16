@@ -14,15 +14,15 @@ import { MdOutlineDateRange } from "react-icons/md";
 const Order = () => {
     const dispatch = useDispatch();
 
-    const [currentPage, setCurrentPage] = useState(0);  
+    const [currentPage, setCurrentPage] = useState(0);
     const [input, setInput] = useState({
         orderStatus: null,
         freeTextSearch: '',
-        pageIndex: currentPage + 1, 
+        pageIndex: currentPage + 1,
         pageSize: 5,
         sortBy: 'orderDate',
         isAscending: true,
-        startDate: null, 
+        startDate: null,
         endDate: null,
     });
 
@@ -30,8 +30,8 @@ const Order = () => {
     const totalRecord = useSelector((state) => state.root.admin.totalRecord);
 
     useEffect(() => {
-        fetchOrders(); 
-    }, [input, currentPage]); 
+        fetchOrders();
+    }, [input, currentPage]);
 
     const fetchOrders = useCallback(() => {
         const formattedStartDate = input.startDate
@@ -43,7 +43,7 @@ const Order = () => {
 
         const searchParams = {
             ...input,
-            pageIndex: currentPage + 1, 
+            pageIndex: currentPage + 1,
             startDate: formattedStartDate,
             endDate: formattedEndDate,
         };
@@ -81,7 +81,7 @@ const Order = () => {
                 dispatch(changeStatusOrder({ orderId, status: 'cancel', orderStatus: input.orderStatus }))
                     .then(() => {
                         Swal.fire('Thành công!', 'Đơn hàng đã được hủy.', 'success');
-                        fetchOrders(); // Fetch lại sau khi thay đổi thành công
+                        fetchOrders(); 
                     }).catch(() => {
                         Swal.fire('Lỗi!', 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
                     });
@@ -89,27 +89,34 @@ const Order = () => {
         });
     }, [dispatch, input.orderStatus, fetchOrders]);
 
+
+
+
     const handleConfirmOrder = useCallback((orderId) => {
         dispatch(changeStatusOrder({ orderId, status: 'confirm', orderStatus: input.orderStatus }))
             .then(() => {
                 Swal.fire('Thành công!', 'Đơn hàng đã được xác nhận.', 'success');
-                fetchOrders(); // Fetch lại sau khi thay đổi thành công
+                fetchOrders(); 
             }).catch(() => {
                 Swal.fire('Lỗi!', 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
             });
     }, [dispatch, input.orderStatus, fetchOrders]);
+
+    
+
+
 
     const handleReceiveOrder = useCallback((orderId) => {
         dispatch(changeStatusOrder({ orderId, status: 'receive', orderStatus: input.orderStatus }))
             .then(() => {
                 Swal.fire('Thành công!', 'Đơn hàng đã được nhận.', 'success');
-                fetchOrders(); // Fetch lại sau khi thay đổi thành công
             }).catch(() => {
                 Swal.fire('Lỗi!', 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
             });
     }, [dispatch, input.orderStatus, fetchOrders]);
 
- 
+
+
 
     const getColorAndName = (status) => {
         switch (status) {
@@ -134,7 +141,14 @@ const Order = () => {
         return listAllOrder && listAllOrder.length > 0 ? (
             listAllOrder.map(order => (
                 <div className='boc' key={order.trackingCode}>
+                    <div className='info-order'>
+                        <div className='user-top'>
+                        <img src={order.user?.image} className='img-user'></img>
+                        <div className='name-user'>{order.user.fullName}</div>
+                        </div>
+                   
                     <div className='code'>Mã đơn: {order.trackingCode}</div>
+                    </div>
                     {order.orderItems.map((item, index) => (
                         <div key={index} className='product-info'>
                             <div className='product-info-name'>
@@ -163,30 +177,30 @@ const Order = () => {
                         {order.orderStatus === 1 ? (
                             <div className='btn-group'>
                                 <div
-                                    className='btn btn-danger cancel-button'
+                                    className='btn btn-danger cancel-button me-3'
                                     onClick={() => handleCancelOrder(order.id)}
                                 >
                                     Hủy đơn
                                 </div>
                                 <div
-                                    className='btn btn-success confirm-button'
+                                    className='btn btn-success cancel-button'
                                     onClick={() => handleConfirmOrder(order.id)}
                                 >
                                     Xác nhận
                                 </div>
                             </div>
-                        ) : <div></div>}
-
-                        {order.orderStatus === 2 && (
+                        ) : order.orderStatus === 2 ? (
                             <div className='btn-group'>
                                 <div
-                                    className='btn btn-success receive-button'
+                                    className='btn btn-primary receive-button'
                                     onClick={() => handleReceiveOrder(order.id)}
                                 >
                                     Đã nhận hàng
                                 </div>
                             </div>
-                        )}
+                        ) : <div></div>}
+
+                        
 
                         <div className='right-price'>
                             <div className='tien'>
@@ -231,6 +245,7 @@ const Order = () => {
                         <div className='filter-date'>
                             <div className="date-picker-container">
                                 <DatePicker
+                                    placeholderText="Ngày đầu"
                                     selected={input.startDate}
                                     onChange={(date) => handleDateChange(date, true)}
                                     selectsStart
@@ -246,6 +261,7 @@ const Order = () => {
                             <div className="date-picker-container">
                                 <DatePicker
                                     selected={input.endDate}
+                                    placeholderText="Ngày cuối"
                                     onChange={(date) => handleDateChange(date, false)}
                                     selectsEnd
                                     startDate={input.startDate}

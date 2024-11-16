@@ -2,7 +2,8 @@
     flex            : 1 1;
     padding         : 20px;
     background-color: #e4e4e4;
-    overflow-x      : hidden; 
+    overflow-x      : hidden;
+
     .pagination {
         display        : flex;
         justify-content: center;
@@ -59,8 +60,8 @@
         .bottom-down {
             border       : 1px solid #dfdfdf;
             border-radius: 5px;
-            margin-left: 3px;
-            margin-right: 3px;
+            margin-left  : 3px;
+            margin-right : 3px;
 
             .option {
                 display         : flex;
@@ -105,54 +106,56 @@
         }
 
         .search {
-            margin-left: 3px;
-            margin-right: 3px;
-            margin-bottom   : 20px;
-            padding         : 20px;
+            margin-left        : 3px;
+            margin-right       : 3px;
+            margin-bottom      : 20px;
+            padding            : 20px;
             // box-shadow      : -1px 3px 7px 4px rgba(201, 201, 201, 0.73);
-            background-color: rgb(255, 255, 255);
-            border-radius   : 5px;
-            display         : flex;
-            flex-wrap       : nowrap;
-            margin-top      : 13px;
+            background-color   : rgb(255, 255, 255);
+            border-radius      : 5px;
+            display            : flex;
+            flex-wrap          : nowrap;
+            margin-top         : 13px;
 
             .date {
                 display: grid;
-                gap: 5px;
-              
+                gap    : 5px;
+
                 .title-date {
-                  font-weight: 600;
+                    font-weight: 600;
                 }
-              
+
                 .filter-date {
-                  display: flex;
-                  gap: 10px;
-              
-                  .date-picker-container {
-                    position: relative;
-                    // width: 100%;
-              
-                    
-                    .form-control {
-                      width: 80%;
-                      padding-right: 30px; /* Đảm bảo có đủ không gian cho icon */
+                    display: flex;
+                    gap    : 10px;
+
+                    .date-picker-container {
+                        position: relative;
+                        // width: 100%;
+
+
+                        .form-control {
+                            width        : 80%;
+                            padding-right: 30px;
+                            /* Đảm bảo có đủ không gian cho icon */
+                        }
+
+                        .date-icon {
+                            position      : absolute;
+                            right         : 57px;
+                            top           : 50%;
+                            font-size     : 25px;
+                            transform     : translateY(-50%);
+                            pointer-events: none;
+                            /* Đảm bảo icon không chặn các sự kiện của input */
+                        }
                     }
-              
-                    .date-icon {
-                      position: absolute;
-                      right: 57px;
-                      top: 50%;
-                      font-size: 25px;
-                      transform: translateY(-50%);
-                      pointer-events: none; /* Đảm bảo icon không chặn các sự kiện của input */
-                    }
-                  }
                 }
-              }
+            }
 
             .search-bar {
                 margin-bottom: 1px;
-                margin-top: 24px;
+                margin-top   : 24px;
 
                 input {
                     width        : 100%;
@@ -170,18 +173,18 @@
                 }
 
                 .search-icon {
-                    position: absolute;
-                    right: 569px;
-                    top: 50%;
-                    transform: translateY(-571%);
-                    font-size: 23px;
-                    color: #a4a2a2;
+                    position      : absolute;
+                    right         : 569px;
+                    top           : 50%;
+                    transform     : translateY(-571%);
+                    font-size     : 23px;
+                    color         : #a4a2a2;
                     pointer-events: none;
                 }
             }
         }
 
-       
+
 
 
 
@@ -198,16 +201,47 @@
                     margin-bottom   : 20px;
                     border          : 1px solid #ddd2d2;
 
-                    .code {
-                        font-size    : 12px;
-                        font-weight  : 700;
-                        text-align   : left;
-                        padding      : 10px 21px;
-                        color        : #909090;
-                        cursor       : pointer;
-                        margin-bottom: 3px;
-                        border-bottom: 1px solid #f0e8e8;
+                    .info-order {
+                        display         : flex;
+                        justify-content : space-between;
+                        padding         : 7px 0px 6px 20px;
+                        border-bottom   : 1px solid #e0dfdf;
+                        background-color: #fff3f3;
+                        border-radius   : 5px 5px 0px 0px;
+
+                        .user-top {
+                            display: flex;
+                            gap    : 10px;
+
+                            .img-user {
+                                border-radius         : 50px;
+                                width                 : 40px;
+                                height                : 40px;
+                                // background-image   : url('../../assets/avatar-trang-4.jpg');
+                                background-size       : cover;
+                                background-position   : center;
+                            }
+
+                            .name-user {
+                                font-weight: 600;
+                                margin-top : 10px;
+                                color      : #000000;
+                                font-size  : 13px;
+                            }
+
+                        }
+
+                        .code {
+                            font-size    : 12px;
+                            font-weight  : 700;
+                            text-align   : right;
+                            padding      : 10px 21px;
+                            color        : #909090;
+                            cursor       : pointer;
+                            margin-bottom: 3px;
+                        }
                     }
+
 
                     .product-info {
                         display        : flex;
@@ -289,6 +323,15 @@
                             font-size    : 14px;
                             border-radius: 4px;
                         }
+                        .receive-button{
+                            padding: 5px 14px;
+                            font-size: 14px;
+                            border-radius: 4px;
+                            background-color: #eb5bd8;
+                            color: #ffffff;
+                            border: none;
+                        }
+
 
                         .right-price {
                             display        : flex;

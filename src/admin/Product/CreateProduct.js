@@ -187,6 +187,7 @@ const CreateProduct = () => {
                     variants: []
                 });
                 setImagePreview([]);
+                navigate('/admin/manage-product');
             }
         } catch (error) {
             console.error('Error creating product:', error);
