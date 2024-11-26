@@ -90,6 +90,16 @@ const Order = () => {
     }, [dispatch, input.orderStatus, fetchOrders]);
 
 
+    const handleReceiveOrder = useCallback((orderId) => {
+        dispatch(changeStatusOrder({ orderId, status: 'receive', orderStatus: input.orderStatus }))
+            .then(() => {
+                Swal.fire('Thành công!', 'Đơn hàng đã được nhận.', 'success');
+                fetchOrders();
+            }).catch(() => {
+                Swal.fire('Lỗi!', 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
+            });
+        }, [dispatch, input.orderStatus, fetchOrders]);
+
 
 
     const handleConfirmOrder = useCallback((orderId) => {
@@ -106,16 +116,7 @@ const Order = () => {
 
 
 
-    const handleReceiveOrder = useCallback((orderId) => {
-        dispatch(changeStatusOrder({ orderId, status: 'receive', orderStatus: input.orderStatus }))
-            .then(() => {
-                Swal.fire('Thành công!', 'Đơn hàng đã được nhận.', 'success');
-            }).catch(() => {
-                Swal.fire('Lỗi!', 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
-            });
-    }, [dispatch, input.orderStatus, fetchOrders]);
-
-
+   
 
 
     const getColorAndName = (status) => {

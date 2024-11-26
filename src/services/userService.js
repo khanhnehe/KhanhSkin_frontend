@@ -65,6 +65,13 @@ export const createReview = (input) => {
 export const getReviewProduct = (input) => {
     return axios.post('/api/Review/get-review-product', input);
 };
+
+
+
+export const getRecommendations = (productId) => {
+    return axios.get(`/api/Product/${productId}/recommendations`);
+};
+
 export { 
     loginApiService,
     getAllUser,

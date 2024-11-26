@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
 import { getInfoForProduct, addProductCart } from '../../../store/action/adminThunks';
-import { getReviewsProduct } from '../../../store/action/userThunks';
+import { getReviewsProduct, getRecommendProduct } from '../../../store/action/userThunks';
 import './InfoProduct.scss';
 import { toast } from 'react-toastify';
 import { GrPrevious, GrNext, GrFormNext } from "react-icons/gr";
 import { IoIosStar } from "react-icons/io";
 import Rating from '@mui/material/Rating';
 import ReactPaginate from 'react-paginate';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const InfoProduct = () => {
     const dispatch = useDispatch();
@@ -26,8 +28,11 @@ const InfoProduct = () => {
     const productPerPage = 5;
 
 
+    const recommend = useSelector((state) => state.root.user.productRecommend);
+
     useEffect(() => {
         dispatch(getInfoForProduct(id));
+        dispatch(getRecommendProduct(id));
     }, [dispatch, id]);
 
     //review
@@ -97,7 +102,13 @@ const InfoProduct = () => {
 
     const currentImageUrl = currentVariant ? currentVariant.imageUrl : images[currentImage];
 
-
+    // gợi ý sp
+    const responsive = {
+        superLargeDesktop: { breakpoint: { max: 2000, min: 1024 }, items: 5 },
+        desktop: { breakpoint: { max: 1024, min: 768 }, items: 4 },
+        tablet: { breakpoint: { max: 768, min: 464 }, items: 3 },
+        mobile: { breakpoint: { max: 464, min: 0 }, items: 2 },
+    };
 
     return (
         <>
@@ -151,7 +162,7 @@ const InfoProduct = () => {
                                     </div>
                                     <div className='info-top-down'>
                                         <div className='title-info'>{infoProduct.productName}</div>
-                                        <div className='discount-info'>{currentVariant ? -currentVariant.discountVariant : -infoProduct.discount || 0}%</div>
+                                        <div className='discount-info'>{currentVariant ? -currentVariant.discountVariant : -infoProduct.discount}%</div>
                                     </div>
                                 </div>
                                 <div className='info-center col-9'>
@@ -209,64 +220,126 @@ const InfoProduct = () => {
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className='info-review container mt-3'>
-                    {/* <div className='title mb-2'>Chi tiết sản phẩm</div> */}
-                    <div
-                        className='description-info'
-                        dangerouslySetInnerHTML={{ __html: infoProduct.description }}
-                        style={{ maxHeight: isExpanded ? '' : '350px', overflow: 'hidden' }}
-                    ></div>
-                    <div className="button-container">
-                        {isExpanded ? (
-                            <button className='btn-expand'
-                                onClick={() => setIsExpanded(false)}>Thu gọn</button>
-                        ) : (
-                            <button className='btn-expand'
-                                onClick={() => setIsExpanded(true)}>Mở rộng</button>
-                        )}
+
+                   
+
+                    <div className='info-review mt-3'>
+                        {/* <div className='title mb-2'>Chi tiết sản phẩm</div> */}
+                        <div
+                            className='description-info mt-4'
+                            dangerouslySetInnerHTML={{ __html: infoProduct.description }}
+                            style={{ maxHeight: isExpanded ? '' : '350px', overflow: 'hidden' }}
+                        ></div>
+                        <div className="button-container">
+                            {isExpanded ? (
+                                <button className='btn-expand'
+                                    onClick={() => setIsExpanded(false)}>Thu gọn</button>
+                            ) : (
+                                <button className='btn-expand'
+                                    onClick={() => setIsExpanded(true)}>Mở rộng</button>
+                            )}
+                        </div>
+
+                        <div className="skin-item mt-5 mb-4">
+                        <div className='title-p mt-3'>Gợi ý sản phẩm</div>
+                        <Carousel responsive={responsive}>
+                            {recommend && recommend.length > 0 ? ( // Kiểm tra `recommend` trước khi sử dụng `.length`
+                                recommend.map((product) => (
+                                    <NavLink to={`/product/${product.id}`} key={product.id}>
+                                        <div key={product.id} className="custom-item">
+                                            <div className="image-container">
+                                                <div className="discount">-{product.discount}%</div>
+                                                <img
+                                                    src={product.images[0]}
+                                                    alt={product.productName}
+                                                    className="product-image"
+                                                />
+                                                <img
+                                                    src={product.images[1]}
+                                                    alt={product.productName}
+                                                    className="product-image hover-image"
+                                                />
+                                            </div>
+                                            <div className="bottom">
+                                                <div className="product-name">{product.productName}</div>
+                                                <div className="price">
+                                                    {product.price.toLocaleString('vi-VN', {
+                                                        style: 'currency',
+                                                        currency: 'VND',
+                                                    })}
+                                                </div>
+                                                <div className="sale">
+                                                    {product.salePrice.toLocaleString('vi-VN', {
+                                                        style: 'currency',
+                                                        currency: 'VND',
+                                                    })}
+                                                </div>
+                                                <div className="bottom-two">
+                                                    <div className="rating">
+                                                        <Rating
+                                                            name={`rating-${product.id}`}
+                                                            value={product.averageRating || 0}
+                                                            precision={0.5}
+                                                            readOnly
+                                                        />
+                                                    </div>
+                                                    <div className="purchases">
+                                                        {product.purchases} Đã bán
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </NavLink>
+                                ))
+                            ) : (
+                                <div>Không có sản phẩm nào</div>
+                            )}
+                        </Carousel>
                     </div>
-                    <div className='review'>
-                        <div className='boc-dg'>
-                            <div className='title'>Đánh giá sản phẩm</div>
-                            <div className='boc-sao'>
-                                <p className='text-star'>{infoProduct.averageRating}<IoIosStar className='icon-star' /></p>
-                                <p className='text-p'>trên  5</p>
+
+                        <div className='review'>
+                            <div className='boc-dg'>
+                                <div className='title'>Đánh giá sản phẩm</div>
+                                <div className='boc-sao'>
+                                    <p className='text-star'>{infoProduct.averageRating}<IoIosStar className='icon-star' /></p>
+                                    <p className='text-p'>trên  5</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div className='review-list'>
-                        {allReview && allReview.length > 0 ? (
-                            allReview.map((review) => (
-                                <div key={review.id} className='boc-review'>
-                                    <div className='user-info'>
-                                        <img src={review.user.image} alt={review.user.fullName} className='user-image' />
-                                        <p className='user-name'>{review.user.fullName}</p>
+                        <div className='review-list'>
+                            {allReview && allReview.length > 0 ? (
+                                allReview.map((review) => (
+                                    <div key={review.id} className='boc-review'>
+                                        <div className='user-info'>
+                                            <img src={review.user.image} alt={review.user.fullName} className='user-image' />
+                                            <p className='user-name'>{review.user.fullName}</p>
+                                        </div>
+                                        <Rating value={review.rating} readOnly className='review-rating' />
+                                        <p className='comment'>{review.comment}</p>
+                                        <p className='created-at'>{new Date(review.reviewDate).toLocaleDateString()}</p>
                                     </div>
-                                    <Rating value={review.rating} readOnly className='review-rating' />
-                                    <p className='comment'>{review.comment}</p>
-                                    <p className='created-at'>{new Date(review.reviewDate).toLocaleDateString()}</p>
-                                </div>
-                            ))
-                        ) : (
-                            <p>Chưa có đánh giá nào cho sản phẩm này.</p>
-                        )}
+                                ))
+                            ) : (
+                                <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                            )}
+                        </div>
+                        <ReactPaginate
+                            previousLabel={'<'}
+                            nextLabel={'>'}
+                            breakLabel={'...'}
+                            pageCount={Math.ceil(totalRecor / productPerPage)}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={'pagination'}
+                            activeClassName={'active'}
+                        />
                     </div>
-                    <ReactPaginate
-                        previousLabel={'<'}
-                        nextLabel={'>'}
-                        breakLabel={'...'}
-                        pageCount={Math.ceil(totalRecor / productPerPage)}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={5}
-                        onPageChange={handlePageClick}
-                        containerClassName={'pagination'}
-                        activeClassName={'active'}
-                    />
                 </div>
+
 
             </div>
         </>

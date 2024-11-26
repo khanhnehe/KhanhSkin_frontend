@@ -105,15 +105,26 @@ const Inventory = () => {
 
             <div className='inventory-list'>
                 {allInventoryLogs?.map((log, index) => (
-                    <div key={log.id} className={`inventory-item ${log.actionType === 1 ? 'import' : 'export'}`}>
+                    <div
+                        key={log.id}
+                        className={`inventory-item ${log.actionType === 1 ? 'import' : log.actionType === 2 ? 'export' : 'cancel'}`}
+                    >
                         <p><strong>{log.productName}</strong> - {log.variantName || 'Không có biến thể'}</p>
                         <p>Số Lượng: {log.quantityChange}</p>
                         <p>Ngày: {new Date(log.transactionDate).toLocaleDateString()}</p>
-                        <p>Loại hoạt động: {log.actionType === 1 ? 'Nhập' : 'Xuất'}</p>
+                        <p>
+                            Loại hoạt động:
+                            {log.actionType === 1
+                                ? ' Nhập'
+                                : log.actionType === 2
+                                    ? ' Xuất'
+                                    : ' Đơn hủy'}
+                        </p>
                         {log.supplierName && <p>Nhà Cung Cấp: {log.supplierName}</p>}
                     </div>
                 ))}
             </div>
+
 
 
             <ReactPaginate

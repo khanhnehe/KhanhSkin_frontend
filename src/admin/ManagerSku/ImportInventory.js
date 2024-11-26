@@ -30,7 +30,7 @@ const ImportInventory = () => {
         startDate: null,
         endDate: null,
     });
-
+    
     const fetchInventory = useCallback(() => {
         const formattedStartDate = input.startDate
             ? setHours(setMinutes(new Date(input.startDate), 0), 0).toISOString()
@@ -42,6 +42,7 @@ const ImportInventory = () => {
         const searchParams = {
             ...input,
             pageIndex: currentPage + 1,
+            pageSize: 5,
             startDate: formattedStartDate,
             endDate: formattedEndDate,
         };
@@ -196,11 +197,11 @@ const ImportInventory = () => {
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            <div>{log.costPrice.toLocaleString()} đ</div>
+                                            <div>{log.costPrice?.toLocaleString() || '0'} đ</div>
                                         </TableCell>
                                         <TableCell>{log.quantityChange}</TableCell>
                                         <TableCell>{log.supplierName || ""}</TableCell>
-                                        <TableCell>{log.totalPrice.toLocaleString()} đ</TableCell>
+                                        <TableCell>{log.totalPrice?.toLocaleString() || '0'} đ</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -70,6 +70,7 @@ const deletedUser = createAsyncThunk(
     try {
       await deleteUser(id); 
       toast.success('Xóa người dùng thành công');
+      dispatch(fetchAllUser());
       return {id};
     } catch (err) {
       dispatch(hideLoading());

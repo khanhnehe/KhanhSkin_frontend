@@ -1,10 +1,10 @@
 import React from 'react';
 import './Sidler.scss';
 import { Carousel } from 'react-bootstrap';
-import poster1 from '../../assets/poster/poster4.webp';
-import poster6 from '../../assets/poster/poster2.webp';
-import poster2 from '../../assets/poster/poster3.webp';
-import row1 from "../../assets/poster/bannermin1.webp"
+import poster1 from '../../assets/poster/anh3.png';
+import poster6 from '../../assets/poster/anh1.jpg';
+import poster2 from '../../assets/poster/anh2.png';
+import row1 from "../../assets/poster/be2.png"
 import row2 from "../../assets/poster/bannermin2.webp"
 // import row3 from "../../assets/banner-gaiam-gia.png"
 import './Sidler.scss';
@@ -36,9 +36,9 @@ const Sidler = () => {
                     <div className='row banner-row'>
                         <img src={row1} className="row-img" alt="Banner 1" />
                     </div>
-                    <div className='row banner-row' style={{height: '240px'}}>
+                    {/* <div className='row banner-row' style={{height: '240px'}}>
                         <img src={row2} className="row-img" alt="Banner 2" />
-                    </div>
+                    </div> */}
                 </div>
 
             </div>

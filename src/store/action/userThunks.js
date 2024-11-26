@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getAllUser, createUser, updateUser, deleteUser, getUserId, createAddress, updateAddress, deleteAddress, getAddressId,
     
-    getOrdersByUser,changeStatus, createReview,getReviewProduct
+    getOrdersByUser,changeStatus, createReview,getReviewProduct, getRecommendations
  } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from '../reducer/loadingSlice';
@@ -158,6 +158,24 @@ export const getReviewsProduct= createAsyncThunk(
         try {
             // dispatch(showLoading());
             const response = await getReviewProduct(input);    
+            // dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            // dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+);
+
+
+export const getRecommendProduct= createAsyncThunk(
+    'user/getRecommendProduct', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            // dispatch(showLoading());
+            const response = await getRecommendations(input);    
             // dispatch(hideLoading());
             return response.result;   
         } catch (err) {

@@ -22,7 +22,7 @@ const ImportProduct = () => {
 
     const searchParams = useMemo(() => ({
         freeTextSearch: searchTerm,
-        pageIndex: 3,
+        pageIndex: currentPage + 1,
         pageSize: productPerPage,
         isAscending: true,
         brandIds: [],
