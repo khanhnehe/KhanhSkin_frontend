@@ -1,44 +1,47 @@
+.pagination {
+    display        : flex;
+    justify-content: center;
+    list-style     : none;
+    padding        : 0;
+    margin-top     : 20px;
+
+    li {
+        margin: 0 5px;
+
+        a {
+            padding        : 5px 10px;
+            border         : 1px solid #ddd;
+            color          : #333;
+            cursor         : pointer;
+            border-radius  : 3px;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #f5f5f5;
+            }
+        }
+
+        &.active a {
+            background-color: #ff5253;
+            color           : white;
+            border-color    : #ff5253;
+        }
+
+        &.disabled a {
+            color : #999;
+            cursor: not-allowed;
+        }
+    }
+}
+
+
 .systemContainer {
     flex            : 1 1;
     padding         : 20px;
     background-color: #e4e4e4;
+    color: black;
 
-    .pagination {
-        display        : flex;
-        justify-content: center;
-        list-style     : none;
-        padding        : 0;
-        margin-top     : 20px;
-
-        li {
-            margin: 0 5px;
-
-            a {
-                padding        : 5px 10px;
-                border         : 1px solid #ddd;
-                color          : #333;
-                cursor         : pointer;
-                border-radius  : 3px;
-                text-decoration: none;
-
-                &:hover {
-                    background-color: #f5f5f5;
-                }
-            }
-
-            &.active a {
-                background-color: #ff5253;
-                color           : white;
-                border-color    : #ff5253;
-            }
-
-            &.disabled a {
-                color : #999;
-                cursor: not-allowed;
-            }
-        }
-    }
-
+  
     .custom-button {
         background-color: #dc3545 !important;
         color           : white !important;

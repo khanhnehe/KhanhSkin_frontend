@@ -2,7 +2,9 @@
     flex            : 1 1;
     padding         : 20px;
     background-color: #e4e4e4;
+    color: black;
 
+    
     /* Ẩn các nút tăng giảm trên Chrome, Safari, Edge, và Opera */
     input[type=number]::-webkit-outer-spin-button,
     input[type=number]::-webkit-inner-spin-button {
@@ -10,6 +12,9 @@
         margin            : 0;
     }
 
+   
+    
+  
 
     .import-product {
         width       : 100%;
@@ -17,6 +22,8 @@
         padding-left: 230px;
         padding-top : 8px;
 
+
+        
         .top {
             padding         : 20px;
             box-shadow      : -1px 3px 7px 4px rgb(201 201 201 / 73%);
@@ -34,6 +41,43 @@
                 &:nth-child(6) { min-width: 100px; } /* Sản Phẩm */
                
             }
+
+            
+        .pagination {
+            display        : flex;
+            justify-content: center;
+            list-style     : none;
+            padding        : 0;
+            margin-top     : 20px;
+    
+            li {
+                margin: 0 5px;
+    
+                a {
+                    padding        : 5px 10px;
+                    border         : 1px solid #ddd;
+                    color          : #333;
+                    cursor         : pointer;
+                    border-radius  : 3px;
+                    text-decoration: none;
+    
+                    &:hover {
+                        background-color: #f5f5f5;
+                    }
+                }
+    
+                &.active a {
+                    background-color: #ff5253;
+                    color           : white;
+                    border-color    : #ff5253;
+                }
+    
+                &.disabled a {
+                    color : #999;
+                    cursor: not-allowed;
+                }
+            }
+        }
         }
 
     }

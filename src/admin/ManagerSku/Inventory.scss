@@ -3,41 +3,7 @@
     padding: 20px;
     background-color: #e4e4e4;
 
-    .pagination {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        padding: 0;
-        margin-top: 20px;
-
-        li {
-            margin: 0 5px;
-
-            a {
-                padding: 5px 10px;
-                border: 1px solid #ddd;
-                color: #333;
-                cursor: pointer;
-                border-radius: 3px;
-                text-decoration: none;
-
-                &:hover {
-                    background-color: #f5f5f5;
-                }
-            }
-
-            &.active a {
-                background-color: #ff5253;
-                color: white;
-                border-color: #ff5253;
-            }
-
-            &.disabled a {
-                color: #999;
-                cursor: not-allowed;
-            }
-        }
-    }
+  
 
     .Inventory {
         width: 100%;
@@ -135,7 +101,7 @@
                 }
                 p {
                     margin: 0;
-                    line-height: 1.5;
+                    // line-height: 1.5;
                 }
 
                 strong {

@@ -185,6 +185,11 @@ export const getPagedLogs = (input) => {
 };
 
 
+export const getRevenueAndProfit = (input) => {
+    return axios.post('/api/Order/get-revenue-and-profit', input);
+};
+
+
 export {
     getAllBrand,
     createBrand,

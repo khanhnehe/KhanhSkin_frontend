@@ -5,7 +5,7 @@ import {
   fetchAllProduct, createNewProduct, updatedProduct, deletedProduct,
   getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands, getInfoForProduct,
   getCartByUser, getPageProduct, getPageOrders, getVoucher, getActiveVouchers, applyToVoucher, getPageSupplier, getPageInventoryLog,
-  checkOutOrder
+  checkOutOrder,getRevenueProfitDay, getRevenueProfitMonth, getRevenueProfitY
 
 } from '../action/adminThunks';
 
@@ -26,6 +26,9 @@ const initialState = {
   allVoucher: [],
   allSupplier: [],
   allInventoryLog: [],
+  revenueProfitD: [],
+  revenueProfitM: [],
+  revenueProfitY: [],
   error: null,
 };
 
@@ -273,6 +276,39 @@ const adminSlice = createSlice({
       });
 
 
+      //
+      builder
+      .addCase(getRevenueProfitDay.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getRevenueProfitDay.fulfilled, (state, action) => {
+        state.revenueProfitD = action.payload;
+      })
+      .addCase(getRevenueProfitDay.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+      //
+      builder
+      .addCase(getRevenueProfitMonth.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getRevenueProfitMonth.fulfilled, (state, action) => {
+        state.revenueProfitM = action.payload;
+      })
+      .addCase(getRevenueProfitMonth.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+      //
+      builder
+      .addCase(getRevenueProfitY.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getRevenueProfitY.fulfilled, (state, action) => {
+        state.revenueProfitY = action.payload;
+      })
+      .addCase(getRevenueProfitY.rejected, (state, action) => {
+        state.error = action.payload;
+      });
 
     // Lắng nghe action `PERSIST_STORE_UPDATE` để merge state từ localStorage
     builder.addCase('PERSIST_STORE_UPDATE', (state, action) => {

@@ -19,7 +19,7 @@ import Supplier from "../admin/ManagerSku/Supplier";
 import ImportProduct from "../admin/ManagerSku/ImportProduct";
 import Inventory from "../admin/ManagerSku/Inventory";
 import ImportInventory from "../admin/ManagerSku/ImportInventory";
-
+import Statistical from "../admin/Statistical/Statistical";
 const System = () => {
     return (
         <div className='system'>
@@ -44,6 +44,8 @@ const System = () => {
                         <Route path="admin-inventory" element={<ImportInventory />} />
                         <Route path="import-product" element={<ImportProduct />} />
                         <Route path="inventory" element={<Inventory />} />
+                        <Route path="statistical" element={<Statistical />} />
+                        
                         {/* Thêm các route khác cho admin ở đây */}
                     </Routes>
                 </div>

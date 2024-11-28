@@ -10,6 +10,7 @@ export const path = {
     PROFILE: "/profile",
     CHECK_OUT: "/checkout",
     ORDER: "/order",
+    PAYMENT: "/payment-result",
 
    
 }

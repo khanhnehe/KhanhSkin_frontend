@@ -77,16 +77,24 @@ const CheckOut = () => {
         };
 
         dispatch(checkOutOrder(checkoutData))
-        .unwrap()
-        .then(() => {
-            setTimeout(() => {
-                navigate('/profile/order');
-            }, 2000); 
-        })
-        .catch(() => {
-            toast.error("Đặt hàng không thành công.");
-        });
+            .unwrap()
+            .then((response) => {
+                if (response.paymentUrl) {
+                    // Nếu thanh toán VNPay, điều hướng người dùng đến URL thanh toán
+                    window.location.href = response.paymentUrl;
+                } else {
+                    // Nếu COD, chuyển hướng đến trang đơn hàng
+                    toast.success("Đặt hàng thành công!");
+                    // setTimeout(() => {
+                    //     navigate('/profile/order');
+                    // }, 2000);
+                }
+            })
+            .catch(() => {
+                toast.error("Đặt hàng không thành công.");
+            });
     };
+
 
     const handleApplyVoucher = (voucherId) => {
         dispatch(applyToVoucher({ voucherId, action: "apply" }))
@@ -201,9 +209,15 @@ const CheckOut = () => {
                                         onChange={() => setSelectedPaymentMethod(method.value)}
                                     />
                                     <span>{method.label}</span>
+                                    {method.value === 2 && (
+                                        <span style={{ color: '#009eff', marginLeft: '8px' }}>
+                                            (Bạn sẽ được chuyển đến VNPay để thanh toán)
+                                        </span>
+                                    )}
                                 </div>
                             ))}
                         </div>
+
                         <div className="apply-voucher">
                             <div
                                 className="flex items-center mb-4 cursor-pointer"

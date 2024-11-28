@@ -14,7 +14,7 @@ const menuItems = [
     icon: MdDashboard,
     key: "overview",
     children: [
-      { title: "Doanh thu", path: "/admin/admin-manage" },
+      { title: "Thống kê", path: "/admin/statistical" },
       { title: "Nhập hàng", path: "/admin/admin-inventory" },
     ],
   },

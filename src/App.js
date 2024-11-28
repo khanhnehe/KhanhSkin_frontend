@@ -21,6 +21,7 @@ import InfoProduct from './home/main/Infoproduct/InfoProduct';
 import CartOrder from './home/main/Cart/CartOrder';
 import Profile from './home/main/Profile/Profile';
 import CheckOut from './home/main/Cart/CheckOut';
+import PaymentResult from './home/main/Cart/PaymentResult';
 function App() {
   return (
     <>
@@ -68,6 +69,7 @@ const UserRoutes = () => (
     <Route path="/profile/*" element={<Profile />} />
     <Route path="/test" element={<MyComponent />} />
     <Route path={path.CHECK_OUT} element={<CheckOut />} />
+    <Route path={path.PAYMENT} element={<PaymentResult />} />
 
     </Routes>
 

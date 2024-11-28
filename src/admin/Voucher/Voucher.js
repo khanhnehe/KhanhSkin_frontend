@@ -19,8 +19,8 @@ const Voucher = () => {
             <div className='top'>
             <h3 className='text-danger'>Mã khuyến mãi</h3>
             <div className='links mb-4'>
-                <Link to="/admin/voucher-global" className='p-2 btn btn-success me-2 ' >Voucher Toàn shop <IoMdAdd/></Link>
-                <Link to="/admin/voucher-specific" className='p-2 btn text-light' style={{backgroundColor: "#ff7f7f"}}>Voucher Sản phẩm cụ thể <IoMdAdd/> </Link>
+                <Link to="/admin/voucher-global" className='p-2 btn btn-success me-2 ' >Mã khuyến mãi Toàn shop <IoMdAdd/></Link>
+                <Link to="/admin/voucher-specific" className='p-2 btn text-light' style={{backgroundColor: "#ff7f7f"}}>Mã khuyến mãi Sản phẩm cụ thể <IoMdAdd/> </Link>
             </div>
 
             <div className='voucher-table'>
@@ -74,7 +74,7 @@ const Voucher = () => {
                                                 ))}
                                             </div>
                                         ) : (
-                                            <span>No products</span>
+                                            <span>Toàn shop</span>
                                         )}
                                     </td>
                                     <td>

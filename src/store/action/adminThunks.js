@@ -11,7 +11,7 @@ import { createBrand, getAllBrand, updateBrand, deleteBrand,
   getCartByUserId, deleteCartItem, checkoutMyOrder, getPagedProducts,
   getOrders, createVoucher, getAllVoucher, getActiveVoucher, applyVoucher,
   createSupplier,getPagedSupplier,updateSupplier, deleteSupplier, importInventory,
-  getPagedLogs
+  getPagedLogs,getRevenueAndProfit
 
  } from '../../services/productService';
 
@@ -763,6 +763,58 @@ export const deletedSupplier = createAsyncThunk(
         try {
             dispatch(showLoading());
             const response = await getPagedLogs(input);    
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+  );
+
+  export const getRevenueProfitDay = createAsyncThunk(
+    'admin/getRevenueProfitDay', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await getRevenueAndProfit(input);    
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+  );
+
+  export const getRevenueProfitMonth = createAsyncThunk(
+    'admin/getRevenueProfitMonth', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await getRevenueAndProfit(input);    
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+  );
+
+  
+  export const getRevenueProfitY = createAsyncThunk(
+    'admin/getRevenueProfitY', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await getRevenueAndProfit(input);    
             dispatch(hideLoading());
             return response.result;   
         } catch (err) {

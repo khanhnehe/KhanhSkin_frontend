@@ -4,6 +4,7 @@ import { Modal, Button, Form, Table } from 'react-bootstrap';
 import { getPageProduct, importProduct, getPageSupplier } from '../../store/action/adminThunks';
 import './ImportProduct.scss';
 import { useNavigate } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 const ImportProduct = () => {
     const dispatch = useDispatch();
@@ -11,12 +12,13 @@ const ImportProduct = () => {
 
     const allProducts = useSelector((state) => state.root.admin.allProduct);
     const allSupplier = useSelector((state) => state.root.admin.allSupplier);
+    const totalRecor = useSelector((state) => state.root.admin.totalRecord);
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(0);
-    const [productPerPage] = useState(5);
+    const [productPerPage] = useState(4);
     const [note, setNote] = useState('');
     const [supplierId, setSupplierId] = useState('');
 
@@ -34,6 +36,11 @@ const ImportProduct = () => {
         dispatch(getPageProduct(searchParams));
         dispatch(getPageSupplier());
     };
+
+    const handlePageClick = (event) => {
+        setCurrentPage(event.selected);
+    };
+
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
@@ -174,7 +181,7 @@ const ImportProduct = () => {
                     </div>
 
                     {/* Phần thông tin nhập hàng */}
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <label>Ghi chú</label>
                         <Form.Control
                             as="textarea"
@@ -182,7 +189,7 @@ const ImportProduct = () => {
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
                         />
-                    </div>
+                    </div> */}
 
 
                     <div className="mb-3">
@@ -200,7 +207,7 @@ const ImportProduct = () => {
                         </Form.Select>
                     </div>
 
-                    <Modal show={showModal} onHide={handleCloseModal} size="lg">
+                    <Modal show={showModal} onHide={handleCloseModal} size="lg" style={{zIndex: 10000}}>
                         <Modal.Header closeButton>
                             <Modal.Title>Chọn Sản Phẩm</Modal.Title>
                         </Modal.Header>
@@ -272,10 +279,24 @@ const ImportProduct = () => {
                                                     <td>{product.quantity}</td>
                                                 </tr>
                                             )}
+
                                         </React.Fragment>
+
                                     ))}
+
                                 </tbody>
+
                             </Table>
+                            <ReactPaginate
+                                previousLabel={'<'}
+                                nextLabel={'>'}
+                                breakLabel={'...'}
+                                pageCount={Math.ceil(totalRecor / productPerPage)} marginPagesDisplayed={2}
+                                pageRangeDisplayed={5}
+                                onPageChange={handlePageClick}
+                                containerClassName={'pagination'}
+                                activeClassName={'active'}
+                            />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleCloseModal}>

@@ -44,33 +44,35 @@ const VoucherGlobal = () => {
         };
 
         dispatch(createdVoucher(data))
-        .then(() => {
-            setProgramName('');
-            setCode('');
-            setDescription('');
-            setDiscountType(1);
-            setMinimumOrderValue(0);
-            setDiscountValue(0);
-            setTotalUses(0);
-            setIsActive(true);
-            setStartDate(setHours(setMinutes(new Date(), 0), 0));
-            setEndDate(setHours(setMinutes(new Date(), 59), 23));
-        })
-        .catch((error) => {
-            console.error("Failed to create voucher:", error);
-        });    };
+            .then(() => {
+                setProgramName('');
+                setCode('');
+                setDescription('');
+                setDiscountType(1);
+                setMinimumOrderValue(0);
+                setDiscountValue(0);
+                setTotalUses(0);
+                setIsActive(true);
+                setStartDate(setHours(setMinutes(new Date(), 0), 0));
+                setEndDate(setHours(setMinutes(new Date(), 59), 23));
+            })
+            .catch((error) => {
+                console.error("Failed to create voucher:", error);
+            });
+    };
 
     return (
         <div className="voucher">
-            <div className="top">
+            <div className="mb-3">
+                <div>
+                    <div style={{ fontSize: "18px"}} className="badge bg-success">Mã giảm cho toàn Shop</div>
+                </div>
+            </div>
+            <div className="">
                 <form onSubmit={handleSubmit}>
+                    <div className='top mb-3'>
                     <h2 className="mb-4">Thông tin cơ bản</h2>
-                    <div className="mb-3">
-                        <label className="form-label">Loại mã</label>
-                        <div>
-                            <span className="badge bg-primary">Voucher toàn Shop</span>
-                        </div>
-                    </div>
+                    
                     <div className="mb-3">
                         <label className="form-label">Tên chương trình giảm giá</label>
                         <input
@@ -108,7 +110,7 @@ const VoucherGlobal = () => {
 
                     <div className="mb-3">
                         <label className="form-label">Thời gian sử dụng mã</label>
-                        <div className="d-flex">
+                        <div className="d-flex me-3">
                             <DatePicker
                                 selected={startDate}
                                 onChange={(date) => setStartDate(date)}
@@ -140,7 +142,9 @@ const VoucherGlobal = () => {
                             />
                         </div>
                     </div>
+                    </div>
 
+                    <div className='top'>
                     <h2 className="mb-4 mt-5">Thiết lập mã giảm giá</h2>
 
                     <div className="mb-3">
@@ -186,6 +190,7 @@ const VoucherGlobal = () => {
                     </div>
 
                     <button type="submit" className="btn btn-primary">Tạo Voucher</button>
+                    </div>
                 </form>
             </div>
         </div>
