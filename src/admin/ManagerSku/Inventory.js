@@ -55,7 +55,33 @@ const Inventory = () => {
 
     useEffect(() => {
         fetchInventory();
-    }, [input, currentPage]);
+    }, [fetchInventory]);
+
+    // Memoize danh sách inventory logs
+    const memoizedInventoryLogs = useMemo(() => {
+        return allInventoryLogs?.map((log, index) => (
+            <div
+                key={log.id}
+                className={`inventory-item ${log.actionType === 1 ? 'import' : log.actionType === 2 ? 'export' : 'cancel'}`}
+            >
+                <p><strong>{log.productName}</strong> - {log.variantName || 'Không có biến thể'}</p>
+                <p>Số Lượng: {log.quantityChange}</p>
+                <p>Ngày: {new Date(log.transactionDate).toLocaleDateString()}</p>
+                <p>
+                    Loại hoạt động:
+                    {log.actionType === 1
+                        ? ' Nhập'
+                        : log.actionType === 2
+                            ? ' Xuất'
+                            : ' Đơn hủy'}
+                </p>
+                {log.supplierName && <p>Nhà Cung Cấp: {log.supplierName}</p>}
+            </div>
+        ));
+    }, [allInventoryLogs]);
+
+    // Memoize số trang
+    const pageCount = useMemo(() => Math.ceil(totalRecord / input.pageSize), [totalRecord, input.pageSize]);
 
     return (
         <div className='Inventory'>
@@ -104,34 +130,14 @@ const Inventory = () => {
             </div>
 
             <div className='inventory-list'>
-                {allInventoryLogs?.map((log, index) => (
-                    <div
-                        key={log.id}
-                        className={`inventory-item ${log.actionType === 1 ? 'import' : log.actionType === 2 ? 'export' : 'cancel'}`}
-                    >
-                        <p><strong>{log.productName}</strong> - {log.variantName || 'Không có biến thể'}</p>
-                        <p>Số Lượng: {log.quantityChange}</p>
-                        <p>Ngày: {new Date(log.transactionDate).toLocaleDateString()}</p>
-                        <p>
-                            Loại hoạt động:
-                            {log.actionType === 1
-                                ? ' Nhập'
-                                : log.actionType === 2
-                                    ? ' Xuất'
-                                    : ' Đơn hủy'}
-                        </p>
-                        {log.supplierName && <p>Nhà Cung Cấp: {log.supplierName}</p>}
-                    </div>
-                ))}
+                {memoizedInventoryLogs}
             </div>
-
-
 
             <ReactPaginate
                 previousLabel={'<'}
                 nextLabel={'>'}
                 breakLabel={'...'}
-                pageCount={Math.ceil(totalRecord / input.pageSize)}
+                pageCount={pageCount} // Tính toán số trang tối ưu
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}

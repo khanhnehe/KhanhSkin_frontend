@@ -191,7 +191,7 @@
             .bottom-voucher {
 
                 .item-voucher {
-                    border         : 1px solid #ccc;
+                    // border         : 1px solid #ccc;
                     border-radius  : 5px;
                     padding        : 10px 11px;
                     display        : flex;
@@ -199,6 +199,99 @@
                     margin-bottom  : 10px;
                     justify-content: flex-start;
                     align-items    : flex-end;
+
+                    .card {
+                        position: relative;
+
+                        .ticket-perforations {
+                            position        : absolute;
+                            left            : 0;
+                            right           : 0;
+                            display         : flex;
+                            justify-content : space-between;
+                            overflow        : hidden;
+                            background-color: #ffc5cb;
+
+                            &.top {
+                                top      : 0;
+                                height   : 5px;
+                                color    : rgb(255, 255, 255);
+                                transform: rotate(180deg);
+
+                            }
+
+                            &.bottom {
+                                bottom: 0;
+                                height: 5px;
+                            }
+
+                            &.left {
+                                bottom        : 0;
+                                height        : 5px;
+                                flex-direction: column;
+
+                            }
+
+                            &.right {
+                                bottom        : 0;
+                                height        : 5px;
+                                flex-direction: column;
+
+                            }
+
+
+                            
+
+                            .circle {
+                                width           : 10px;
+                                height          : 10px;
+                                background-color: #f8f9fa;
+                                border-radius   : 50%;
+                                transform       : translateY(-50%);
+                            }
+                        }
+
+                        .voucher {
+                            display         : flex;
+                            padding         : 11px;
+                            border-left     : 1px dashed #dc3545;
+                            border-right    : 1px dashed #dc3545;
+                            align-items     : flex-end;
+                            background-color: #ffffff;
+                            gap             : 22px;
+                            justify-content : center;
+
+                            .text-voucher {
+                                color      : #b90114;
+                                font-size  : 16px;
+                                font-weight: 900;
+                            }
+
+                            .text-child {
+                                font-size  : 14px;
+                                font-weight: 500;
+                                color      : #2d2d2d;
+                            }
+
+                            .icon-container {
+                                .icon-wrapper {
+                                    background-color: #ffc6cb;
+                                    padding         : 7px;
+                                    border-radius   : 5px;
+
+                                    .icon {
+                                        color      : #c31829;
+                                        /* width   : 24px; */
+                                        height     : 94px;
+                                        font-size  : 50px;
+                                        font-weight: 900;
+                                    }
+                                }
+                            }
+
+                            .voucher-content {}
+                        }
+                    }
 
                     .boc-icon {
                         background-color: #e14f5d;

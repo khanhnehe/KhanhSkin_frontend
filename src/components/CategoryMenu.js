@@ -154,11 +154,11 @@ const CategoryMenu = () => {
           ))}
           <li
             className="nav-item"
-            onMouseEnter={handleBrandHover}
-            onMouseLeave={handleBrandLeave}
+            // onMouseEnter={handleBrandHover}
+            // onMouseLeave={handleBrandLeave}
           >
             <a className="nav-link" href="#!">Thương hiệu</a>
-            {showBrandDropdown && renderBrandDropdown()}
+            {/* {showBrandDropdown && renderBrandDropdown()} */}
           </li>
           <li onClick={loadData}
             style={{ cursor: 'pointer', color: '#c31829' }}

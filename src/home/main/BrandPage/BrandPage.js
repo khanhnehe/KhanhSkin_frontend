@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
 import { postFilteredProducts, getProductBrands } from '../../../store/action/adminThunks'; // Import các action
 import '../CategoryPage/CategoryPage.scss';
-import bia from "../../../assets/poster/poster1.webp";
+import bia from "../../../assets/Type/slider_3_master.png";
 import { IoIosStar } from "react-icons/io";
 import Rating from '@mui/material/Rating';
 
@@ -41,7 +41,7 @@ const BrandPage = () => {
                     const types = [];
 
                     products.forEach(product => {
-                    
+
                         if (Array.isArray(product.productTypes)) {
                             product.productTypes.forEach(type => {
                                 if (!types.some(t => t.id === type.id)) {
@@ -91,7 +91,7 @@ const BrandPage = () => {
         );
     };
 
-   
+
     const handlePriceChange = (e, field) => {
         setPriceRange({ ...priceRange, [field]: e.target.value });
     };
@@ -172,7 +172,7 @@ const BrandPage = () => {
                         <button onClick={applyPriceFilter} className="apply-button">ÁP DỤNG</button>
                     </div>
 
-                   
+
 
                 </div>
 
@@ -234,14 +234,14 @@ const BrandPage = () => {
                                                     <div className='price'>{product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
                                                     <div className='sale'>{product.salePrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
                                                     <div className='bottom-two'>
-                                                    <div className="rating">
-                        <Rating
-                          name={`rating-${product.id}`}
-                          value={product.averageRating || 0} // Ensure rating exists
-                          precision={0.5}
-                          readOnly
-                        />
-                      </div>                                                        <div className='purchases'>{product.purchases} Đã bán </div>
+                                                        <div className="rating">
+                                                            <Rating
+                                                                name={`rating-${product.id}`}
+                                                                value={product.averageRating || 0} // Ensure rating exists
+                                                                precision={0.5}
+                                                                readOnly
+                                                            />
+                                                        </div>                                                        <div className='purchases'>{product.purchases} Đã bán </div>
                                                     </div>
                                                 </div>
                                             </div>

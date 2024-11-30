@@ -81,7 +81,7 @@ const VoucherGlobal = () => {
                             maxLength={100}
                             value={programName}
                             onChange={(e) => setProgramName(e.target.value)}
-                            placeholder="Tên Voucher sẽ không được hiển thị cho Người mua"
+                            placeholder="Tên Voucher"
                         />
                     </div>
 

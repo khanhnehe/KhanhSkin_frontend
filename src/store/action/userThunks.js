@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getAllUser, createUser, updateUser, deleteUser, getUserId, createAddress, updateAddress, deleteAddress, getAddressId,
     
-    getOrdersByUser,changeStatus, createReview,getReviewProduct, getRecommendations
+    getOrdersByUser,changeStatus, createReview,getReviewProduct, getRecommendations,
+    getVoucherActive, changePassword, searchProduct
  } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from '../reducer/loadingSlice';
@@ -23,6 +24,23 @@ export const getUserById = createAsyncThunk(
     }
 );
 
+export const searchProducts = createAsyncThunk(
+    'user/searchProducts',
+    async (keyword, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await searchProduct(keyword);
+            dispatch(hideLoading());
+            return response.result;
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi tìm kiếm sản phẩm';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
+
 export const getAddressById = createAsyncThunk(
     'user/getAddressById', 
     async (_, { dispatch, rejectWithValue }) => {
@@ -37,6 +55,35 @@ export const getAddressById = createAsyncThunk(
             toast.error(errorMessage);
             return rejectWithValue(errorMessage);  
         }
+    }
+);
+
+export const changePasswordUser = createAsyncThunk(
+    'user/changePasswordUser',
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await changePassword(input);
+            dispatch(hideLoading());
+            toast.success('Thay đổi mật khẩu thành công');
+            // dispatch(getAddressById()); 
+            return response.result;
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorResponse = err.response?.data?.responseException;
+            let errorMessage = "Đổi mật khẩu thất bại";
+      
+            if (errorResponse) {
+              if (typeof errorResponse.exceptionMessage === 'string') {
+                errorMessage = errorResponse.exceptionMessage;
+              } else if (errorResponse.errors) {
+                errorMessage = Object.values(errorResponse.errors).flat().join(' ');
+              }
+            }
+      
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage); 
+          }
     }
 );
 
@@ -102,12 +149,12 @@ export const getOrderByUser = createAsyncThunk(
     'user/getOrderByUser', 
     async (input, { dispatch, rejectWithValue }) => {
         try {
-            // dispatch(showLoading());
+            dispatch(showLoading());
             const response = await getOrdersByUser(input);    
-            // dispatch(hideLoading());
+            dispatch(hideLoading());
             return response.result;   
         } catch (err) {
-            // dispatch(hideLoading());
+            dispatch(hideLoading());
             const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
             toast.error(errorMessage);
             return rejectWithValue(errorMessage);  
@@ -186,3 +233,22 @@ export const getRecommendProduct= createAsyncThunk(
         }
     }
 );
+
+export const getVouchersActive = createAsyncThunk(
+    'user/getVouchersActive', 
+    async (_, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await getVoucherActive();    
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin địa chỉ';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+);
+
+

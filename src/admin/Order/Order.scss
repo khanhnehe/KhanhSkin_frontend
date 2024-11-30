@@ -2,7 +2,7 @@
     flex            : 1 1;
     padding         : 20px;
     background-color: #e4e4e4;
-    color: black;
+    color           : black;
     overflow-x      : hidden;
 
     .pagination {
@@ -175,8 +175,8 @@
 
                 .search-icon {
                     position      : absolute;
-                    right         : 569px;
-                    top           : 50%;
+                    right         : 639px;
+                    top           : 45%;
                     transform     : translateY(-571%);
                     font-size     : 23px;
                     color         : #a4a2a2;
@@ -324,13 +324,14 @@
                             font-size    : 14px;
                             border-radius: 4px;
                         }
-                        .receive-button{
-                            padding: 5px 14px;
-                            font-size: 14px;
-                            border-radius: 4px;
+
+                        .receive-button {
+                            padding         : 5px 14px;
+                            font-size       : 14px;
+                            border-radius   : 4px;
                             background-color: #eb5bd8;
-                            color: #ffffff;
-                            border: none;
+                            color           : #ffffff;
+                            border          : none;
                         }
 
 

@@ -25,6 +25,7 @@
     }
   
     .bottom {
+      padding: 13px;
       ul {
         list-style-type: none;
         padding: 0;
@@ -40,6 +41,7 @@
             padding: 10px;
             border-radius: 5px;
             transition: background-color 0.3s;
+            padding-left: 33px;
   
             &:hover, .active & {
               background-color: #e9ecef;
@@ -48,6 +50,12 @@
             .icon {
               margin-right: 10px;
               font-size: 1.2em;
+            }
+
+
+            &.active {
+              background-color: #ffdadd;
+              color: #c31829;
             }
           }
         }

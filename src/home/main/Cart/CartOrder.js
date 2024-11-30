@@ -146,64 +146,79 @@ const CartOrder = () => {
                                         className={`text ${isOpen ? '' : '-rotate-90'}`}
                                         size={20}
                                     />
-                                    <span className="title-voucher">MÃ GIẢM GIÁ</span>
+                                     <span className="title-voucher">MÃ GIẢM GIÁ</span>
+                            </div>
+                            <div className={`transition-all duration-300 origin-top ${isOpen ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+                                <div className="top-voucher gap-2 mb-4 ms-3">
+                                    <input
+                                        type="text"
+                                        placeholder="Nhập mã giảm giá/Phiếu mua hàng"
+                                        className="flex-1 px-4 py-2 border rounded"
+                                        value={listCart.voucherProgramName || ""}
+                                        onChange={(e) => setSelectedVoucher(e.target.value)}
+                                    />
                                 </div>
-                                <div className={`transition-all duration-300 origin-top ${isOpen ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
-                                    <div className="top-voucher gap-2 mb-4">
-                                        <div className='row-text'>
-                                            <div className=''>Mã đã được áp dụng</div>
-                                            <div className=''>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Nhập mã giảm giá/Phiếu mua hàng"
-                                                    className="flex-1 px-4 py-2 border rounded"
-                                                    value={listCart.voucherProgramName || ""}
-                                                    onChange={(e) => setSelectedVoucher(e.target.value)}
-                                                />
+                                    <div className="bottom-voucher">
+                                    {activeVouchers.map((voucher) => (
+                                        <div key={voucher.id} className="item-voucher">
+
+                                            <div className="card shadow-lg rounded-lg overflow-hidden">
+                                                <div className="ticket-perforations top">
+                                                    {[...Array(20)].map((_, i) => (
+                                                        <div key={i} className="circle" />
+                                                    ))}
+                                                </div>
+
+                                                <div className="ticket-perforations bottom">
+                                                    {[...Array(20)].map((_, i) => (
+                                                        <div key={i} className="circle" />
+                                                    ))}
+                                                </div>
+
+                                                <div className="voucher">
+                                                    <div className="icon-container">
+                                                        <div className="icon-wrapper">
+                                                            <CiDiscount1 className="icon" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="voucher-content ">
+                                                        <div className="">
+                                                            <div className="text-voucher">{voucher.programName}</div>
+                                                            <div className="text-child">
+                                                                {voucher.discountType === 1
+                                                                    ? `Giảm ${voucher.discountValue.toLocaleString('vi-VN')}₫`
+                                                                    : `Giảm ${voucher.discountValue}%`}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-child">
+                                                                {voucher.minimumOrderValue &&
+                                                                    `Đơn tối thiểu: ${voucher.minimumOrderValue.toLocaleString('vi-VN')}₫`}
+                                                            </div>
+                                                            <div className="text-child">Mã: {voucher.code} </div>
+                                                            <div className='text-child' >
+                                                                HSD: {new Date(voucher.endTime).toLocaleString('vi-VN')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/* áp dụng */}
+                                                    <div className="text-cancel">
+                                                        {listCart.voucherId === voucher.id ? (
+                                                            <button className="btn btn-danger" onClick={handleRemoveVoucher}>
+                                                                Gỡ bỏ
+                                                            </button>
+                                                        ) : (
+                                                            <button className="btn btn-outline-danger" onClick={() => handleApplyVoucher(voucher.id)}>
+                                                                Áp dụng
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
-
-                                    </div>
-                                    <div className="bottom-voucher">
-                                        {activeVouchers.map((voucher) => (
-                                            <div key={voucher.id} className="item-voucher col-5">
-                                                <div className="boc-icon">
-                                                    <div className=""><CiDiscount1 className="text-per" /></div>
-                                                </div>
-                                                <div className="flex-1">
-                                                    <div className="text">
-                                                        {voucher.discountType === 1
-                                                            ? `Giảm ${voucher.discountValue.toLocaleString('vi-VN')}₫`
-                                                            : `Giảm ${voucher.discountValue}%`}
-                                                    </div>
-                                                    <div className="tex">
-                                                        {voucher.minimumOrderValue && `Đơn hàng tối thiểu: ${voucher.minimumOrderValue.toLocaleString('vi-VN')}₫`}
-                                                    </div>
-                                                    <div className="text">
-                                                        <span className="text-gray-600">Mã: </span>
-                                                        <span>{voucher.code}</span>
-                                                    </div>
-                                                    <div className="text">
-                                                        HSD: {new Date(voucher.endTime).toLocaleString('vi-VN')}
-                                                    </div>
-                                                </div>
-                                                <div className="text-cancel">
-                                                    {listCart.voucherId === voucher.id ? (
-                                                        <button className="btn btn-danger" onClick={handleRemoveVoucher}>
-                                                            Gỡ bỏ
-                                                        </button>
-                                                    ) : (
-                                                        <button className="btn btn-success" onClick={() => handleApplyVoucher(voucher.id)}>
-                                                            Áp dụng
-                                                        </button>
-                                                    )}
-                                                </div>
-                                                <AlertCircle className="text-gray-400" size={20} />
-                                            </div>
-                                        ))}
-
-                                    </div>
+                                    ))}
+                                </div>
                                 </div>
                             </div>
                         </Row>

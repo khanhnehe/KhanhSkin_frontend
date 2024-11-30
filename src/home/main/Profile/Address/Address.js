@@ -4,7 +4,7 @@ import { getAddressById, createNewAddress, updatedAddress, deletedAddress } from
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
-
+import './Address.scss';
 const Address = () => {
     const dispatch = useDispatch();
     const infoAddress = useSelector(state => state.root.user.address);
@@ -177,11 +177,32 @@ const Address = () => {
 
     return (
         <div className='container'>
-            <h2>Quản lý địa chỉ</h2>
-            <Button variant="primary" onClick={handleAddNewAddress}>
-                Thêm địa chỉ
-            </Button>
+            <div className='address'>
+                <Button variant="primary" onClick={handleAddNewAddress}>
+                    Thêm địa chỉ
+                </Button>
 
+
+                <h3 className='mt-3'>Danh sách địa chỉ</h3>
+                <ul className='list-group'>
+                    {infoAddress.map((address) => (
+                        <li key={address.id} className='list-group-item mt-3'>
+                            <div>
+                                <p>Họ và tên: {address.fullName}</p>
+                                <p>Số điện thoại: {address.phoneNumber}</p>
+                                <p> Đại chỉ: {address.addressDetail}, {address.ward}, {address.district}, {address.province}</p>
+                                <p>Địa chỉ chi tiết: {address.addressDetail}</p>
+                                <p className='text-info'>{address.isDefault ? '(Địa chỉ mặc định)' : ''}</p>
+                                <Button variant="warning" onClick={() => handleEdit(address)} className='mr-2 me-3'>Chỉnh sửa</Button>
+                                <Button variant="danger" onClick={() => handleDelete(address.id)} disabled={address.isDefault}>
+                                    Xóa
+                                </Button>
+                                {address.isDefault && <small className="text-muted ml-2 ms-3 me-3">Không thể xóa địa chỉ mặc định</small>}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             {/* Modal để thêm/chỉnh sửa địa chỉ */}
             <Modal show={showModal} onHide={handleCloseModal} size="lg">
                 <Modal.Header closeButton>
@@ -195,12 +216,12 @@ const Address = () => {
                                 onChange={(e) => setData({ ...data, fullName: e.target.value })}
                                 className='form-control' />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group mt-2'>
                             <label>Số điện thoại</label>
                             <input type='text' name='phoneNumber' value={data.phoneNumber} onChange={(e) => setData({ ...data, phoneNumber: e.target.value })}
                                 className='form-control' />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group mt-2'>
                             <label>Tỉnh/Thành phố</label>
                             <select name='provinceId' value={data.provinceId} onChange={handleInputChange} className='form-control'>
                                 <option value=''>Chọn tỉnh/ thành phố</option>
@@ -209,7 +230,7 @@ const Address = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group mt-2'>
                             <label>Quận/Huyện</label>
                             <select name='districtId' value={data.districtId} onChange={handleInputChange} className='form-control'>
                                 <option value=''>Chọn quận/huyện</option>
@@ -218,7 +239,7 @@ const Address = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group mt-2'>
                             <label>Xã/Phường</label>
                             <select name='wardId' value={data.wardId} onChange={handleInputChange} className='form-control'>
                                 <option value=''>Chọn xã/phường</option>
@@ -227,7 +248,7 @@ const Address = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group mt-2'>
                             <label>Địa chỉ chi tiết</label>
                             <input
                                 type='text'
@@ -238,7 +259,7 @@ const Address = () => {
                             />
                         </div>
 
-                        <div className='form-group'>
+                        <div className='form-group mt-2'>
                             <label>
                                 <input type='checkbox' name='isDefault' checked={data.isDefault} onChange={(e) => setData({ ...data, isDefault: e.target.checked })} />
                                 {' '}Chọn làm địa chỉ mặc định
@@ -256,23 +277,6 @@ const Address = () => {
                 </Modal.Footer>
             </Modal>
 
-            <h3>Danh sách địa chỉ</h3>
-            <ul className='list-group'>
-                {infoAddress.map((address) => (
-                    <li key={address.id} className='list-group-item'>
-                        <div>
-                            <p>{address.addressDetail}, {address.ward}, {address.district}, {address.province}</p>
-                            <p>Số điện thoại: {address.phoneNumber}</p>
-                            <p>{address.isDefault ? '(Địa chỉ mặc định)' : ''}</p>
-                            <Button variant="warning" onClick={() => handleEdit(address)} className='mr-2'>Chỉnh sửa</Button>
-                            <Button variant="danger" onClick={() => handleDelete(address.id)} disabled={address.isDefault}>
-                                Xóa
-                            </Button>
-                            {address.isDefault && <small className="text-muted ml-2">Không thể xóa địa chỉ mặc định</small>}
-                        </div>
-                    </li>
-                ))}
-            </ul>
         </div>
 
     );

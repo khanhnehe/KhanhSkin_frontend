@@ -72,6 +72,22 @@ export const getRecommendations = (productId) => {
     return axios.get(`/api/Product/${productId}/recommendations`);
 };
 
+
+export const getVoucherActive = () => {
+    return axios.get(`/api/Voucher/get-active-vouchers`);
+};
+
+export const changePassword = (input) => {
+    return axios.post('/api/User/change-password', input);
+};
+
+
+export const searchProduct = (keyword) => {
+    return axios.get(`api/Product/search-product`, {
+      params: { keyword },
+    });
+  };
+
 export { 
     loginApiService,
     getAllUser,

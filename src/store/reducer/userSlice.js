@@ -3,7 +3,10 @@ import { loginApiService } from '../../services/userService';
 import { decodeToken, isTokenExpired } from '../../services/tokenService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from './loadingSlice'; // Import các hành động loading
-import { getUserById, getAddressById, getOrderByUser, getReviewsProduct, getRecommendProduct } from '../action/userThunks';
+import {
+  getUserById, getAddressById, getOrderByUser, getReviewsProduct, getRecommendProduct, getVouchersActive,
+  searchProducts
+} from '../action/userThunks';
 
 
 export const loginUser = createAsyncThunk(
@@ -37,6 +40,8 @@ const userSlice = createSlice({
     orderUser: [],
     reviewProduct: [],
     productRecommend: [],
+    voucherActive: [],
+    searchProduct: [],
     isLoading: false,
     //
   },
@@ -118,16 +123,16 @@ const userSlice = createSlice({
         state.error = '';
       })
       .addCase(getOrderByUser.fulfilled, (state, action) => {
-        state.orderUser = action.payload;
-        state.isLoading = false;
+        state.orderUser = action.payload.items;
+        state.totalRecord = action.payload.totalRecord;
       })
       .addCase(getOrderByUser.rejected, (state, action) => {
         state.error = action.payload || 'Failed to fetch user information.';
         state.isLoading = false;
       });
 
-      //
-      builder
+    //
+    builder
       .addCase(getReviewsProduct.pending, (state) => {
         state.error = null;
       })
@@ -139,8 +144,8 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      //
-      builder
+    //
+    builder
       .addCase(getRecommendProduct.pending, (state) => {
         state.error = null;
       })
@@ -150,6 +155,30 @@ const userSlice = createSlice({
       .addCase(getRecommendProduct.rejected, (state, action) => {
         state.error = action.payload;
       });
+
+    //
+    builder
+      .addCase(getVouchersActive.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getVouchersActive.fulfilled, (state, action) => {
+        state.voucherActive = action.payload;
+      })
+      .addCase(getVouchersActive.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+      //
+    builder
+      .addCase(searchProducts.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(searchProducts.fulfilled, (state, action) => {
+        state.searchProduct = action.payload;
+      })
+      .addCase(searchProducts.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
   },
 });
 

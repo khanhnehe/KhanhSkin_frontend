@@ -7,19 +7,28 @@ import Swal from 'sweetalert2';
 import { Modal, Box, Button } from '@mui/material';
 import { Star } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 const OrderPage = () => {
   const dispatch = useDispatch();
-  const [input, setInput] = useState({ orderStatus: null, freeTextSearch: null, isAscending: false });
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [reviewData, setReviewData] = useState({});
-
+  const totalRecord = useSelector((state) => state.root.user.totalRecord);
   const listOrder = useSelector(state => state.root.user.orderUser);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [input, setInput] = useState({
+    orderStatus: null,
+    freeTextSearch: null,
+    isAscending: false,
+    pageIndex: currentPage + 1,
+    pageSize: 8,
+  });
+
 
   useEffect(() => {
     dispatch(getOrderByUser(input));
-  }, [dispatch, input]);
+  }, [dispatch, input, currentPage]);
 
   const handleStatusClick = (status) => {
     setInput((prev) => ({ ...prev, orderStatus: status }));
@@ -75,6 +84,7 @@ const OrderPage = () => {
     setReviewData({});
   };
 
+  // sao
   const handleRatingChange = (productId, rating) => {
     setReviewData((prev) => ({
       ...prev,
@@ -82,6 +92,7 @@ const OrderPage = () => {
     }));
   };
 
+  //cmt
   const handleCommentChange = (productId, comment) => {
     setReviewData((prev) => ({
       ...prev,
@@ -108,6 +119,10 @@ const OrderPage = () => {
     closeReviewModal();
   };
 
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+    setInput((prev) => ({ ...prev, pageIndex: event.selected + 1 }));
+  };
 
   const getColorAndName = (status) => {
     switch (status) {
@@ -250,8 +265,20 @@ const OrderPage = () => {
               {renderedOrders}
             </div>
           </div>
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={'...'}
+            pageCount={Math.ceil(totalRecord / input.pageSize)}  // Tổng số trang
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}  // Hàm xử lý khi chuyển trang
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+          />
         </div>
       </div>
+
 
       {/* Modal Đánh Giá Sản Phẩm */}
       <Modal open={isReviewModalOpen} onClose={closeReviewModal} aria-labelledby="order-review-modal">

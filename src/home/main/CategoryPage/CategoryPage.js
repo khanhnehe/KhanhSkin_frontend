@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
 import { postFilteredProducts, getProductCategory } from '../../../store/action/adminThunks'; // Import các action
 import './CategoryPage.scss';
-import bia from "../../../assets/poster/poster1.webp";
+import bia from "../../../assets/poster/windexss3checkim11.png";
 import { IoIosStar } from "react-icons/io";
 import Rating from '@mui/material/Rating';
 

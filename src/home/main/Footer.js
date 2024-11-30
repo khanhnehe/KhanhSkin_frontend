@@ -20,12 +20,12 @@ class Footer extends Component {
     render() {
         return (
             <>
-                <footer className="footer bg-body-tertiary text-center">
+                <footer className="footer bg-body-tertiary text-center mt-4">
                     <div className="container text-center text-md-start">
                         <div className="row">
                             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto my-4">
                                 <h6 className="text-uppercase fw-bold mb-4">
-                                    KANH POP
+                                    KHANH-SKIN
                                 </h6>
                                 <p>
                                     Here you can use rows and columns to organize your footer content. Lorem ipsum
@@ -64,7 +64,7 @@ class Footer extends Component {
                         </div>
                     </div>
                     <div className="copyright text-center p-3">
-                        © 2023 Copyright: KANHPOP
+                        © 2023 Copyright: KHANH-SKIN
                     </div>
                 </footer>
             </>

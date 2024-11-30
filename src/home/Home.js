@@ -2,12 +2,13 @@ import React from 'react';
 import Sidler from './Sidler/Sidler';
 import TypeOutStanding from './main/TypeOutStanding';
 import CategoryProducts from './main/OutStanding/CategoryProducts';
-
+import VoucherActive from './main/VoucherActive';
 const Home = () => {
   return (
     <>
       <Sidler />
       <TypeOutStanding />
+      <VoucherActive />
       <CategoryProducts
         categoryId="3fa85f64-5717-4562-b3fc-2c963f66afa6" // Chuyển categoryId thành chuỗi
         title="CHĂM SÓC DA"

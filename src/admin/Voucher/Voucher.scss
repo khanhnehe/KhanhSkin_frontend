@@ -16,6 +16,7 @@
             background-color: rgb(255, 255, 255);
             border-radius   : 5px;
             .product-list{
+                
                 .info-product{
                     display: flex;
                     gap: 10px;
@@ -37,6 +38,85 @@
             }
         }
       
+        .search {
+            margin-left        : 3px;
+            margin-right       : 3px;
+            margin-bottom      : 20px;
+            padding            : 20px;
+            // box-shadow      : -1px 3px 7px 4px rgba(201, 201, 201, 0.73);
+            background-color   : rgb(255, 255, 255);
+            border-radius      : 5px;
+            display            : flex;
+            flex-wrap          : nowrap;
+            margin-top         : 13px;
+
+            .date {
+                display: grid;
+                gap    : 5px;
+
+                .title-date {
+                    font-weight: 600;
+                }
+
+                .filter-date {
+                    display: flex;
+                    gap    : 10px;
+
+                    .date-picker-container {
+                        position: relative;
+                        // width: 100%;
+
+
+                        .form-control {
+                            width        : 80%;
+                            padding-right: 30px;
+                            /* Đảm bảo có đủ không gian cho icon */
+                        }
+
+                        .date-icon {
+                            position      : absolute;
+                            right         : 57px;
+                            top           : 50%;
+                            font-size     : 25px;
+                            transform     : translateY(-50%);
+                            pointer-events: none;
+                            /* Đảm bảo icon không chặn các sự kiện của input */
+                        }
+                    }
+                }
+            }
+
+            .search-bar {
+                margin-bottom: 1px;
+                margin-top   : 24px;
+
+                input {
+                    width        : 100%;
+                    padding      : 10px;
+                    border       : 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size    : 14px;
+                    box-shadow   : 2px 0 5px rgba(0, 0, 0, 0.1);
+
+                    &:focus {
+                        outline        : none;
+                        // border-color: #a5d651;
+                        box-shadow     : 0 0 5px rgba(203, 203, 203, 0.5);
+                    }
+                }
+
+                .search-icon {
+                    position: absolute;
+                    right: 569px;
+                    top: 61%;
+                    transform: translateY(-587%);
+                    font-size: 23px;
+                    color: #a4a2a2;
+                    pointer-events: none;
+                }
+            }
+        }
+
 
     }
 

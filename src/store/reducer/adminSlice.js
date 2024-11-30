@@ -5,7 +5,7 @@ import {
   fetchAllProduct, createNewProduct, updatedProduct, deletedProduct,
   getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands, getInfoForProduct,
   getCartByUser, getPageProduct, getPageOrders, getVoucher, getActiveVouchers, applyToVoucher, getPageSupplier, getPageInventoryLog,
-  checkOutOrder,getRevenueProfitDay, getRevenueProfitMonth, getRevenueProfitY
+  checkOutOrder,getRevenueProfitDay, getRevenueProfitMonth, getRevenueProfitY, getPageVouchers
 
 } from '../action/adminThunks';
 
@@ -29,6 +29,7 @@ const initialState = {
   revenueProfitD: [],
   revenueProfitM: [],
   revenueProfitY: [],
+  allVouchers: [],
   error: null,
 };
 
@@ -309,6 +310,33 @@ const adminSlice = createSlice({
       .addCase(getRevenueProfitY.rejected, (state, action) => {
         state.error = action.payload;
       });
+
+      //
+      builder
+      .addCase(getPageVouchers.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getPageVouchers.fulfilled, (state, action) => {
+        state.allVouchers = action.payload.items;
+        state.totalRecord = action.payload.totalRecord;
+      })
+      .addCase(getPageVouchers.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Lắng nghe action `PERSIST_STORE_UPDATE` để merge state từ localStorage
     builder.addCase('PERSIST_STORE_UPDATE', (state, action) => {

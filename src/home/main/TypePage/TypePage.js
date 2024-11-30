@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
 import { postFilteredProducts, getProductTypes } from '../../../store/action/adminThunks'; // Import các action
 import '../CategoryPage/CategoryPage.scss';
-import bia from "../../../assets/poster/poster1.webp";
+import bia from "../../../assets/poster/showsliderimg1.png";
 import { IoIosStar } from "react-icons/io";
+import Rating from '@mui/material/Rating';
 
 const TypePage = () => {
     const dispatch = useDispatch();
@@ -232,8 +233,14 @@ const TypePage = () => {
                                                     <div className='price'>{product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
                                                     <div className='sale'>{product.salePrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
                                                     <div className='bottom-two'>
-                                                        <div className='sao'>{product.averageRating}<IoIosStar className='icon-star' /></div>
-                                                        <div className='purchases'>{product.purchases} Đã bán </div>
+                                                        <div className="rating">
+                                                            <Rating
+                                                                name={`rating-${product.id}`}
+                                                                value={product.averageRating || 0} // Ensure rating exists
+                                                                precision={0.5}
+                                                                readOnly
+                                                            />
+                                                        </div>                                                        <div className='purchases'>{product.purchases} Đã bán </div>
                                                     </div>
                                                 </div>
                                             </div>

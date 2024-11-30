@@ -1,47 +1,56 @@
-import React from "react";
-import { Link, useLocation } from 'react-router-dom';
-import { MdDashboard, MdManageAccounts } from "react-icons/md";
-import { PiNotepadFill } from "react-icons/pi";
-// import logo from "../../assets/logo.png";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { MdManageAccounts } from "react-icons/md";
+import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { FiShoppingBag } from "react-icons/fi";
 import "./MenuUser.scss";
 
 const menuItems = [
   {
     title: "Tài khoản",
-    icon: MdDashboard,
+    icon: MdManageAccounts,
     path: "/profile/account",
   },
   {
     title: "Đơn hàng",
-    icon: MdManageAccounts,
-    path: "/profile/order" 
+    icon: FiShoppingBag,
+    path: "/profile/order",
   },
   {
     title: "Địa chỉ",
-    icon: PiNotepadFill,
-    path: "/profile/address"
+    icon: MdOutlineMapsHomeWork,
+    path: "/profile/address",
   },
 ];
 
 const MenuUser = () => {
   const location = useLocation();
+  const [selectedPath, setSelectedPath] = useState(location.pathname);
+
+  // Đồng bộ selectedPath với location.pathname
+  useEffect(() => {
+    setSelectedPath(location.pathname);
+  }, [location.pathname]);
 
   return (
     <div className="menu">
       <div className="top">
-        {/* <span className="logo">
-          <img src={logo} alt='Logo' />
-        </span> */}
+        {/* Thêm logo nếu cần */}
       </div>
       <div className="bottom">
         <ul>
           {menuItems.map((item) => (
-            <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
-              <Link to={item.path}>
-                <item.icon className="icon" />
-                {item.title}
-              </Link>
-            </li>
+            <li key={item.path}>
+            <Link
+              to={item.path}
+              className={selectedPath === item.path ? "active" : ""}
+              onClick={() => setSelectedPath(item.path)}
+            >
+              <item.icon className="icon" />
+              {item.title}
+            </Link>
+          </li>
+          
           ))}
         </ul>
       </div>

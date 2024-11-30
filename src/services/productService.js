@@ -189,6 +189,9 @@ export const getRevenueAndProfit = (input) => {
     return axios.post('/api/Order/get-revenue-and-profit', input);
 };
 
+export const getPageVoucher = (input) => {
+    return axios.post('/api/Voucher/get-page-voucher', input);
+};
 
 export {
     getAllBrand,

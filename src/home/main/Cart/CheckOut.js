@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 import { ChevronDown, AlertCircle } from 'react-feather';
 import { CiDiscount1 } from "react-icons/ci";
+import vnPay from '../../../assets/Logo-VNPAY-QR-1.webp';
+import cod from '../../../assets/Ảnh chụp màn hình 2024-11-30 004603.png';
 
 const shippingMethods = [
     { value: 1, label: 'Giao hàng nhanh' },        // FasfDelivery = 1
@@ -159,11 +161,13 @@ const CheckOut = () => {
                             </div>
                             {selectedAddress && (
                                 <div className='address-content'>
-                                    <p className='name'>{selectedAddress.name} (+{selectedAddress.phone})</p>
-                                    <p className='address-detail'>
-                                        {selectedAddress.detail}, {selectedAddress.ward}, {selectedAddress.district}, {selectedAddress.province}
-                                    </p>
-                                    <div className='address-actions'>
+                                    <p className='address-detail'> Tên người nhận: {selectedAddress.fullName}</p>
+                                    <p className='address-detail'> Sđt: {selectedAddress.phoneNumber}</p>
+                                    <div className='address-detail'>
+                                        <div> Địa chỉ: {selectedAddress.addressDetail}, {selectedAddress.ward}, {selectedAddress.district}, {selectedAddress.province}</div>
+
+                                    </div>
+                                    <div className='address-actions mt-2'>
                                         {selectedAddress.isDefault && <span className='default-label'>Mặc Định</span>}
                                         <button className='change-btn' onClick={() => setShowAddressModal(true)}>Thay Đổi</button>
                                     </div>
@@ -171,18 +175,19 @@ const CheckOut = () => {
                             )}
                         </div>
 
-                        <div className='shipping-method col-11 mt-3'>
-                            <label>Phương thức vận chuyển</label>
+                        <div className='name mt-4'>Phương thức vận chuyển</div>
+                        <div className='shipping-method col-11 mt-1'>
                             {shippingMethods.map(method => (
                                 <div key={method.value}>
                                     <input
                                         type="radio"
                                         name="shippingMethod"
+                                        className='ms-3'
                                         value={method.value}
                                         checked={selectedShippingMethod === method.value}
                                         onChange={() => setSelectedShippingMethod(method.value)}
                                     />
-                                    <span>{method.label}</span>
+                                    <span> {method.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -198,26 +203,33 @@ const CheckOut = () => {
                         </div>
 
                         <div className='payment-method col-11 mt-3'>
-                            <label>Phương thức thanh toán</label>
+                            <div className='name'>Phương thức thanh toán</div>
                             {paymentMethods.map(method => (
                                 <div key={method.value}>
                                     <input
                                         type="radio"
                                         name="paymentMethod"
+                                        className='mt-3'
                                         value={method.value}
                                         checked={selectedPaymentMethod === method.value}
                                         onChange={() => setSelectedPaymentMethod(method.value)}
                                     />
-                                    <span>{method.label}</span>
-                                    {method.value === 2 && (
-                                        <span style={{ color: '#009eff', marginLeft: '8px' }}>
-                                            (Bạn sẽ được chuyển đến VNPay để thanh toán)
+                                    {method.value === 2 ? (
+                                        <span>
+                                            <img src={vnPay} alt="VNPay" style={{ width: '106px', marginLeft: '10px' }} />    Thanh toán với VNpay
                                         </span>
-                                    )}
+                                    ) :
+                                        (
+                                            <span>
+                                                <img src={cod} alt="cod" style={{ width: '106px', marginLeft: '10px' }} /> Thanh toán khi nhận hàng
+                                            </span>
+                                        )}
                                 </div>
                             ))}
                         </div>
 
+
+                        {/* Mã giảm giá */}
                         <div className="apply-voucher">
                             <div
                                 className="flex items-center mb-4 cursor-pointer"
@@ -227,7 +239,7 @@ const CheckOut = () => {
                                 <span className="title-voucher">MÃ GIẢM GIÁ</span>
                             </div>
                             <div className={`transition-all duration-300 origin-top ${isOpen ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
-                                <div className="top-voucher gap-2 mb-4">
+                                <div className="top-voucher gap-2 mb-4 ms-3">
                                     <input
                                         type="text"
                                         placeholder="Nhập mã giảm giá/Phiếu mua hàng"
@@ -239,37 +251,61 @@ const CheckOut = () => {
                                 <div className="bottom-voucher">
                                     {activeVouchers.map((voucher) => (
                                         <div key={voucher.id} className="item-voucher">
-                                            <div className="boc-icon">
-                                                <CiDiscount1 className="text-per" />
+
+                                            <div className="card shadow-lg rounded-lg overflow-hidden">
+                                                <div className="ticket-perforations top">
+                                                    {[...Array(20)].map((_, i) => (
+                                                        <div key={i} className="circle" />
+                                                    ))}
+                                                </div>
+
+                                                <div className="ticket-perforations bottom">
+                                                    {[...Array(20)].map((_, i) => (
+                                                        <div key={i} className="circle" />
+                                                    ))}
+                                                </div>
+
+                                                <div className="voucher">
+                                                    <div className="icon-container">
+                                                        <div className="icon-wrapper">
+                                                            <CiDiscount1 className="icon" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="voucher-content ">
+                                                        <div className="">
+                                                            <div className="text-voucher">{voucher.programName}</div>
+                                                            <div className="text-child">
+                                                                {voucher.discountType === 1
+                                                                    ? `Giảm ${voucher.discountValue.toLocaleString('vi-VN')}₫`
+                                                                    : `Giảm ${voucher.discountValue}%`}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-child">
+                                                                {voucher.minimumOrderValue &&
+                                                                    `Đơn tối thiểu: ${voucher.minimumOrderValue.toLocaleString('vi-VN')}₫`}
+                                                            </div>
+                                                            <div className="text-child">Mã: {voucher.code} </div>
+                                                            <div className='text-child' >
+                                                                HSD: {new Date(voucher.endTime).toLocaleString('vi-VN')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/* áp dụng */}
+                                                    <div className="text-cancel">
+                                                        {listCart.voucherId === voucher.id ? (
+                                                            <button className="btn btn-danger" onClick={handleRemoveVoucher}>
+                                                                Gỡ bỏ
+                                                            </button>
+                                                        ) : (
+                                                            <button className="btn btn-outline-danger" onClick={() => handleApplyVoucher(voucher.id)}>
+                                                                Áp dụng
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="flex-1">
-                                                <div className="text">
-                                                    {voucher.discountType === 1
-                                                        ? `Giảm ${voucher.discountValue.toLocaleString('vi-VN')}₫`
-                                                        : `Giảm ${voucher.discountValue}%`}
-                                                </div>
-                                                <div className="tex">
-                                                    {voucher.minimumOrderValue && `Đơn hàng tối thiểu: ${voucher.minimumOrderValue.toLocaleString('vi-VN')}₫`}
-                                                </div>
-                                                <div className="text">
-                                                    <span className="text-gray-600">Mã: </span>
-                                                    <span>{voucher.code}</span>
-                                                </div>
-                                                <div className="text">
-                                                    HSD: {new Date(voucher.endTime).toLocaleString('vi-VN')}
-                                                </div>
-                                            </div>
-                                            <div className="text-cancel">
-                                                {listCart.voucherId === voucher.id ? (
-                                                    <button className="btn btn-danger" onClick={handleRemoveVoucher}>
-                                                        Gỡ bỏ
-                                                    </button>
-                                                ) : (
-                                                    <button className="btn btn-success" onClick={() => handleApplyVoucher(voucher.id)}>
-                                                        Áp dụng
-                                                    </button>
-                                                )}
-                                            </div>
+
                                         </div>
                                     ))}
                                 </div>
@@ -323,7 +359,7 @@ const CheckOut = () => {
                                         <div className='tam'>Tổng thanh toán</div>
                                         <div className='tam'>{(listCart.finalPrice + (selectedShippingMethod === 1 ? 35000 : 25000)).toLocaleString('vi-VN')} ₫</div>
                                     </div>
-                                    <div className='col thanh-toan col-11' onClick={handleCheckout}>
+                                    <div className='col thanh-toan col-11 mb-3' onClick={handleCheckout}>
                                         Hoàn tất đơn hàng
                                     </div>
                                 </>
@@ -341,11 +377,11 @@ const CheckOut = () => {
                 >
                     <Box sx={modalStyle}>
                         <div className="modal-header">
-                            <h3 id="address-modal-title">Chọn địa chỉ giao hàng</h3>
+                            <h4 id="address-modal-title">Chọn địa chỉ giao hàng</h4>
                         </div>
-                        <div className="modal-body" id="address-modal-description">
+                        <div className="modal-body" id="address-modal-description mt-3">
                             {infoAddress && infoAddress.map(address => (
-                                <div key={address.id} className="address-item">
+                                <div key={address.id} className="address-item ">
                                     <input
                                         type="radio"
                                         name="address"
@@ -353,16 +389,16 @@ const CheckOut = () => {
                                         checked={tempSelectedAddressId === address.id}
                                         onChange={() => setTempSelectedAddressId(address.id)}
                                     />
-                                    <label>
-                                        {address.name} (+{address.phone}) - {address.detail}, {address.ward}, {address.district}, {address.province}
-                                        {address.isDefault && <span className='default-label'>Mặc Định</span>}
+                                    <label className='mb-3 mt-3 ms-2'>
+                                        {address.fullName}, {address.phoneNumber}, {address.detail}, {address.ward}, {address.district}, {address.province}
+                                        {address.isDefault && <span className=' ms-2 text-danger'>Mặc Định</span>}
                                     </label>
                                 </div>
                             ))}
                         </div>
                         <div className="modal-footer">
-                            <button onClick={handleCloseModal}>Đóng</button>
-                            <button onClick={handleConfirmAddress}>Xác nhận</button>
+                            <button className='btn btn-dark me-3' onClick={handleCloseModal}>Đóng</button>
+                            <button className='btn btn-success' onClick={handleConfirmAddress}>Xác nhận</button>
                         </div>
                     </Box>
                 </Modal>

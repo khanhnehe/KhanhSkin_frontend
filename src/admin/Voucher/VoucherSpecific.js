@@ -39,7 +39,7 @@ const VoucherSpecific = () => {
         freeTextSearch: searchTerm,
         pageIndex: currentPage + 1,
         pageSize: productPerPage,
-        isAscending: true,
+        isAscending: false,
         brandIds: [],
         categoryIds: [],
         productTypeIds: [],
@@ -154,7 +154,7 @@ const VoucherSpecific = () => {
                                 maxLength={100}
                                 value={programName}
                                 onChange={(e) => setProgramName(e.target.value)}
-                                placeholder="Tên Voucher sẽ không được hiển thị cho Người mua"
+                                placeholder="Tên Voucher "
                             />
                         </div>
 
@@ -170,7 +170,16 @@ const VoucherSpecific = () => {
                                 placeholder="Vui lòng chỉ nhập các kí tự chữ cái (A-Z), số (0-9); tối đa 5 kí tự"
                             />
                         </div>
-
+                        <div className="mb-3">
+                        <label className="form-label">Mô tả</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Mô tả ngắn gọn về voucher"
+                        />
+                    </div>
                         <div className="mb-3">
                             <label className="form-label">Thời gian sử dụng mã</label>
                             <div className="d-flex">
