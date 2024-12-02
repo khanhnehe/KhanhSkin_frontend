@@ -111,7 +111,7 @@ const Login = () => {
 
                         <div className="text-center mt-4">
                             Bạn chưa có tài khoản?
-                            <span onClick={() => navigate('/register')} className="register-link text-primary ms-2">
+                            <span onClick={() => navigate('/sign-up')} className="register-link text-primary ms-2">
                                 Đăng ký ngay
                             </span>
                         </div>

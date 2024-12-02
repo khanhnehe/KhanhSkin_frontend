@@ -11,6 +11,9 @@ import Rating from '@mui/material/Rating';
 import ReactPaginate from 'react-paginate';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { toggleFavoriteProduct } from '../../../store/action/userThunks';
+import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
 
 const InfoProduct = () => {
     const dispatch = useDispatch();
@@ -26,7 +29,19 @@ const InfoProduct = () => {
     const totalRecor = useSelector((state) => state.root.user.totalRecord);
     const [currentPage, setCurrentPage] = useState(0);
     const productPerPage = 5;
+    //favorite
+    const favorite = useSelector((state) => state.root.user.userFavorite);
+    const [isFavorite, setIsFavorite] = useState(false);
 
+    useEffect(() => {
+        if (Array.isArray(favorite)) {
+            setIsFavorite(favorite.some(fav => fav.id === id));
+        } else {
+            console.error("userFavorites is not an array:");
+        }
+    }, [favorite, id]);
+    
+    //
 
     const recommend = useSelector((state) => state.root.user.productRecommend);
 
@@ -41,7 +56,7 @@ const InfoProduct = () => {
             productId: id,
             pageIndex: currentPage + 1,
             pageSize: productPerPage,
-            isAscending: true,
+            // isAscending: true,
             isApproved: true
         }));
     }, [dispatch, id, currentPage]);
@@ -109,6 +124,22 @@ const InfoProduct = () => {
         tablet: { breakpoint: { max: 768, min: 464 }, items: 3 },
         mobile: { breakpoint: { max: 464, min: 0 }, items: 2 },
     };
+
+    //yêu thích
+    const handleToggleFavorite = async () => {
+        try {
+            await dispatch(toggleFavoriteProduct(id));
+            setIsFavorite(prev => !prev); // Đổi trạng thái yêu thích
+            toast.success(
+                isFavorite
+                    ? "Sản phẩm đã bị xóa khỏi danh sách yêu thích!"
+                    : "Sản phẩm đã được thêm vào danh sách yêu thích!"
+            );
+        } catch (error) {
+            toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
+        }
+    };
+
 
     return (
         <>
@@ -215,6 +246,11 @@ const InfoProduct = () => {
                                     <div className='mua-hang'>
                                         <div className='mua-ngay'>Mua ngay</div>
                                         <div className='add' onClick={addToCart}>Thêm vào giỏ hàng</div>
+                                        <div className="favorite-icon" onClick={handleToggleFavorite}>
+                                            {isFavorite
+                                                ? <MdFavorite className="icon-favorite active" />
+                                                : <MdFavoriteBorder className="icon-favorite" />}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +258,7 @@ const InfoProduct = () => {
                     </div>
 
 
-                   
+
 
                     <div className='info-review mt-3'>
                         {/* <div className='title mb-2'>Chi tiết sản phẩm</div> */}
@@ -242,61 +278,61 @@ const InfoProduct = () => {
                         </div>
 
                         <div className="skin-item mt-5 mb-4">
-                        <div className='title-p mt-3'>Gợi ý sản phẩm</div>
-                        <Carousel responsive={responsive}>
-                            {recommend && recommend.length > 0 ? ( // Kiểm tra `recommend` trước khi sử dụng `.length`
-                                recommend.map((product) => (
-                                    <NavLink to={`/product/${product.id}`} key={product.id}>
-                                        <div key={product.id} className="custom-item">
-                                            <div className="image-container">
-                                                <div className="discount">-{product.discount}%</div>
-                                                <img
-                                                    src={product.images[0]}
-                                                    alt={product.productName}
-                                                    className="product-image"
-                                                />
-                                                <img
-                                                    src={product.images[1]}
-                                                    alt={product.productName}
-                                                    className="product-image hover-image"
-                                                />
-                                            </div>
-                                            <div className="bottom">
-                                                <div className="product-name">{product.productName}</div>
-                                                <div className="price">
-                                                    {product.price.toLocaleString('vi-VN', {
-                                                        style: 'currency',
-                                                        currency: 'VND',
-                                                    })}
+                            <div className='title-p mt-3'>Gợi ý sản phẩm</div>
+                            <Carousel responsive={responsive}>
+                                {recommend && recommend.length > 0 ? ( // Kiểm tra `recommend` trước khi sử dụng `.length`
+                                    recommend.map((product) => (
+                                        <NavLink to={`/product/${product.id}`} key={product.id}>
+                                            <div key={product.id} className="custom-item">
+                                                <div className="image-container">
+                                                    <div className="discount">-{product.discount}%</div>
+                                                    <img
+                                                        src={product.images[0]}
+                                                        alt={product.productName}
+                                                        className="product-image"
+                                                    />
+                                                    <img
+                                                        src={product.images[1]}
+                                                        alt={product.productName}
+                                                        className="product-image hover-image"
+                                                    />
                                                 </div>
-                                                <div className="sale">
-                                                    {product.salePrice.toLocaleString('vi-VN', {
-                                                        style: 'currency',
-                                                        currency: 'VND',
-                                                    })}
-                                                </div>
-                                                <div className="bottom-two">
-                                                    <div className="rating">
-                                                        <Rating
-                                                            name={`rating-${product.id}`}
-                                                            value={product.averageRating || 0}
-                                                            precision={0.5}
-                                                            readOnly
-                                                        />
+                                                <div className="bottom">
+                                                    <div className="product-name">{product.productName}</div>
+                                                    <div className="price">
+                                                        {product.price.toLocaleString('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        })}
                                                     </div>
-                                                    <div className="purchases">
-                                                        {product.purchases} Đã bán
+                                                    <div className="sale">
+                                                        {product.salePrice.toLocaleString('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        })}
+                                                    </div>
+                                                    <div className="bottom-two">
+                                                        <div className="rating">
+                                                            <Rating
+                                                                name={`rating-${product.id}`}
+                                                                value={product.averageRating || 0}
+                                                                precision={0.5}
+                                                                readOnly
+                                                            />
+                                                        </div>
+                                                        <div className="purchases">
+                                                            {product.purchases} Đã bán
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </NavLink>
-                                ))
-                            ) : (
-                                <div>Không có sản phẩm nào</div>
-                            )}
-                        </Carousel>
-                    </div>
+                                        </NavLink>
+                                    ))
+                                ) : (
+                                    <div>Không có sản phẩm nào</div>
+                                )}
+                            </Carousel>
+                        </div>
 
                         <div className='review'>
                             <div className='boc-dg'>
@@ -319,7 +355,15 @@ const InfoProduct = () => {
                                         </div>
                                         <Rating value={review.rating} readOnly className='review-rating' />
                                         <p className='comment'>{review.comment}</p>
-                                        <p className='created-at'>{new Date(review.reviewDate).toLocaleDateString()}</p>
+                                        <p className='created-at'>
+                                            {new Date(review.reviewDate).toLocaleString('vi-VN', {
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                            })}
+                                        </p>
                                     </div>
                                 ))
                             ) : (

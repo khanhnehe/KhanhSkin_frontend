@@ -6,6 +6,7 @@ import './CartOrder.scss';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { ChevronDown, AlertCircle } from 'react-feather';
 import { CiDiscount1 } from "react-icons/ci";
+import { RiInformationLine } from "react-icons/ri";
 
 const CartOrder = () => {
     const dispatch = useDispatch();
@@ -146,79 +147,85 @@ const CartOrder = () => {
                                         className={`text ${isOpen ? '' : '-rotate-90'}`}
                                         size={20}
                                     />
-                                     <span className="title-voucher">MÃ GIẢM GIÁ</span>
-                            </div>
-                            <div className={`transition-all duration-300 origin-top ${isOpen ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
-                                <div className="top-voucher gap-2 mb-4 ms-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Nhập mã giảm giá/Phiếu mua hàng"
-                                        className="flex-1 px-4 py-2 border rounded"
-                                        value={listCart.voucherProgramName || ""}
-                                        onChange={(e) => setSelectedVoucher(e.target.value)}
-                                    />
+                                    <span className="title-voucher">MÃ GIẢM GIÁ</span>
                                 </div>
+                                <div className={`transition-all duration-300 origin-top ${isOpen ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+                                    <div className="top-voucher gap-2 mb-4 ms-3">
+                                        <input
+                                            type="text"
+                                            placeholder="Nhập mã giảm giá/Phiếu mua hàng"
+                                            className="flex-1 px-4 py-2 border rounded"
+                                            value={listCart.voucherProgramName || ""}
+                                            onChange={(e) => setSelectedVoucher(e.target.value)}
+                                        />
+                                    </div>
                                     <div className="bottom-voucher">
-                                    {activeVouchers.map((voucher) => (
-                                        <div key={voucher.id} className="item-voucher">
+                                        {activeVouchers.map((voucher) => (
+                                            <div key={voucher.id} className="item-voucher">
 
-                                            <div className="card shadow-lg rounded-lg overflow-hidden">
-                                                <div className="ticket-perforations top">
-                                                    {[...Array(20)].map((_, i) => (
-                                                        <div key={i} className="circle" />
-                                                    ))}
-                                                </div>
-
-                                                <div className="ticket-perforations bottom">
-                                                    {[...Array(20)].map((_, i) => (
-                                                        <div key={i} className="circle" />
-                                                    ))}
-                                                </div>
-
-                                                <div className="voucher">
-                                                    <div className="icon-container">
-                                                        <div className="icon-wrapper">
-                                                            <CiDiscount1 className="icon" />
-                                                        </div>
+                                                <div className="card shadow-lg rounded-lg overflow-hidden">
+                                                    <div className="ticket-perforations top">
+                                                        {[...Array(20)].map((_, i) => (
+                                                            <div key={i} className="circle" />
+                                                        ))}
                                                     </div>
-                                                    <div className="voucher-content ">
-                                                        <div className="">
-                                                            <div className="text-voucher">{voucher.programName}</div>
-                                                            <div className="text-child">
-                                                                {voucher.discountType === 1
-                                                                    ? `Giảm ${voucher.discountValue.toLocaleString('vi-VN')}₫`
-                                                                    : `Giảm ${voucher.discountValue}%`}
+
+                                                    <div className="ticket-perforations bot">
+                                                        {[...Array(20)].map((_, i) => (
+                                                            <div key={i} className="circle" />
+                                                        ))}
+                                                    </div>
+
+                                                    <div className="voucher">
+                                                        <div className="icon-container">
+                                                            <div className="icon-wrapper">
+                                                                <CiDiscount1 className="icon" />
                                                             </div>
                                                         </div>
-                                                        <div>
-                                                            <div className="text-child">
-                                                                {voucher.minimumOrderValue &&
-                                                                    `Đơn tối thiểu: ${voucher.minimumOrderValue.toLocaleString('vi-VN')}₫`}
+                                                        <div className="voucher-content ">
+                                                            <div className="">
+                                                                <div className="text-voucher">{voucher.programName}</div>
+                                                                <div className="text-child">
+                                                                    {voucher.discountType === 1
+                                                                        ? `Giảm ${voucher.discountValue.toLocaleString('vi-VN')}₫`
+                                                                        : `Giảm ${voucher.discountValue}%`}
+                                                                </div>
                                                             </div>
-                                                            <div className="text-child">Mã: {voucher.code} </div>
-                                                            <div className='text-child' >
-                                                                HSD: {new Date(voucher.endTime).toLocaleString('vi-VN')}
+                                                            <div>
+                                                                <div className="text-child">
+
+                                                                    {voucher.minimumOrderValue &&
+                                                                        `Đơn tối thiểu: ${voucher.minimumOrderValue.toLocaleString('vi-VN')}₫`}
+                                                                </div>
+                                                                <div className="text-child">Mã: {voucher.code} </div>
+                                                                <div className='text-child' >
+                                                                    HSD: {new Date(voucher.endTime).toLocaleString('vi-VN')}
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        {/* áp dụng */}
+                                                        <div className="text-cancel">
+
+                                                            {listCart.voucherId === voucher.id ? (
+                                                                <button className="btn btn-danger" onClick={handleRemoveVoucher}>
+                                                                    Gỡ bỏ
+                                                                </button>
+                                                            ) : (
+                                                                <button className="btn btn-outline-danger" onClick={() => handleApplyVoucher(voucher.id)}>
+                                                                    Áp dụng
+                                                                </button>
+                                                            )}
+                                                            <div onClick={() => navigate(`/condition-voucher/${voucher.id}`)}>
+                                                                <RiInformationLine className="icon" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {/* áp dụng */}
-                                                    <div className="text-cancel">
-                                                        {listCart.voucherId === voucher.id ? (
-                                                            <button className="btn btn-danger" onClick={handleRemoveVoucher}>
-                                                                Gỡ bỏ
-                                                            </button>
-                                                        ) : (
-                                                            <button className="btn btn-outline-danger" onClick={() => handleApplyVoucher(voucher.id)}>
-                                                                Áp dụng
-                                                            </button>
-                                                        )}
-                                                    </div>
                                                 </div>
+
                                             </div>
-
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </Row>

@@ -40,28 +40,16 @@
                 &.top {
                     top      : 0;
                     height   : 5px;
-                    color    : red;
+                    // color    : red;
                     transform: rotate(180deg);
 
                 }
 
-                &.bottom {
-                    bottom: 0;
-                    height: 5px;
-                }
-
-                &.left {
-                    bottom        : 0;
-                    height        : 5px;
-                    flex-direction: column;
-
-                }
-
-                &.right {
-                    bottom        : 0;
-                    height        : 5px;
-                    flex-direction: column;
-
+                &.bot {
+                    bottom      : 0;
+                    height   : 5px;
+                    // color    : red;
+                    // transform: rotate(180deg);
                 }
 
 

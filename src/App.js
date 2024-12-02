@@ -22,6 +22,10 @@ import CartOrder from './home/main/Cart/CartOrder';
 import Profile from './home/main/Profile/Profile';
 import CheckOut from './home/main/Cart/CheckOut';
 import PaymentResult from './home/main/Cart/PaymentResult';
+import SearchProduct from './home/SearchProduct';
+import Register from './Auth/Register';
+import FavoriteProduct from './home/main/Profile/favorite/FavoriteProduct';
+import ConditionVoucher from './home/main/ConditionVoucher/ConditionVoucher';
 function App() {
   return (
     <>
@@ -70,6 +74,10 @@ const UserRoutes = () => (
     <Route path="/test" element={<MyComponent />} />
     <Route path={path.CHECK_OUT} element={<CheckOut />} />
     <Route path={path.PAYMENT} element={<PaymentResult />} />
+    <Route path={path.SEARCH} element={<SearchProduct />} />
+    <Route path={path.REGISTER} element={<Register />} />
+    <Route path={path.FAVORITE} element={<FavoriteProduct />} />
+    <Route path={path.VOUCHER} element={<ConditionVoucher />} />
 
     </Routes>
 

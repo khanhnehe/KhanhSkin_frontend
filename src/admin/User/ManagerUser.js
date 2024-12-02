@@ -61,7 +61,7 @@ const ManagerUser = () => {
             fullName: user.fullName,
             email: user.email,
             phoneNumber: user.phoneNumber,
-            // password: '......',
+            password: '......',
             imageFile: null, // Đặt lại imageFile vì sẽ cập nhật mới nếu người dùng chọn
             role: user.role
         });
@@ -135,7 +135,7 @@ const ManagerUser = () => {
         formData.append('FullName', newUser.fullName);
         formData.append('Email', newUser.email);
         formData.append('PhoneNumber', newUser.phoneNumber);
-        // formData.append('Password', newUser.password);
+        formData.append('Password', newUser.password);
         formData.append('Role', parseInt(newUser.role, 10));
         if (newUser.imageFile) {
             formData.append('ImageFile', newUser.imageFile);
@@ -226,8 +226,7 @@ const ManagerUser = () => {
                                             : user.role === 3
                                                 ? 'Nhân viên'
                                                 : 'Admin'}
-                                    </td>
-                                    <td>
+                                    </td>                                    <td>
                                         <Fab
                                             size="small"
                                             className="edit-button"
@@ -308,21 +307,18 @@ const ManagerUser = () => {
                                     required
                                 />
                             </Grid>
-                            {!editMode && (
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth
-                                        label="Mật khẩu"
-                                        name="password"
-                                        type="password"
-                                        value={newUser.password}
-                                        onChange={handleInputChange}
-                                        variant="outlined"
-                                        required
-                                    />
-                                </Grid>
-                            )}
-
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Mật khẩu"
+                                    name="password"
+                                    type="password"
+                                    value={newUser.password}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                    required
+                                />
+                            </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     select
@@ -340,6 +336,7 @@ const ManagerUser = () => {
                                     <option value={1}>Khách hàng</option>
                                     <option value={2}>Admin</option>
                                     <option value={3}>Nhân viên</option>
+
                                 </TextField>
                             </Grid>
 

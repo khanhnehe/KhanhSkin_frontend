@@ -12,6 +12,8 @@ import { ChevronDown, AlertCircle } from 'react-feather';
 import { CiDiscount1 } from "react-icons/ci";
 import vnPay from '../../../assets/Logo-VNPAY-QR-1.webp';
 import cod from '../../../assets/Ảnh chụp màn hình 2024-11-30 004603.png';
+import { RiInformationLine } from "react-icons/ri";
+
 
 const shippingMethods = [
     { value: 1, label: 'Giao hàng nhanh' },        // FasfDelivery = 1
@@ -259,7 +261,7 @@ const CheckOut = () => {
                                                     ))}
                                                 </div>
 
-                                                <div className="ticket-perforations bottom">
+                                                <div className="ticket-perforations bot">
                                                     {[...Array(20)].map((_, i) => (
                                                         <div key={i} className="circle" />
                                                     ))}
@@ -302,6 +304,9 @@ const CheckOut = () => {
                                                                 Áp dụng
                                                             </button>
                                                         )}
+                                                        <div onClick={() => navigate(`/condition-voucher/${voucher.id}`)}>
+                                                                <RiInformationLine className="icon" />
+                                                            </div>
                                                     </div>
                                                 </div>
                                             </div>

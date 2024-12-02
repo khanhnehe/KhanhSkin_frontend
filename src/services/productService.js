@@ -193,6 +193,11 @@ export const getPageVoucher = (input) => {
     return axios.post('/api/Voucher/get-page-voucher', input);
 };
 
+export const getSellingProduct = () => {
+    return axios.get('/api/Product/top-selling-product');
+};
+
+
 export {
     getAllBrand,
     createBrand,

@@ -303,7 +303,7 @@ const VoucherSpecific = () => {
 
                         </div>
 
-                        <Modal show={showModal} onHide={handleCloseModal} size="lg">
+                        <Modal show={showModal} onHide={handleCloseModal} size="lg" style={{zIndex: "10000"}}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Chọn Sản Phẩm</Modal.Title>
                             </Modal.Header>

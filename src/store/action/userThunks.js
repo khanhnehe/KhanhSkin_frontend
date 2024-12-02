@@ -2,10 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getAllUser, createUser, updateUser, deleteUser, getUserId, createAddress, updateAddress, deleteAddress, getAddressId,
     
     getOrdersByUser,changeStatus, createReview,getReviewProduct, getRecommendations,
-    getVoucherActive, changePassword, searchProduct
+    getVoucherActive, changePassword, searchProduct, userFavorites, toggleFavorite,
+    register, conditionVoucher, updateUserById
  } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from '../reducer/loadingSlice';
+import { loginUser } from '../reducer/userSlice';
 
 export const getUserById = createAsyncThunk(
     'user/getUserById', 
@@ -245,6 +247,87 @@ export const getVouchersActive = createAsyncThunk(
         } catch (err) {
             dispatch(hideLoading());
             const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin địa chỉ';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+);
+
+export const userFavorite = createAsyncThunk(
+    'user/userFavorite', 
+    async (_, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await userFavorites();    
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+);
+
+export const toggleFavoriteProduct = createAsyncThunk(
+    'user/toggleFavoriteProduct', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await toggleFavorite(input);    
+            dispatch(hideLoading());
+            // toast.success('Đã thêm vào yêu thích');
+            dispatch(userFavorite()); 
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);  
+        }
+    }
+);
+
+export const registerUser = createAsyncThunk(
+    'user/registerUser', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await register(input);    
+            toast.success('Đăng ký thành công');
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorResponse = err.response?.data?.responseException;
+            let errorMessage = "Đăng ký thất bại";
+            if (errorResponse) {
+              if (typeof errorResponse.exceptionMessage === 'string') {
+                errorMessage = errorResponse.exceptionMessage;
+              } else if (errorResponse.errors) {
+                errorMessage = Object.values(errorResponse.errors).flat().join(' ');
+              }
+            }
+      
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage); 
+          }
+    }
+);
+
+
+export const conditionOfVoucher= createAsyncThunk(
+    'user/conditionOfVoucher', 
+    async (input, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(showLoading());
+            const response = await conditionVoucher(input);    
+            dispatch(hideLoading());
+            return response.result;   
+        } catch (err) {
+            dispatch(hideLoading());
+            const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
             toast.error(errorMessage);
             return rejectWithValue(errorMessage);  
         }

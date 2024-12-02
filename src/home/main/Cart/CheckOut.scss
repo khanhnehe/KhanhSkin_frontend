@@ -213,9 +213,11 @@
                 
                                 }
                 
-                                &.bottom {
-                                    bottom: 0;
-                                    height: 5px;
+                                &.bot {
+                                    bottom      : 0;
+                                    height   : 5px;
+                                    // color    : red;
+                                    // transform: rotate(180deg);
                                 }
                 
                                 &.left {
@@ -259,6 +261,7 @@
                             }
                 
                             .voucher {
+                                min-width: 486px;
                                 display         : flex;
                                 padding         : 11px;
                                 border-left     : 1px dashed #dc3545;
@@ -320,8 +323,11 @@
                     }
 
                     .text-cancel {
+                        display    : flex;
+                        gap        : 8px;
                         margin-left: 86px;
                         min-width  : 88px;
+                        align-items: flex-end;
                     }
 
                 }

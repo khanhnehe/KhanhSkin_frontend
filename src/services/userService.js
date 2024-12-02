@@ -82,11 +82,39 @@ export const changePassword = (input) => {
 };
 
 
+
 export const searchProduct = (keyword) => {
     return axios.get(`api/Product/search-product`, {
       params: { keyword },
     });
   };
+
+  export const toggleFavorite = (input) => {
+    return axios.post('/api/Product/toggle-favorite', input);
+};
+  
+  export const userFavorites = () => {
+    return axios.get(`/api/Product/user-favorites`);
+  };
+  
+
+  export const register = (input) => {
+    return axios.post('/api/User/register-user', input);
+};
+
+
+export const conditionVoucher = (id) => {
+    return axios.get(`/api/Voucher/get-voucher/${id}`);
+};
+
+
+export const updateUserById = (formData) => {
+    return axios.put('/api/User/update-user', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+};
 
 export { 
     loginApiService,

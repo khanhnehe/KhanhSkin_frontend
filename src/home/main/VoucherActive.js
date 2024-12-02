@@ -66,8 +66,8 @@ const VoucherActive = () => {
                                 ))}
                             </div>
 
-                            <div className="ticket-perforations bottom">
-                                {[...Array(20)].map((_, i) => (
+                            <div className="ticket-perforations bot">
+                            {[...Array(20)].map((_, i) => (
                                     <div key={i} className="circle" />
                                 ))}
                             </div>

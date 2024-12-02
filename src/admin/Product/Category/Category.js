@@ -146,16 +146,16 @@ const Category = () => {
   return (
     <>
       <div className="manager-category">
-      <h4 style={{color: "#c7313f"}}>DANH MỤC SẢN PHẨM</h4>
-      <div className='top mt-2'>
+        <h4 style={{ color: "#c7313f" }}>DANH MỤC SẢN PHẨM</h4>
+        <div className='top mt-2'>
           <div className='bot-btn mb-4'>
             <Button variant="contained" sx={{
-        backgroundColor: '#dc3545',
-        color: 'white',
-        '&:hover': {
-            backgroundColor: '#b22b38',
-        }
-    }} endIcon={<IoMdAdd />} onClick={handleOpen}>
+              backgroundColor: '#dc3545',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: '#b22b38',
+              }
+            }} endIcon={<IoMdAdd />} onClick={handleOpen}>
               Thêm danh mục
             </Button>
           </div>
@@ -182,7 +182,7 @@ const Category = () => {
                     >
                       <EditIcon style={{ fontSize: '20px' }} /> Sửa
                     </Fab>
-                    <Fab 
+                    <Fab
                       size="small"
                       className="delete-button"
                       variant="extended"
@@ -209,8 +209,8 @@ const Category = () => {
         </div>
 
         <div className='bot'>
-        <h4 style={{color: "#c7313f"}}>PHÂN LOẠI SẢN PHẨM</h4>
-        <TypeProduct />
+          <h4 style={{ color: "#c7313f" }}>PHÂN LOẠI SẢN PHẨM</h4>
+          <TypeProduct />
         </div>
       </div>
       <Modal
@@ -271,12 +271,12 @@ const Category = () => {
                   variant="contained"
                   endIcon={<SendIcon />}
                   sx={{
-        backgroundColor: '#dc3545',
-        color: 'white',
-        '&:hover': {
-            backgroundColor: '#b22b38',
-        }
-    }}
+                    backgroundColor: '#dc3545',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#b22b38',
+                    }
+                  }}
                 >
                   {editMode ? 'Cập nhật' : 'Thêm mới'}
                 </Button>

@@ -5,7 +5,7 @@ import {
   fetchAllProduct, createNewProduct, updatedProduct, deletedProduct,
   getFilteredProducts, postFilteredProducts, getProductCategory, getProductTypes, getProductBrands, getInfoForProduct,
   getCartByUser, getPageProduct, getPageOrders, getVoucher, getActiveVouchers, applyToVoucher, getPageSupplier, getPageInventoryLog,
-  checkOutOrder,getRevenueProfitDay, getRevenueProfitMonth, getRevenueProfitY, getPageVouchers
+  checkOutOrder,getRevenueProfitDay, getRevenueProfitMonth, getRevenueProfitY, getPageVouchers, getSellingProducts
 
 } from '../action/adminThunks';
 
@@ -30,6 +30,7 @@ const initialState = {
   revenueProfitM: [],
   revenueProfitY: [],
   allVouchers: [],
+  sellingProducts: [],
   error: null,
 };
 
@@ -321,6 +322,18 @@ const adminSlice = createSlice({
         state.totalRecord = action.payload.totalRecord;
       })
       .addCase(getPageVouchers.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
+      //
+      builder
+      .addCase(getSellingProducts.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getSellingProducts.fulfilled, (state, action) => {
+        state.sellingProducts = action.payload.result;
+      })
+      .addCase(getSellingProducts.rejected, (state, action) => {
         state.error = action.payload;
       });
 

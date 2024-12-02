@@ -114,9 +114,9 @@ const Voucher = () => {
                         <span>Toàn shop</span>
                     )}
                 </td>
-                <td>
+                {/* <td>
                     {voucher.isActive ? "Active" : "Inactive"}
-                </td>
+                </td> */}
             </tr>
         ));
     }, [allVoucher]);
@@ -210,7 +210,7 @@ const Voucher = () => {
                                     <th>Lượt dùng</th>
                                     <th>Ngày hết hạn</th>
                                     <th>Sản phẩm</th>
-                                    <th>Trạng thái</th>
+                                    {/* <th>Trạng thái</th> */}
                                 </tr>
                             </thead>
                             <tbody>

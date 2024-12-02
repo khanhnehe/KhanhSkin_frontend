@@ -1,17 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loginApiService } from '../../services/userService';
+import { loginApiService, updateUserById } from '../../services/userService';
 import { decodeToken, isTokenExpired } from '../../services/tokenService';
 import { toast } from 'react-toastify';
 import { showLoading, hideLoading } from './loadingSlice'; // Import các hành động loading
 import {
   getUserById, getAddressById, getOrderByUser, getReviewsProduct, getRecommendProduct, getVouchersActive,
-  searchProducts
+  searchProducts, userFavorite, conditionOfVoucher
 } from '../action/userThunks';
+
+
 
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async ({ email, password }, { dispatch, rejectWithValue }) => { // Thêm dispatch vào tham số
+  async ({ email, password }, { dispatch, rejectWithValue }) => {
     try {
       dispatch(showLoading());
 
@@ -28,6 +30,40 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const updateUserId = createAsyncThunk(
+  'user/updateUserId',
+  async (input, { dispatch, getState, rejectWithValue }) => {
+    try {
+      dispatch(showLoading());
+
+      const response = await updateUserById(input);
+
+      // Lấy thông tin user hiện tại từ state
+      const currentState = getState().user;
+
+      // Kết hợp thông tin user mới với thông tin hiện tại
+      const updatedUserInfo = {
+        ...currentState.userInfo,
+        ...response.result,
+      };
+
+      dispatch({
+        type: 'user/updateUserInfo',
+        payload: updatedUserInfo,
+      });
+
+      dispatch(hideLoading());
+      toast.success('Cập nhật thông tin thành công!');
+      return response.result;
+    } catch (err) {
+      dispatch(hideLoading());
+      const errorMessage =
+        err.response?.data?.responseException?.exceptionMessage ||
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -42,8 +78,9 @@ const userSlice = createSlice({
     productRecommend: [],
     voucherActive: [],
     searchProduct: [],
+    userFavorite: [],
+    infoVoucher: [],
     isLoading: false,
-    //
   },
   reducers: {
     logout(state) {
@@ -53,24 +90,25 @@ const userSlice = createSlice({
       state.error = '';
       state.isLoading = false;
     },
+    updateUserInfo(state, action) {
+      state.userInfo = { ...state.userInfo, ...action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => { // Khi hành động login đang xử lý (đang chờ)
+      .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = '';
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         const token = action.payload.result.token;
 
-        // Kiểm tra nếu token hết hạn
         if (isTokenExpired(token)) {
           state.error = 'Token has expired.';
-          state.isLoading = false; // Ngừng trạng thái loading
+          state.isLoading = false;
           return;
         }
 
-        // Giải mã token 
         const decodedToken = decodeToken(token);
 
         state.isLoggedIn = true;
@@ -79,15 +117,31 @@ const userSlice = createSlice({
         state.error = '';
         state.isLoading = false;
       })
-      .addCase(loginUser.rejected, (state, action) => { // Khi hành động login bị từ chối
+      .addCase(loginUser.rejected, (state, action) => {
         state.isLoggedIn = false;
         state.userInfo = null;
         state.accessToken = null;
         state.error = action.payload || 'Login failed. Please check your credentials.';
         state.isLoading = false;
       })
+      // update
+      .addCase(updateUserId.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(updateUserId.fulfilled, (state, action) => {
+        state.userInfo = { ...state.userInfo, ...action.payload };
+        state.isLoading = false;
+      })
+      .addCase(updateUserId.rejected, (state, action) => {
+        state.error = action.payload || 'Cập nhật thông tin thất bại.';
+        state.isLoading = false;
+      })
+///
 
-      //
+
+
+      //-------------------
       .addCase(getUserById.pending, (state) => {
         state.isLoading = true;
         state.error = '';
@@ -178,6 +232,31 @@ const userSlice = createSlice({
       .addCase(searchProducts.rejected, (state, action) => {
         state.error = action.payload;
       });
+
+      //
+    builder
+      .addCase(userFavorite.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(userFavorite.fulfilled, (state, action) => {
+        state.userFavorite = action.payload.data;
+      })
+      .addCase(userFavorite.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+      //
+
+      builder
+      .addCase(conditionOfVoucher.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(conditionOfVoucher.fulfilled, (state, action) => {
+        state.infoVoucher = action.payload;
+      })
+      .addCase(conditionOfVoucher.rejected, (state, action) => {
+        state.error = action.payload;
+      });
+
 
   },
 });

@@ -11,7 +11,7 @@ import { createBrand, getAllBrand, updateBrand, deleteBrand,
   getCartByUserId, deleteCartItem, checkoutMyOrder, getPagedProducts,
   getOrders, createVoucher, getAllVoucher, getActiveVoucher, applyVoucher,
   createSupplier,getPagedSupplier,updateSupplier, deleteSupplier, importInventory,
-  getPagedLogs,getRevenueAndProfit, getPageVoucher
+  getPagedLogs,getRevenueAndProfit, getPageVoucher, getSellingProduct
 
  } from '../../services/productService';
 
@@ -843,6 +843,36 @@ export const deletedSupplier = createAsyncThunk(
     }
   );
 
+  // export const getSellingProducts = createAsyncThunk(
+  //   'admin/getSellingProducts', 
+  //   async ( { dispatch, rejectWithValue }) => {
+  //       try {
+  //           dispatch(showLoading());
+  //           const response = await getSellingProduct();    
+  //           dispatch(hideLoading());
+  //           return response.result;   
+  //       } catch (err) {
+  //           dispatch(hideLoading());
+  //           const errorMessage = err.response?.data?.responseException?.exceptionMessage || 'Có lỗi xảy ra khi lấy thông tin người dùng';
+  //           toast.error(errorMessage);
+  //           return rejectWithValue(errorMessage);  
+  //       }
+  //   }
+  // );
+
+
+  export const getSellingProducts = createAsyncThunk(
+    'admin/getSellingProducts', 
+    async (_, { rejectWithValue }) => { // Hàm bất đồng bộ để thực hiện hành động
+      try {
+        const response = await getSellingProduct(); 
+        return response.result; 
+      } catch (err) {
+        const errorMessage = err.response?.data?.responseException?.exceptionMessage ;
+        return rejectWithValue(errorMessage); 
+      }
+    }
+  );
 
 export {
   updatedUser,

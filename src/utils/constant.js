@@ -11,6 +11,11 @@ export const path = {
     CHECK_OUT: "/checkout",
     ORDER: "/order",
     PAYMENT: "/payment-result",
+    SEARCH: "/search-results",
+    REGISTER: "/sign-up",
+    FAVORITE: "/favorite",
+    VOUCHER: "/condition-voucher/:id",
+
 
    
 }
